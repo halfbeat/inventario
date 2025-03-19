@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Usuario
+
+class Rol
+
+class Permiso
+
+class Asignacion {
+  fecha: string
+}
+
+class Aplicacion
+
+
+class Ambito {
+  valor: string
+}
+
+class TipoAmbito {
+  restriccion: string
+  is_jerarquia: boolean
+}
+
+Usuario -- Rol
+
+Permiso -- Usuario
+
+(Usuario, Rol) .. Asignacion
+(Usuario, Permiso) .. Asignacion
+
+Rol "*" -- "1" Aplicacion
+
+Rol "*" - "*" Permiso
+
+Permiso "*" - "1" Aplicacion
+
+Asignacion --- "0..1" Ambito
+
+Ambito -- "1" TipoAmbito
+
+@enduml

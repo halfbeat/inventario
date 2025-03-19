@@ -1,0 +1,11 @@
+/.venv/
+/venv/
+__pycache__
+*.iml
+.$*.bkp
+*~
+/instance/
+/install/pgdata/
+/install/redisdata/
+/dist/
+/build/

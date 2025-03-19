@@ -1,0 +1,188 @@
+_type: export
+__export_format: 4
+__export_date: 2025-01-11T09:20:49.870Z
+__export_source: insomnia.desktop.app:v2023.2.2
+resources:
+  - _id: req_8eebfc9267b9441787e5452d49fe8a40
+    parentId: fld_4a2665877a964ff3a18cbe86343cf20d
+    modified: 1736510114582
+    created: 1736448149383
+    url: "{{ _.url }}/v2/aplicaciones/"
+    name: Obtener aplicaciones
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: oauth2
+      grantType: authorization_code
+      authorizationUrl: "{{ _.oauth2_auth_url }}"
+      accessTokenUrl: "{{ _.oauth2_token_url }}"
+      clientId: "{{ _.oauth2_client_id }}"
+      clientSecret: "{{ _.oauth2_client_secret }}"
+      redirectUrl: "{{ _.oauth2_redirect_url }}"
+      state: ""
+      scope: openid
+      usePkce: false
+    metaSortKey: -1736448246457
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_4a2665877a964ff3a18cbe86343cf20d
+    parentId: wrk_af29fae118c0430e900098f1af62c256
+    modified: 1736448278815
+    created: 1736448278815
+    name: v2
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1736448278815
+    _type: request_group
+  - _id: wrk_af29fae118c0430e900098f1af62c256
+    parentId: null
+    modified: 1736448093271
+    created: 1736448093271
+    name: AUTHZ2
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_e9bcc975f5664b1c87a099baacd1730e
+    parentId: fld_4a2665877a964ff3a18cbe86343cf20d
+    modified: 1736507834041
+    created: 1736507831936
+    url: "{{ _.url }}/v2/aplicaciones/AUTHZ"
+    name: Obtener aplicacion
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: oauth2
+      grantType: authorization_code
+      authorizationUrl: "{{ _.oauth2_auth_url }}"
+      accessTokenUrl: "{{ _.oauth2_token_url }}"
+      clientId: "{{ _.oauth2_client_id }}"
+      clientSecret: "{{ _.oauth2_client_secret }}"
+      redirectUrl: "{{ _.oauth2_redirect_url }}"
+    metaSortKey: -1734994440954
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3d32c6ddea024843b6d2e1ed3399c56e
+    parentId: fld_4a2665877a964ff3a18cbe86343cf20d
+    modified: 1736507790926
+    created: 1736507785902
+    url: "{{ _.url }}/v2/aplicaciones/AUTHZ/roles"
+    name: Obtener roles aplicacion
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: oauth2
+      grantType: authorization_code
+      authorizationUrl: "{{ _.oauth2_auth_url }}"
+      accessTokenUrl: "{{ _.oauth2_token_url }}"
+      clientId: "{{ _.oauth2_client_id }}"
+      clientSecret: "{{ _.oauth2_client_secret }}"
+      redirectUrl: "{{ _.oauth2_redirect_url }}"
+    metaSortKey: -1733540635451
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b7ccecff255d47b38e9a2c51d7353c8e
+    parentId: fld_4a2665877a964ff3a18cbe86343cf20d
+    modified: 1736509679873
+    created: 1736509668640
+    url: "{{ _.url }}/v2/aplicaciones/AUTHZ/permisos"
+    name: Obtener permisos aplicacion
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: oauth2
+      grantType: authorization_code
+      authorizationUrl: "{{ _.oauth2_auth_url }}"
+      accessTokenUrl: "{{ _.oauth2_token_url }}"
+      clientId: "{{ _.oauth2_client_id }}"
+      clientSecret: "{{ _.oauth2_client_secret }}"
+      redirectUrl: "{{ _.oauth2_redirect_url }}"
+    metaSortKey: -1732086829948
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_da12d04ede234e35f17528eea7f7c11d3b6f36fe
+    parentId: wrk_af29fae118c0430e900098f1af62c256
+    modified: 1736448093274
+    created: 1736448093274
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1736448093274
+    _type: environment
+  - _id: jar_da12d04ede234e35f17528eea7f7c11d3b6f36fe
+    parentId: wrk_af29fae118c0430e900098f1af62c256
+    modified: 1736448093275
+    created: 1736448093275
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_d51c99f5ca5a44a78860159f9feee63c
+    parentId: wrk_af29fae118c0430e900098f1af62c256
+    modified: 1736448093271
+    created: 1736448093271
+    fileName: AUTHZ2
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_f95f7083c86249eba859d49480e9c189
+    parentId: env_da12d04ede234e35f17528eea7f7c11d3b6f36fe
+    modified: 1736448530196
+    created: 1736448139858
+    name: LOCAL
+    data:
+      url: http://localhost:5000/api
+      oauth2_auth_url: https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/auth
+      oauth2_token_url: https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/token
+      oauth2_client_id: familias
+      oauth2_client_secret: 821c6c47-7c5b-4052-bed2-6e4767c670ec
+      oauth2_redirect_url: http://localhost:4200
+    dataPropertyOrder:
+      "&":
+        - url
+        - oauth2_auth_url
+        - oauth2_token_url
+        - oauth2_client_id
+        - oauth2_client_secret
+        - oauth2_redirect_url
+    color: null
+    isPrivate: false
+    metaSortKey: 1736448139859
+    _type: environment

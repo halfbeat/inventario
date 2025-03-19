@@ -1,0 +1,8 @@
+venv
+.idea
+.vscode
+.git
+.github
+sandbox
+migrations
+__pycache__/

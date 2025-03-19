@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authz-pvc
+  namespace: authz
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: nfs-client
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authz-backend
+  namespace: authz
+  labels:
+    app: authz-backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: authz-backend
+    spec:
+      containers:
+        - name: authz-backend
+          image: registry.k3s.aika.website/authz2:latest
+          envFrom:
+            - configMapRef:
+                name: authz-configmap
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - mountPath: /opt/authzbackend/files
+              name: authz-pv
+          resources:
+            limits:
+              cpu: "350m"
+              memory: "256Mi"
+              ephemeral-storage: "256Mi"
+      volumes:
+        - name: authz-pv
+          persistentVolumeClaim:
+            claimName: authz-pvc
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+  selector:
+    matchLabels:
+      app: authz-backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authz-backend
+spec:
+  selector:
+    app: authz-backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 31802
+  type: NodePort

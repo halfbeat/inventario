@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: authz
+  name: authz-db-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authz
+  name: authz-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authz-db
+  template:
+    metadata:
+      labels:
+        app: authz-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14-alpine
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: authz-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authz-secrets
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: "authz"
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+              ephemeral-storage: "512Mi"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdata
+      volumes:
+        - name: postgresdata
+          persistentVolumeClaim:
+            claimName: authz-db-volume-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: authz
+  name: authz-db
+  labels:
+    app: authz-db
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: 31801
+  selector:
+    app: authz-db

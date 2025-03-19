@@ -1,0 +1,743 @@
+openapi: 3.0.3
+
+info:
+  version: 2.0.0
+  title: AUTHZ
+  description: Api REST de autorización
+  license:
+    name: MIT
+    url: "https://opensource.org/licenses/MIT"
+  contact:
+    email: jesvizan@jcyl.es
+  termsOfService: "https://www.jcyl.es/terminosServicio"
+servers:
+  - url: "http://localhost:5000/{basePath}"
+    variables:
+      basePath:
+        default: api/v2
+paths:
+  /aplicaciones:
+    get:
+      summary: Recuperar las aplicaciones registradas
+      operationId: getAplicaciones
+      tags:
+        - Aplicacion
+      security:
+        - keycloak: []
+      parameters:
+        - in: query
+          name: page
+          description: Numero de página a mostrar
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          description: Tamaño de las páginas
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListaPaginadaAplicaciones"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /aplicaciones/{idAplicacion}/roles:
+    get:
+      summary: Recuperar los roles de una aplicación
+      operationId: getRolesAplicacion
+      tags:
+        - Aplicacion
+      security:
+        - keycloak: []
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Numero de página a mostrar
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          description: Tamaño de las páginas
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListaPaginadaRoles"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /aplicaciones/{idAplicacion}/permisos:
+    get:
+      summary: Recuperar los permisos de una aplicación
+      operationId: getPermisosAplicacion
+      tags:
+        - Aplicacion
+      security:
+        - keycloak: []
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Numero de página a mostrar
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          description: Tamaño de las páginas
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListaPaginadaPermisos"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /aplicaciones/{idAplicacion}/roles/{idRol}/permisos:
+    get:
+      summary: Recuperar los permisos de un rol
+      operationId: getPermisosRol
+      tags:
+        - Aplicacion
+      security:
+        - keycloak: []
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: idRol
+          description: Identificador del rol
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Numero de página a mostrar
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: page_size
+          description: Tamaño de las páginas
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListaPaginadaPermisos"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /current-user:
+    get:
+      summary: Recuperar la información de autorización asociada al principal que invoca el servicio
+      operationId: getCurrentUserSecurityInfo
+      tags:
+        - CurrentUser
+      security:
+        - keycloak: [currentUser_read]
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InformacionSeguridadUsuario"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+  /security/roles:
+    get:
+      summary: Recuperación de los roles disponibles
+      operationId: getRoles
+      tags:
+        - Security
+      security:
+        - keycloak: [security_roles_read]
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TipoRol"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /security/usuarios:
+    post:
+      summary: Recuperación de los usuarios de la aplicación
+      operationId: getUsuarios
+      tags:
+        - Security
+      security:
+        - keycloak: [security_users_read]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FiltroUsuario"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Usuario"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+  /security/usuarios/{idUsuario}:
+    get:
+      summary: Recuperación de los datos de un usuario
+      operationId: getUsuario
+      tags:
+        - Security
+      security:
+        - keycloak: [security_users_read]
+      parameters:
+        - in: path
+          name: idUsuario
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+    put:
+      summary: Modificación de un usuario
+      description: Modificación de un usuario
+      operationId: modificarUsuario
+      tags:
+        - Security
+      security:
+        - keycloak: [security_users_read]
+      parameters:
+        - in: path
+          name: idUsuario
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModificacionUsuario"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Usuario"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+  /current-user/verificarIdentidad:
+    post:
+      summary: Validar ciudadano con la información de su DNI
+      operationId: validarCiudadano
+      tags:
+        - CurrentUser
+      security:
+        - keycloak: [currentUser_write]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InformacionValidacionDNI"
+      responses:
+        "200":
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InformacionSeguridadUsuario"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        default:
+          $ref: "#/components/responses/UnspecifiedError"
+
+components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/auth
+          tokenUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/token
+          scopes:
+            peticiones_write: Modificación de peticiones
+            convocatorias_read: Consulta de convocatorias
+            convocatorias_write: Modificación de convocatorias
+            aplicaciones_read: Consulta de aplicaciones
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    DummyResponse:
+      description: Respuesta para generar stubs
+      content:
+        application/json:
+          schema:
+            type: object
+    Void:
+      description: Respuesta sin contenido
+      content:
+        application/json:
+          schema:
+            type: object
+
+    Unauthorized:
+      description: Debe indicar datos de autorización en la petición
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: No tiene permiso para ejecutar la operación
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnspecifiedError:
+      description: Error inesperado
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: El elemento solicitado no existe
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - codigo
+        - descripcion
+      properties:
+        codigo:
+          type: string
+        descripcion:
+          type: string
+        descripcionDetallada:
+          type: string
+
+    CampoOrdenacion:
+      type: object
+      required:
+        - campo
+        - ascendente
+      properties:
+        campo:
+          type: string
+          description: Campo de ordenación
+          example: id
+        ascendente:
+          type: string
+          description: Si es ascende o no
+          example: S
+
+    InformacionSeguridadUsuario:
+      type: object
+      properties:
+        principal:
+          type: string
+          description: Identificador de seguridad del usuario
+        roles:
+          type: array
+          description: Roles del usuario
+          items:
+            $ref: "#/components/schemas/Rol"
+        esCiudadano:
+          type: boolean
+          description: Indica si el usuario es un ciudadano
+        esCiudadanoIdentificado:
+          type: boolean
+          description: Indica si el usuario es un ciudadano identificado
+
+    TipoAmbito:
+      type: object
+      properties:
+        idAmbito:
+          type: string
+          description: Identificador del ámbito
+        descripcion:
+          type: string
+          description: Descripción del ámbito
+
+    TipoRol:
+      type: object
+      properties:
+        idRol:
+          type: string
+          description: Identificador del rol
+        descripcion:
+          type: string
+          description: Descripción del rol
+        ambitos:
+          type: array
+          items:
+            $ref: "#/components/schemas/TipoAmbito"
+
+    DatosAuditoria:
+      type: object
+      properties:
+        usuarioCreacion:
+          type: string
+          description: Datos usuario creación del registro
+        fechaCreacion:
+          type: string
+          description: Fecha y hora de la creación del registro
+          format: date-time
+          example: "2021-06-15T09:41:12Z"
+        usuarioModificacion:
+          type: string
+          description: Datos usuario modificación del registro
+        fechaModificacion:
+          type: string
+          description: Fecha y hora de la modificación del registro
+          format: date-time
+          example: "2021-06-15T09:41:12Z"
+
+    FiltroUsuario:
+      type: object
+      description: Filtro de usuarios. Se utilizan todos los campos no nulos con el operador AND
+      properties:
+        principal:
+          type: string
+          description: Principal del usuario
+        fechaInicioValidez:
+          type: string
+          format: date
+          description: Indica la fecha de inicio de validez
+          example: "1999-11-22"
+        fechaFinValidez:
+          type: string
+          format: date
+          description: Indica la fecha de fin de validez
+          example: "2030-11-22"
+        nombre:
+          type: string
+          minLength: 2
+          maxLength: 40
+          example: "LUIS"
+        apellidos:
+          type: string
+          minLength: 2
+          maxLength: 40
+          example: "MENDIZABAL GÓMEZ"
+        activo:
+          type: boolean
+          description: Indica si el usuario está activo
+        roles:
+          type: array
+          description: OR de roles
+          items:
+            $ref: "#/components/schemas/Rol"
+        campoOrdenacion:
+          $ref: "#/components/schemas/CampoOrdenacion"
+
+    ModificacionUsuario:
+      type: object
+      properties:
+        fechaInicioValidez:
+          type: string
+          format: date
+          description: Indica la fecha de inicio de validez
+        fechaFinValidez:
+          type: string
+          format: date
+          description: Indica la fecha de fin de validez
+        activo:
+          type: boolean
+          description: Indica si el usuario está activo o no
+        roles:
+          type: array
+          description: Roles del usuario
+          items:
+            $ref: "#/components/schemas/Rol"
+
+    PeticionValidacionToken:
+      type: object
+      required:
+        - subject
+        - documentoIdentidad
+      properties:
+        subject:
+          type: string
+        documentoIdentidad:
+          type: string
+
+    RespuestaValidacionToken:
+      type: object
+      required:
+        - subject
+        - documentoIdentidad
+        - validado
+      properties:
+        subject:
+          type: string
+        documentoIdentidad:
+          type: string
+        validado:
+          type: boolean
+
+    Usuario:
+      type: object
+      required:
+        - activo
+      properties:
+        subject:
+          type: string
+          description: Identificador de seguridad del usuario
+        principal:
+          type: string
+          description: Principal del usuario
+        nombre:
+          type: string
+          minLength: 2
+          maxLength: 40
+          example: "LUIS"
+        apellidos:
+          type: string
+          minLength: 2
+          maxLength: 40
+          example: "MENDIZABAL GÓMEZ"
+        activo:
+          type: boolean
+          description: Indica si el usuario está activo
+        fechaInicioValidez:
+          type: string
+          format: date
+          description: Indica la fecha de inicio de validez
+        fechaFinValidez:
+          type: string
+          format: date
+          description: Indica la fecha de fin de validez
+        fechaUltimoAcceso:
+          type: "string"
+          format: "date-time"
+          description: "Fecha de la último accesos"
+        roles:
+          type: array
+          description: Roles del usuario
+          items:
+            $ref: "#/components/schemas/Rol"
+
+    InformacionValidacionDNI:
+      type: object
+      required:
+        - documento
+        - nombre
+        - apellido1
+        - fechaNacimiento
+        - fechaCaducidad
+        - numeroSoporte
+      properties:
+        documento:
+          type: string
+          minLength: 9
+          maxLength: 9
+        nombre:
+          type: string
+        apellido1:
+          type: string
+        apellido2:
+          type: string
+        fechaNacimiento:
+          type: string
+          format: date
+        fechaCaducidad:
+          type: string
+          format: date
+        numeroSoporte:
+          type: string
+
+    Paginable:
+      type: object
+      required:
+        - page
+        - total-pages
+        - num-items
+        - total-items
+      properties:
+        page:
+          type: integer
+          minimum: 0
+        page_size:
+          type: integer
+          minimum: 0
+        total:
+          type: integer
+          minimum: 0
+
+    Aplicacion:
+      type: object
+      required:
+        - id_aplicacion
+        - nombre
+      properties:
+        id_aplicacion:
+          type: string
+        nombre:
+          type: string
+
+    ListaPaginadaAplicaciones:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Paginable"
+        - type: object
+          required:
+            - items
+          properties:
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/Aplicacion"
+
+    Rol:
+      type: object
+      required:
+        - id_aplicacion
+        - id_rol
+        - nombre
+      properties:
+        id_aplicacion:
+          type: string
+        id_rol:
+          type: string
+        nombre:
+          type: string
+
+    ListaPaginadaRoles:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Paginable"
+        - type: object
+          required:
+            - items
+          properties:
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/Rol"
+
+    Permiso:
+      type: object
+      required:
+        - id_aplicacion
+        - id_permiso
+        - nombre
+      properties:
+        id_aplicacion:
+          type: string
+        id_rol:
+          type: string
+        nombre:
+          type: string
+
+    ListaPaginadaPermisos:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Paginable"
+        - type: object
+          required:
+            - items
+          properties:
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/Permiso"

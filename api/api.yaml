@@ -1,0 +1,142 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: Inventario de aplicaciones GSS
+  description: Api REST del inventario de aplicaciones GSS
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+  contact:
+    email: jesvizan@jcyl.es
+  termsOfService: 'https://www.jcyl.es/terminosServicio'
+servers:
+  - url: 'https://jcweb24des101.ae.jcyl.es/{basePath}'
+    variables:
+      basePath:
+        default: /api/v1
+paths:
+  /aplicaciones:
+    get:
+      summary: Listado paginado de aplicaciones
+      operationId: getAplicaciones
+      tags:
+        - aplicaciones
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListadoPaginadoAplicaciones'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
+components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/auth
+          tokenUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/token
+          scopes:
+            peticiones_write: Modificación de peticiones
+            convocatorias_read: Consulta de convocatorias
+            convocatorias_write: Modificación de convocatorias
+            centros_read: Consulta de centros
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    DummyResponse:
+      description: Respuesta para generar stubs
+      content:
+        application/json:
+          schema:
+            type: object
+    Void:
+      description: Respuesta sin contenido
+      content:
+        application/json:
+          schema:
+            type: object
+
+    Unauthorized:
+      description: Debe indicar datos de autorización en la petición
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: No tiene permiso para ejecutar la operación
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnspecifiedError:
+      description: Error inesperado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: El elemento solicitado no existe
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - codigo
+        - descripcion
+      properties:
+        codigo:
+          type: string
+        descripcion:
+          type: string
+        descripcionDetallada:
+          type: string
+
+    ListadoPaginadoAplicaciones:
+      type: object
+      required:
+        - total
+        - page
+        - page_size
+        - items
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Aplicacion'
+
+    Aplicacion:
+      type: object
+      required:
+        - aplicacion_id
+        - nombre
+      properties:
+        aplicacion_id:
+          type: string
+        nombre:
+          type: string
+
+

@@ -1,0 +1,318 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: AUTHZ
+  description: Api REST de autorización
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+  contact:
+    email: jesvizan@jcyl.es
+  termsOfService: 'https://www.jcyl.es/terminosServicio'
+servers:
+  - url: 'https://desservicios.jcyl.es/authz/{basePath}'
+    variables:
+      basePath:
+        default: /api/v1
+paths:
+  /tokens/register:
+    get:
+      summary: Generación de un token para un principal
+      operationId: registerTokenForPrincipal
+      tags:
+        - Tokens
+      security:
+        - keycloak: [ tokens-generate ]
+      parameters:
+        - in: query
+          name: principal
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpaqueToken'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+  /aplicaciones/{idAplicacion}/roles:
+    get:
+      summary: Obtener los roles de una aplicación
+      operationId: getRolesAplicacion
+      tags:
+        - Aplicacion
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolesAplicacion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+  /aplicaciones/{idAplicacion}/roles/{idRol}:
+    get:
+      summary: Obtener un rol de una aplicación
+      operationId: getRolAplicacion
+      tags:
+        - Aplicacion
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: idRol
+          description: Identificador del rol
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolAplicacion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+  /aplicaciones/{idAplicacion}/roles/{idRol}/permisos:
+    get:
+      summary: Obtener los permisos de un rol
+      operationId: getPermisosRol
+      tags:
+        - Aplicacion
+      parameters:
+        - in: path
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: idRol
+          description: Identificador del rol
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermisosRol'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+  /usuarios/{principal}/roles:
+    get:
+      description: Consultar los roles de un usuario
+      operationId: queryRolesPrincipal
+      tags:
+        - Usuarios
+      parameters:
+        - in: path
+          name: principal
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: idAplicacion
+          description: Identificador de la aplicación
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: idRol
+          description: Identificador del rol
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: ambito
+          description: Ámbito del rol
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsignacionesRol'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
+components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/auth
+          tokenUrl: >-
+            https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet/protocol/openid-connect/token
+          scopes:
+            tokens-generate: Generación de tokens
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    DummyResponse:
+      description: Respuesta para generar stubs
+      content:
+        application/json:
+          schema:
+            type: object
+    Void:
+      description: Respuesta sin contenido
+      content:
+        application/json:
+          schema:
+            type: object
+
+    Unauthorized:
+      description: Debe indicar datos de autorización en la petición
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: No tiene permiso para ejecutar la operación
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnspecifiedError:
+      description: Error inesperado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: El elemento solicitado no existe
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - codigo
+        - descripcion
+      properties:
+        codigo:
+          type: string
+        descripcion:
+          type: string
+        descripcionDetallada:
+          type: string
+
+    OpaqueToken:
+      type: string
+
+    RolesAplicacion:
+      type: object
+      required:
+        - rol
+      properties:
+        rol:
+          type: array
+          items:
+            $ref: "#/components/schemas/RolAplicacion"
+
+    RolAplicacion:
+      type: object
+      required:
+        - idAplicacion
+        - idRol
+        - descripcion
+      properties:
+        idAplicacion:
+          type: string
+        idRol:
+          type: string
+        descripcion:
+          type: string
+
+    AsignacionesRol:
+      type: object
+      required:
+        - asignacion
+      properties:
+        rol:
+          type: array
+          items:
+            $ref: "#/components/schemas/AsignacionRol"
+
+    AsignacionRol:
+      type: object
+      required:
+        - idAsignacion
+        - principal
+        - idAplicacion
+        - idRol
+      properties:
+        idAsignacion:
+          type: number
+        principal:
+          type: string
+        idAplicacion:
+          type: string
+        idRol:
+          type: string
+        idAmbito:
+          type: string
+
+    PermisosRol:
+      type: object
+      required:
+        - permiso
+      properties:
+        rol:
+          type: array
+          items:
+            $ref: "#/components/schemas/Permiso"
+
+    Permiso:
+      type: string

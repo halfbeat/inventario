@@ -1,0 +1,5 @@
+/app
+/usr/bin/python3
+/usr/local/bin/flask
+/usr/local/lib/python3.13
+/usr/lib

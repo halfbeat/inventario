@@ -1,0 +1,62 @@
+= Diseño de la aplicación
+Jamie Moriarty
+:stem:
+
+== Modelo lógico
+
+El diseño de la aplicación gira alrededor del siguiente modelo lógico:
+
+#image::modelo-logico.png[]
+
+*Aplicación*: Entidad que agrupa los roles entorno a una aplicación concreta.
+
+*Rol*: Entidad que otorga el acceso a un conjunto de funcionalidades de una aplicación.
+
+*Permiso*: Permiso a una funcionalidad concreta dentro de una aplicación.
+
+== Ejemplo de cálculo de permisos efectivos basados en una combinación de roles con y sin restricción de ámbito
+
+
+Dados los siguentes roles con sus respectivos permisos: 
+[asciimath]
+++++
+bb"R"_1 = {op_1^+, op_2^+}\ \ \ \ bb"R"_2 = {op_3^+}\ \ \ \ bb"R"_3 = {op_1^-, op_4^+}	
+++++
+
+Dados los siguentes ámbitos asciimath:[A_1, A_2] y las siguientes asignaciones:
+[asciimath]
+++++
+asgn_1 = bb"R"_1|A_1\ \ \ \ asgn_2 = bb"R"_2|A_2\ \ \ \ asgn_3 = bb"R"_3
+++++
+Los permisos efectivos de la combinación de asignaciones serían:
+[asciimath]
+++++
+bb"P" = {asgn_1, asgn_2, asgn_3} -= {bb"R"_1|A_1, bb"R"_2| A_2, bb"R"_3}
+-= {op_1^+|A_1, op_2^+|A_1, op_3^+|A_2, op_1^-, op_4^+} 
+-= {op_2^+|A_1, op_3^+|A_2, op_4^+} 
+++++
+
+[latexmath]
+++++
+\fbox{\(P = \{ op_2^+|A_1, op_3^+|A_2, op_4^+ \} \)}
+++++
+
+Con este conjunto de permisos efectivos, se puede determinar si un usuario tiene permisos para realizar una operación concreta en un ámbito concreto:
+[asciimath]
+++++
+"Si"\ a in A_1 =>  bb"P"(op_1, a)="Falso",\  bb"P"(op_2, a)="Cierto",\  bb"P"(op_3, a)="Falso",\ bb"P"(op_4, a)="Cierto"
+
+"Si"\ a in A_2 =>  bb"P"(op_1, a)="Falso",\  bb"P"(op_2, a)="Falso",\  bb"P"(op_3, a)="Cierto",\ bb"P"(op_4, a)="Cierto"
+++++
+
+Un ejemplo mas concreto sería
+[asciimath]
+++++
+R_"gestion" = {"solicitudes:crear", "solicitudes:consultar", "solicitud:consultar", "solicitud:modificar", "solicitud:modificar"}
+
+R_"consulta" = {"solicitudes:consultar", "solicitud:consultar"}
+
+U_1={R_"gestion"| Avila, R_"gestion"| "Valladolid"}\ \ U_2={R_"consulta"| "Valladolid"}\ \ U_2={R_"consulta"}
+
+U_2(solicitud:bo\rrar, "Valladolid") = True\ \ U_2(solicitud:bo\rrar, "Valladolid") = False
+++++

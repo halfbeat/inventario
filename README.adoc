@@ -1,0 +1,13 @@
+= BITÁCORA
+
+Usamos estas webs:
+
+- link:https://plantuml.com/es/class-diagram[PlantUML Class Diagram]
+- link:https://j2logo.com/tutorial-flask-leccion-6-estructura-proyecto-flask-blueprints/[Estructura de un proyecto Flask]
+- link:https://j2logo.com/flask/tutorial-como-crear-api-rest-python-con-flask/[Ejemplo API Rest con Flask]
+- link:https://docs.asciidoctor.org/asciidoc/latest/[Asciidoc documentation]
+- link:https://devopscube.com/dockerize-python-flask-application/[Dockerize python application]
+- link:https://www.digitalocean.com/community/tutorials/how-to-query-tables-and-paginate-data-in-flask-sqlalchemy[Paginacion en SQLAlchemy]
+- link:https://dev.to/izabelakowal/some-ideas-on-how-to-implement-dtos-in-python-be3[DTOs en Python]
+- link:https://thinhdanggroup.github.io/python-code-structure/[Estructura de un proyecto Python]
+- link:http://asciimath.org/[AsciiMath]

@@ -1,0 +1,48 @@
+@startuml
+
+class Aplicacion {
+    idAplicacion: string
+    nombre: string
+}
+
+class Rol {
+    idAplicacion: string
+    idRol: string
+    nombre: string
+    descripcion: string
+}
+
+class Permiso {
+    idPermiso: string
+    nombre: string
+    descripcion: string
+}
+
+class TipoAmbito {
+    tipoAmbito: string
+    nombre: descripcion
+    restriccion: string
+}
+
+class AsignacionRol {
+    principal: string
+    rol: string
+    tipoAmbito: string
+    ambito: string
+    fecha: date-time
+}
+
+class AsignacionPermiso {
+    principal: string
+    idPermiso: string
+    tipoAmbito: string
+    ambito: string
+    fecha: date-time
+}
+
+AsignacionRol "*" - "1" Rol
+AsignacionRol "*" -- "0..1" TipoAmbito
+Rol "*" -- "1" Aplicacion
+Rol "*" - "*" Permiso
+
+@enduml

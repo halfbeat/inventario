@@ -1,0 +1,9 @@
+setup.py
+inventario-backend/__init__.py
+inventario-backend/entrypoint.py
+inventario.egg-info/PKG-INFO
+inventario.egg-info/SOURCES.txt
+inventario.egg-info/dependency_links.txt
+inventario.egg-info/not-zip-safe
+inventario.egg-info/requires.txt
+inventario.egg-info/top_level.txt
