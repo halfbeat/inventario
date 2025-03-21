@@ -4,12 +4,13 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import {AuthProvider} from "react-oidc-context";
+import {AuthProvider, AuthProviderProps} from "react-oidc-context";
 
-const oidcConfig = {
-    authority: "https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet",
+const oidcConfig: AuthProviderProps = {
+    authority: "https://ssokc2pre.jcyl.es/realms/GSS",
     client_id: "familias",
     redirect_uri: "http://localhost:3000",
+    scope: "email profile openid",
     post_logout_redirect_uri: "http://localhost:3000"
 };
 

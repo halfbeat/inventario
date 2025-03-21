@@ -19,7 +19,7 @@ function App() {
     }
 
     if (auth.error) {
-        return <div>Oops... {auth.error.message}</div>;
+        return (<AnonymousApp/>);
     }
 
     if (auth.isAuthenticated) {

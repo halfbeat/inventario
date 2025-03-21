@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "react-oidc-context";
 import {Button, Card, CardGroup, Container, Image, Stack} from "react-bootstrap";
-import {Api, ListadoPaginadoAplicacionesDto, RequestParams} from "./openapi/api";
+import {Api, ListadoPaginadoSistemasDto, RequestParams} from "./openapi/api";
 
 export function AutenticatedApp() {
     const auth = useAuth();
@@ -12,15 +12,20 @@ export function AutenticatedApp() {
         baseUrl: `/api/v1`,
         baseApiParams: rp
     });
+
     function logOut() {
-        auth.removeUser();
-        auth.signoutRedirect();
+        auth.removeUser()
+            .then(() => auth.signoutRedirect({
+                id_token_hint: auth.user?.id_token,
+            }).then(() => auth.clearStaleState()))
+            .catch((error) => alert(JSON.stringify(error)));
+
     }
 
-    const [aplicaciones, setAplicaciones] = useState({} as ListadoPaginadoAplicacionesDto);
+    const [aplicaciones, setAplicaciones] = useState({} as ListadoPaginadoSistemasDto);
     useEffect(() => {
 
-        api.aplicaciones.getAplicaciones()
+        api.sistemas.getSistemasInformacion()
             .then(res => res.data)
             .then(data => {
                 setAplicaciones(data);

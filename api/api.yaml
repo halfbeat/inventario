@@ -16,25 +16,55 @@ servers:
       basePath:
         default: /api/v1
 paths:
-  /aplicaciones:
+  /sistemas:
     get:
       summary: Listado paginado de aplicaciones
-      operationId: getAplicaciones
+      operationId: getSistemasInformacion
       tags:
-        - aplicaciones
+        - sistemas
       responses:
         '200':
           description: Operación realizada con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListadoPaginadoAplicaciones'
+                $ref: '#/components/schemas/ListadoPaginadoSistemas'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
           $ref: '#/components/responses/Forbidden'
         default:
           $ref: '#/components/responses/UnspecifiedError'
+
+  /sistemas/{sistemaId}:
+    get:
+      summary: Recuperar la información de un sistema
+      operationId: getSistemaInformacion
+      tags:
+        - sistemas
+      parameters:
+        - name: sistemaId
+          in: path
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SistemaInformacion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
+
 
 components:
   securitySchemes:
@@ -109,7 +139,7 @@ components:
         descripcionDetallada:
           type: string
 
-    ListadoPaginadoAplicaciones:
+    ListadoPaginadoSistemas:
       type: object
       required:
         - total
@@ -126,9 +156,9 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Aplicacion'
+            $ref: '#/components/schemas/SistemaInformacion'
 
-    Aplicacion:
+    SistemaInformacion:
       type: object
       required:
         - aplicacion_id

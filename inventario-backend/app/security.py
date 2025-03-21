@@ -1,10 +1,16 @@
 from functools import wraps
-from flask import abort, jsonify, request
-import jwt
 
+import jwt
+from flask import abort, request
 from flask import current_app
 
+
 def token_required(func):
+    """
+    Decorador Comprobación de que hay un token JWT y que confiamos en el
+    :param func: función a la que llamar si la comprobacioón es correcta
+    :return: el propio decorador
+    """
     @wraps(func)
     def decorated(*args, **kwargs):
         token = request.headers.get("Authorization")

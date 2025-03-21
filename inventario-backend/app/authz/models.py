@@ -1,11 +1,9 @@
 """Modelado ORM de entidades de base de datos utilizando SQLAlchemy"""
-
+import enum
 from dataclasses import dataclass
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, ForeignKeyConstraint, func, PrimaryKeyConstraint
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import relationship
+from sqlalchemy import Enum, ForeignKeyConstraint, PrimaryKeyConstraint
 
 from app.db import db, BaseModelMixin
 
@@ -19,20 +17,69 @@ class Auditoria:
     fecha_modificacion: datetime | None = None
 
 
-class AplicacionModelDto(db.Model, BaseModelMixin):
-    """DTO de base de datos correspondiente a una aplicación    """
-    __tablename__ = "AUTHZ_APLICACIONES"
-    aplicacion_id = db.Column("C_APLICACION_ID", db.String(10), primary_key=True)
-    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
-
+class AuditoriaMixinModelDto(object):
     # Campos de auditoría
     usuario_creacion = db.Column("C_USR_CREACION", db.String(10))
     fecha_creacion = db.Column(
         "F_CREACION", db.DateTime(timezone=True), server_default=db.func.now()
     )
     usuario_modificacion = db.Column("C_USR_MODIFICACION", db.String(10))
-    fecha_modificacion: datetime = db.Column(
+    fecha_modificacion = db.Column(
         "F_MODIFICACION", db.DateTime(timezone=True)
+    )
+
+    def __init__(self,
+                 usuario_creacion=None,
+                 fecha_creacion=datetime.now(),
+                 usuario_modificacion=None,
+                 fecha_modificacion=None):
+        self.usuario_creacion = usuario_creacion
+        self.fecha_creacion = fecha_creacion
+        self.usuario_modificacion = usuario_modificacion
+        self.fecha_modificacion = fecha_modificacion
+
+
+class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
+    __tablename__ = "INVESGSS_EMPRESAS"
+    empresa_id = db.Column("C_EMPRESA_ID", db.Integer, autoincrement=True)
+    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
+    cif = db.Column("C_CIF", db.String(10), nullable=True)
+    email = db.Column("D_EMAIL", db.String(50), nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(empresa_id),
+        {}
+    )
+
+
+class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
+    """DTO de base de datos correspondiente a una aplicación    """
+    __tablename__ = "INVEGSS_APLICACIONES"
+    aplicacion_id = db.Column("C_SISINFO_ID", db.String(10))
+    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
+    responsable_tecnico = db.Column("C_RESPONSABLE_TECNICO_ID", db.Integer)
+    responsable_funcional = db.Column("C_RESPONSABLE_FUNCIONAL_ID", db.Integer)
+    fecha_entrada_produccion = db.Column(
+        "F_PUESTA_PRODUCCION", db.Date(),
+        nullable=True,
+    )
+    fecha_salida_produccion = db.Column(
+        "F_SALIDA_PRODUCCION", db.Date(),
+        nullable=True,
+    )
+    observaciones = db.Column(
+        "D_OBSERVACIONES", db.Text(), nullable=True
+    )
+    __table_args__ = (
+        PrimaryKeyConstraint(aplicacion_id),
+        ForeignKeyConstraint(
+            [responsable_tecnico],
+            [EmpresaModelDto.empresa_id]
+        ),
+        ForeignKeyConstraint(
+            [responsable_funcional],
+            [EmpresaModelDto.empresa_id]
+        )
     )
 
     def __init__(
@@ -42,7 +89,7 @@ class AplicacionModelDto(db.Model, BaseModelMixin):
             usuario_creacion=None,
             fecha_creacion=datetime.now(),
             usuario_modificacion=None,
-            fecha_modificacion=None,
+            fecha_modificacion=None
     ):
         """Constructor de la clase
 
@@ -61,10 +108,8 @@ class AplicacionModelDto(db.Model, BaseModelMixin):
         """
         self.aplicacion_id = aplicacion_id
         self.nombre = nombre
-        self.usuario_creacion = usuario_creacion
-        self.fecha_creacion = fecha_creacion
-        self.usuario_modificacion = usuario_modificacion
-        self.fecha_modificacion = fecha_modificacion
+        super(SistemaInformacionModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
+                                                         fecha_modificacion)
 
     def __repr__(self):
         return f"Aplicacion([{self.aplicacion_id}] {self.nombre})"
@@ -82,174 +127,91 @@ class AplicacionModelDto(db.Model, BaseModelMixin):
             else:
                 return db.paginate(
                     db.select(cls).filter(
-                        AplicacionModelDto.nombre.like(f"%{nombre_app}%")
+                        SistemaInformacionModelDto.nombre.like(f"%{nombre_app}%")
                     ), page=page, per_page=page_size, error_out=False
                 )
         else:
             if nombre_app == None:
                 return db.paginate(
                     db.select(cls).filter(
-                        AplicacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones)
+                        SistemaInformacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones)
                     ), page=page, per_page=page_size, error_out=False
                 )
             else:
                 return db.paginate(
                     db.select(cls).filter(
-                        AplicacionModelDto.nombre.like(f"%{nombre_app}%"),
-                        AplicacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones),
+                        SistemaInformacionModelDto.nombre.like(f"%{nombre_app}%"),
+                        SistemaInformacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones),
                     ), page=page, per_page=page_size, error_out=False
                 )
 
 
-class RolModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_ROLES"
-    aplicacion_id = db.Column(
-        "C_APLICACION_ID",
-        db.String(10),
-        ForeignKey("AUTHZ_APLICACIONES.C_APLICACION_ID"),
-        primary_key=True,
-    )
-    rol_id = db.Column("C_ROL_ID", db.String(10), primary_key=True)
+class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
+    __tablename__ = "INVESGSS_COMPONENTES"
+    sistema_id = db.Column("C_SISINFO_ID", db.String(10))
+    componente_id = db.Column("C_COMPONENTE_ID", db.String(10))
+    componente_padre_id = db.Column("C_COMPONENTE_PADRE_ID", db.String(10))
     nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
-
-    # Campos de auditoría
-    usuario_creacion = db.Column("C_USR_CREACION", db.String(10))
-    fecha_creacion = db.Column(
-        "F_CREACION", db.DateTime(timezone=True), server_default=db.func.now()
+    git_project = db.Column("D_GIT_PROJECT", db.String(500), nullable=True)
+    observaciones = db.Column(
+        "D_OBSERVACIONES", db.Text(), nullable=True
     )
-    usuario_modificacion = db.Column("C_USR_MODIFICACION", db.String(10))
-    fecha_modificacion: datetime = db.Column(
-        "F_MODIFICACION", db.DateTime(timezone=True)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(sistema_id, componente_id),
+        ForeignKeyConstraint(
+            [sistema_id],
+            [SistemaInformacionModelDto.aplicacion_id]
+        ),
+        ForeignKeyConstraint(
+            [sistema_id, componente_padre_id],
+            [sistema_id, componente_id]
+        )
     )
 
     def __init__(
             self,
             aplicacion_id,
-            rol_id,
+            componente_id,
             nombre,
             usuario_creacion=None,
             fecha_creacion=datetime.now(),
             usuario_modificacion=None,
-            fecha_modificacion=None,
+            fecha_modificacion=None
     ):
-        self.aplicacion_id = aplicacion_id
-        self.rol_id = rol_id
+        super().__init__()
+        self.sistema_id = aplicacion_id
+        self.componente_id = componente_id
         self.nombre = nombre
-        self.usuario_creacion = usuario_creacion
-        self.fecha_creacion = fecha_creacion
-        self.usuario_modificacion = usuario_modificacion
-        self.fecha_modificacion = fecha_modificacion
+        super(ComponenteModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
+                                                 fecha_modificacion)
 
 
-class PermisoModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_PERMISOS"
-    aplicacion_id = db.Column(
-        "C_APLICACION_ID",
-        db.String(10),
-        ForeignKey("AUTHZ_APLICACIONES.C_APLICACION_ID"),
-        primary_key=True,
+class RolAsignacionEnum(enum.Enum):
+    JEFE_DE_PROYECTO = 'JEFE_DE_PROYECTO'
+    ANALISTA = 'ANALISTA'
+    DESARROLLADOR = 'DESARROLLADOR'
+
+
+class AsignacionEmpresaComponenteModelDto(db.Model, BaseModelMixin):
+    __tablename__ = "INVESGSS_EMPRESAS_COMPONENTES"
+    empresa_id = db.Column("C_EMPRESA_ID", db.Integer)
+    sistema_id = db.Column("C_SISINFO_ID", db.String(10))
+    componente_id = db.Column("C_COMPONENTE_ID", db.String(10))
+    fecha_inicio = db.Column(
+        "F_INICIO", db.Date(),
     )
-    permiso_id = db.Column("C_PERMISO_ID", db.String(50), primary_key=True)
-    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
-
-    # Campos de auditoría
-    usuario_creacion = db.Column("C_USR_CREACION", db.String(10))
-    fecha_creacion = db.Column(
-        "F_CREACION", db.DateTime(timezone=True), server_default=db.func.now()
-    )
-    usuario_modificacion = db.Column("C_USR_MODIFICACION", db.String(10))
-    fecha_modificacion: datetime = db.Column(
-        "F_MODIFICACION", db.DateTime(timezone=True)
-    )
-
-    def __init__(
-            self,
-            aplicacion_id,
-            permiso_id,
-            nombre,
-            usuario_creacion=None,
-            fecha_creacion=datetime.now(),
-            usuario_modificacion=None,
-            fecha_modificacion=None,
-    ):
-        self.aplicacion_id = aplicacion_id
-        self.permiso_id = permiso_id
-        self.nombre = nombre
-        self.usuario_creacion = usuario_creacion
-        self.fecha_creacion = fecha_creacion
-        self.usuario_modificacion = usuario_modificacion
-        self.fecha_modificacion = fecha_modificacion
-
-
-class PermisosRolModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_ROLES_PERMISOS"
-    aplicacion_id = db.Column("C_APLICACION_ID", db.String(10), primary_key=True)
-    rol_id = db.Column("C_ROL_ID", db.String(10), primary_key=True)
-    permiso_id = db.Column("C_PERMISO_ID", db.String(50), primary_key=True)
-    __table_args__ = (
-        ForeignKeyConstraint(
-            [aplicacion_id, rol_id], [RolModelDto.aplicacion_id, RolModelDto.rol_id]
-        ),
-        ForeignKeyConstraint(
-            [aplicacion_id, permiso_id],
-            [PermisoModelDto.aplicacion_id, PermisoModelDto.permiso_id],
-        ),
-        {},
-    )
-
-    permiso: Mapped["PermisoModelDto"] = relationship(viewonly=True)
-    rol: Mapped["RolModelDto"] = relationship(viewonly=True)
-
-
-class TipoAmbitoModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_TIPOS_AMBITOS"
-    tipo_ambito_id = db.Column("C_TP_AMBITO_ID", db.String(10), primary_key=True)
-    tipo_ambito = db.Column("D_TP_AMBITO", db.String(50), nullable=False)
-    restriccion = db.Column("D_RESTRICCION", db.String(100))
-
-
-class AsignacionRolModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_ASGN_ROLES"
-    principal = db.Column("C_PRINCIPAL_ID", db.String(100))
-    aplicacion_id = db.Column("C_APLICACION_ID", db.String(10))
-    rol_id = db.Column("C_ROL_ID", db.String(10))
-    n_orden = db.Column("N_ORDEN", db.Numeric(3))
-    tipo_ambito = db.Column("C_TP_AMBITO_ID", db.String(10))
-    ambito = db.Column("D_AMBITO", db.String(40))
-    fecha_inicio = db.Column("F_INICIO", db.DateTime(timezone=True))
-    fecha_fin = db.Column("F_FIN", db.DateTime(timezone=True))
+    fecha_fin_asignacion = db.Column("F_FIN", db.Date(), nullable=True)
+    rol = db.Column("C_ROL_ID", Enum(RolAsignacionEnum), nullable=False)
 
     __table_args__ = (
-        PrimaryKeyConstraint(principal, aplicacion_id, rol_id, n_orden),
+        PrimaryKeyConstraint(empresa_id, sistema_id, componente_id, fecha_inicio),
         ForeignKeyConstraint(
-            [aplicacion_id, rol_id], [RolModelDto.aplicacion_id, RolModelDto.rol_id]
+            [empresa_id],
+            [EmpresaModelDto.empresa_id]
         ),
-        ForeignKeyConstraint([tipo_ambito], [TipoAmbitoModelDto.tipo_ambito_id]),
-        {},
-    )
-
-    @staticmethod
-    def filter(aplicacion: str, principal: str):
-        return db.session.execute(db.select(AsignacionRolModelDto).filter(
-            func.lower(AsignacionRolModelDto.principal) == func.lower(principal),
-            AsignacionRolModelDto.aplicacion_id == aplicacion)).scalars()
-
-
-class AsignacionPermisoModelDto(db.Model, BaseModelMixin):
-    __tablename__ = "AUTHZ_ASGN_PERMISOS"
-    principal = db.Column("C_PRINCIPAL_ID", db.String(100))
-    aplicacion_id = db.Column("C_APLICACION_ID", db.String(10))
-    permiso_id = db.Column("C_PERMISO_ID", db.String(50))
-    n_orden = db.Column("N_ORDEN", db.Numeric(3))
-    tipo_ambito = db.Column("C_TP_AMBITO_ID", db.String(10))
-    ambito = db.Column("D_AMBITO", db.String(40))
-
-    __table_args__ = (
-        PrimaryKeyConstraint(principal, aplicacion_id, permiso_id, n_orden),
         ForeignKeyConstraint(
-            [aplicacion_id, permiso_id],
-            [PermisoModelDto.aplicacion_id, PermisoModelDto.permiso_id],
-        ),
-        ForeignKeyConstraint([tipo_ambito], [TipoAmbitoModelDto.tipo_ambito_id]),
-        {},
+            [sistema_id, componente_id],
+            [ComponenteModelDto.sistema_id, ComponenteModelDto.componente_id]
+        )
     )
