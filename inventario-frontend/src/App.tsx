@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.scss';
 import {useAuth} from "react-oidc-context";
-import {AnonymousApp} from "./AnonymousApp";
-import {AutenticatedApp} from "./AutenticatedApp";
+import {Template} from "./layout/Template";
 
 function App() {
     const auth = useAuth();
@@ -18,17 +17,8 @@ function App() {
         return <div>Loading...</div>;
     }
 
-    if (auth.error) {
-        return (<AnonymousApp/>);
-    }
 
-    if (auth.isAuthenticated) {
-        return (
-            <AutenticatedApp/>
-        );
-    }
-
-    return (<AnonymousApp/>);
+    return (<Template/>);
 }
 
 export default App;

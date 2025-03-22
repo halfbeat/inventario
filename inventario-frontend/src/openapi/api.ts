@@ -19,7 +19,7 @@ export interface ListadoPaginadoSistemasDto {
   total: number;
   page: number;
   page_size: number;
-    items: SistemaInformacionDto[];
+  items: SistemaInformacionDto[];
 }
 
 export interface SistemaInformacionDto {
@@ -248,7 +248,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * Api REST del inventario de aplicaciones GSS
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-    sistemas = {
+  sistemas = {
     /**
      * No description
      *
@@ -262,28 +262,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @response `default` `ErrorDto`
      */
     getSistemasInformacion: (params: RequestParams = {}) =>
-        this.request<ListadoPaginadoSistemasDto, ErrorDto>({
-            path: `/sistemas`,
-            method: "GET",
-            format: "json",
-            ...params,
-        }),
+      this.request<ListadoPaginadoSistemasDto, ErrorDto>({
+        path: `/sistemas`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
 
-        /**
-         * No description
-         *
-         * @tags sistemas
-         * @name GetSistemaInformacion
-         * @summary Recuperar la información de un sistema
-         * @request GET:/sistemas/{sistemaId}
-         * @response `200` `SistemaInformacionDto` Operación realizada con éxito
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name GetSistemaInformacion
+     * @summary Recuperar la información de un sistema
+     * @request GET:/sistemas/{sistemaId}
+     * @response `200` `SistemaInformacionDto` Operación realizada con éxito
      * @response `401` `ErrorDto`
      * @response `403` `ErrorDto`
      * @response `default` `ErrorDto`
      */
-        getSistemaInformacion: (sistemaId: string, params: RequestParams = {}) =>
-            this.request<SistemaInformacionDto, ErrorDto>({
-                path: `/sistemas/${sistemaId}`,
+    getSistemaInformacion: (sistemaId: string, params: RequestParams = {}) =>
+      this.request<SistemaInformacionDto, ErrorDto>({
+        path: `/sistemas/${sistemaId}`,
         method: "GET",
         format: "json",
         ...params,

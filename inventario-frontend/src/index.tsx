@@ -5,9 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import {AuthProvider, AuthProviderProps} from "react-oidc-context";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas);
 
 const oidcConfig: AuthProviderProps = {
-    authority: "https://ssokc2pre.jcyl.es/realms/GSS",
+    authority: "https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet",
     client_id: "familias",
     redirect_uri: "http://localhost:3000",
     scope: "email profile openid",
