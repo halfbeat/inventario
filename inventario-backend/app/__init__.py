@@ -6,7 +6,7 @@ from flask_restful import Api
 from .ext import ma, migrate
 from app.db import db
 from app.common.error_handling import ObjectNotFound, AppErrorBaseClass
-from app.authz.api_v1_0.resources import authz_v1_0_bp
+from app.inventario.api_v1_0.resources import authz_v1_0_bp
 
 
 def create_app(settings_module: str) -> Flask:

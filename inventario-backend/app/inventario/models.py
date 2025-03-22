@@ -55,7 +55,7 @@ class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
 class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     """DTO de base de datos correspondiente a una aplicación    """
     __tablename__ = "INVEGSS_APLICACIONES"
-    aplicacion_id = db.Column("C_SISINFO_ID", db.String(10))
+    sistema_id = db.Column("C_SISINFO_ID", db.String(10))
     nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
     responsable_tecnico = db.Column("C_RESPONSABLE_TECNICO_ID", db.Integer)
     responsable_funcional = db.Column("C_RESPONSABLE_FUNCIONAL_ID", db.Integer)
@@ -71,7 +71,7 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
         "D_OBSERVACIONES", db.Text(), nullable=True
     )
     __table_args__ = (
-        PrimaryKeyConstraint(aplicacion_id),
+        PrimaryKeyConstraint(sistema_id),
         ForeignKeyConstraint(
             [responsable_tecnico],
             [EmpresaModelDto.empresa_id]
@@ -84,7 +84,7 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
 
     def __init__(
             self,
-            aplicacion_id,
+            sistema_id,
             nombre,
             usuario_creacion=None,
             fecha_creacion=datetime.now(),
@@ -93,7 +93,7 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
     ):
         """Constructor de la clase
 
-        aplicacion_id: str
+        sistema_id: str
             Identificador de la aplicación
         nombre: str
             Nombre de la aplicación
@@ -106,13 +106,13 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
         fecha_modificacion: datetime | None
             Última fecha de modificación del registro. None si el registro no se ha modificado
         """
-        self.aplicacion_id = aplicacion_id
+        self.sistema_id = sistema_id
         self.nombre = nombre
         super(SistemaInformacionModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
                                                          fecha_modificacion)
 
     def __repr__(self):
-        return f"Aplicacion([{self.aplicacion_id}] {self.nombre})"
+        return f"Aplicacion([{self.sistema_id}] {self.nombre})"
 
     def __str__(self):
         return f"{self.nombre}"
@@ -134,14 +134,14 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
             if nombre_app == None:
                 return db.paginate(
                     db.select(cls).filter(
-                        SistemaInformacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones)
+                        SistemaInformacionModelDto.sistema_id.in_(limitar_a_aplicaciones)
                     ), page=page, per_page=page_size, error_out=False
                 )
             else:
                 return db.paginate(
                     db.select(cls).filter(
                         SistemaInformacionModelDto.nombre.like(f"%{nombre_app}%"),
-                        SistemaInformacionModelDto.aplicacion_id.in_(limitar_a_aplicaciones),
+                        SistemaInformacionModelDto.sistema_id.in_(limitar_a_aplicaciones),
                     ), page=page, per_page=page_size, error_out=False
                 )
 
@@ -161,7 +161,7 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
         PrimaryKeyConstraint(sistema_id, componente_id),
         ForeignKeyConstraint(
             [sistema_id],
-            [SistemaInformacionModelDto.aplicacion_id]
+            [SistemaInformacionModelDto.sistema_id]
         ),
         ForeignKeyConstraint(
             [sistema_id, componente_padre_id],
@@ -171,7 +171,7 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
 
     def __init__(
             self,
-            aplicacion_id,
+            sistema_id,
             componente_id,
             nombre,
             usuario_creacion=None,
@@ -180,7 +180,7 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
             fecha_modificacion=None
     ):
         super().__init__()
-        self.sistema_id = aplicacion_id
+        self.sistema_id = sistema_id
         self.componente_id = componente_id
         self.nombre = nombre
         super(ComponenteModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,

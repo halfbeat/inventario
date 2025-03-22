@@ -1,10 +1,10 @@
 from flask import abort
 
-from app.authz.api_v1_0.schemas import (
+from app.inventario.api_v1_0.schemas import (
     AplicacionSchema,
     ListaPaginableAplicacionesSchema,
 )
-from app.authz.models import (
+from app.inventario.models import (
     SistemaInformacionModelDto,
 )
 

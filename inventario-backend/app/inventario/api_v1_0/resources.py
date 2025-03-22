@@ -1,7 +1,7 @@
 from flask import request, Blueprint
 from flask_restful import Api, Resource
 
-from app.authz.api_v1_0.logic import AplicacionService
+from app.inventario.api_v1_0.logic import AplicacionService
 from app.security import token_required
 from .schemas import (
     ListaPaginablePermisosAplicacionSchema,
