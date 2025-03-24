@@ -5,17 +5,27 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import {AuthProvider, AuthProviderProps} from "react-oidc-context";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {fas} from '@fortawesome/free-solid-svg-icons'
+import {Log, User} from 'oidc-client-ts';
 
 library.add(fas);
+Log.setLogger(console);
+
 
 const oidcConfig: AuthProviderProps = {
     authority: "https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet",
     client_id: "familias",
     redirect_uri: "http://localhost:3000",
     scope: "email profile openid",
-    post_logout_redirect_uri: "http://localhost:3000"
+    post_logout_redirect_uri: "http://localhost:3000",
+    automaticSilentRenew: true,
+    // silent_redirect_uri: window.location.origin + '/silent_refresh.html',
+    onSigninCallback: async (user: User | undefined) => {
+        if (user) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    },
 };
 
 const root = ReactDOM.createRoot(

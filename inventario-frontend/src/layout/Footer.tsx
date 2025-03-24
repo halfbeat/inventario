@@ -1,26 +1,20 @@
-import {Nav, Navbar} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 
 export function Footer() {
 
-
     return (
-        <Nav
-            activeKey="/home"
-            onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-        >
+        <Nav activeKey="/home">
             <Nav.Item>
-                <Nav.Link href="/home">Active</Nav.Link>
+                <Nav.Link href="/home">INVENTARIO DE APLICACIONES</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link eventKey="link-1">Link</Nav.Link>
+                <Nav.Link href="/terminos-y-condiciones">Terminos y condiciones</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link eventKey="link-2">Link</Nav.Link>
+                <Nav.Link href="/contacto">Contacto</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link eventKey="disabled" disabled>
-                    Disabled
-                </Nav.Link>
+                <Nav.Link href="/acercade"> Acerca de </Nav.Link>
             </Nav.Item>
         </Nav>
     )
