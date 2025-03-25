@@ -161,10 +161,10 @@ components:
     SistemaInformacion:
       type: object
       required:
-        - aplicacion_id
+        - sistema_id
         - nombre
       properties:
-        aplicacion_id:
+        sistema_id:
           type: string
         nombre:
           type: string

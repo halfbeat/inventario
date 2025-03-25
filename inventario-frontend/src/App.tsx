@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import {useAuth} from "react-oidc-context";
-import {Template} from "./layout/Template";
+import {Layout} from "./layout/Layout";
 
 function App() {
     const auth = useAuth();
@@ -18,7 +18,7 @@ function App() {
     }
 
 
-    return (<Template/>);
+    return (<Layout/>);
 }
 
 export default App;

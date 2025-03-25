@@ -3,17 +3,8 @@ from flask_restful import Api, Resource
 
 from app.inventario.api_v1_0.logic import SistemaService
 from app.security import token_required
-from .schemas import (
-    ListaPaginablePermisosAplicacionSchema,
-    ListaPaginablePermisosRolSchema,
-    ListaPaginableRolesAplicacionSchema,
-)
 
 api_v1_0_bp = Blueprint("api_v1_0_bp", __name__)
-
-roles_aplicacion_schema = ListaPaginableRolesAplicacionSchema()
-permisos_aplicacion_schema = ListaPaginablePermisosAplicacionSchema()
-permisos_rol_schema = ListaPaginablePermisosRolSchema()
 
 api = Api(api_v1_0_bp)
 

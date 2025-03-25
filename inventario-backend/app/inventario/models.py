@@ -54,7 +54,7 @@ class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
 
 class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     """DTO de base de datos correspondiente a una aplicación    """
-    __tablename__ = "INVEGSS_APLICACIONES"
+    __tablename__ = "INVEGSS_SISTEMAS"
     sistema_id = db.Column("C_SISINFO_ID", db.String(10))
     nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
     responsable_tecnico = db.Column("C_RESPONSABLE_TECNICO_ID", db.Integer)
@@ -119,19 +119,19 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
 
     @classmethod
     def query_sistemas(
-            cls, page, page_size, nombre_app=None, limitar_a_aplicaciones: list = None
+            cls, page, page_size, nombre=None, limitar_a_aplicaciones: list = None
     ):
         if not limitar_a_aplicaciones:
-            if nombre_app == None:
+            if nombre == None:
                 return super().get_all_paged(page, page_size)
             else:
                 return db.paginate(
                     db.select(cls).filter(
-                        SistemaInformacionModelDto.nombre.like(f"%{nombre_app}%")
+                        SistemaInformacionModelDto.nombre.like(f"%{nombre}%")
                     ), page=page, per_page=page_size, error_out=False
                 )
         else:
-            if nombre_app == None:
+            if nombre == None:
                 return db.paginate(
                     db.select(cls).filter(
                         SistemaInformacionModelDto.sistema_id.in_(limitar_a_aplicaciones)
@@ -140,7 +140,7 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
             else:
                 return db.paginate(
                     db.select(cls).filter(
-                        SistemaInformacionModelDto.nombre.like(f"%{nombre_app}%"),
+                        SistemaInformacionModelDto.nombre.like(f"%{nombre}%"),
                         SistemaInformacionModelDto.sistema_id.in_(limitar_a_aplicaciones),
                     ), page=page, per_page=page_size, error_out=False
                 )

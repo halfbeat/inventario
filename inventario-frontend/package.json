@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tinymce/tinymce-react": "^6.0.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.118",
     "@types/react": "^18.3.12",
@@ -33,7 +34,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "html-webpack-plugin": "^5.5.0",
     "http-proxy-middleware": "^3.0.3",
     "identity-obj-proxy": "^3.0.0",
@@ -64,6 +65,7 @@
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
+    "tinymce": "^7.7.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "webpack": "^5.64.4",
@@ -75,7 +77,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "sta": "sta -p ../api/api.yaml -r --type-suffix Dto -o ./src/openapi -n api.ts"
+    "sta": "sta -p ../api/api.yaml -r --type-suffix Dto -o ./src/openapi -n api.ts",
+    "postinstall": "node ./postinstall.js"
   },
   "eslintConfig": {
     "extends": [

@@ -23,7 +23,7 @@ export interface ListadoPaginadoSistemasDto {
 }
 
 export interface SistemaInformacionDto {
-  aplicacion_id: string;
+  sistema_id: string;
   nombre: string;
 }
 

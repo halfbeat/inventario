@@ -3,9 +3,12 @@ import {Header} from "./Header";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Footer} from "./Footer";
 import {Home} from "../pages/Home";
-import {Sistemas} from "../pages/Sistemas";
+import {ListadoSistemas} from "../pages/ListadoSistemas";
+import {EditorSistema} from "../pages/EditorSistema";
+import {RegistroSistema} from "../pages/RegistroSistema";
+import {ProtectedRoute} from "../ProtectedRoute";
 
-export function Template() {
+export function Layout() {
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Container className="Template-container p-0 ">
@@ -14,7 +17,11 @@ export function Template() {
                     <Routes>
                         <Route index element={<Home/>}/>
                         <Route path={"/home"} element={<Home/>}/>
-                        <Route path={"/sistemas"} element={<Sistemas/>}/>
+                        <Route path={"/"} element={<ProtectedRoute/>}>
+                            <Route path={"/sistemas"} element={<ListadoSistemas/>}/>
+                            <Route path={"/sistemas/registro"} element={<RegistroSistema/>}/>
+                            <Route path={"/sistemas/:sistema_id"} element={<EditorSistema/>}/>
+                        </Route>
                     </Routes>
                 </div>
                 <Footer></Footer>

@@ -1,6 +1,6 @@
 import {Container, Nav, Navbar, Stack} from "react-bootstrap";
 import React from "react";
-import './Template.scss';
+import './Layout.scss';
 import {useAuth} from "react-oidc-context";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
