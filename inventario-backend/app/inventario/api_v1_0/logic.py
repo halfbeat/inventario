@@ -1,40 +1,40 @@
 from flask import abort
 
 from app.inventario.api_v1_0.schemas import (
-    AplicacionSchema,
-    ListaPaginableAplicacionesSchema,
+    SistemaSchema,
+    ListaPaginableSistemasSchema,
 )
 from app.inventario.models import (
     SistemaInformacionModelDto,
 )
 
-aplicacion_schema = AplicacionSchema()
-aplicaciones_schema = ListaPaginableAplicacionesSchema()
+sistema_schema = SistemaSchema()
+sistemas_schema = ListaPaginableSistemasSchema()
 
 
-class AplicacionService:
+class SistemaService:
 
     @staticmethod
     def altaAplicacion(aplicacion_json: dict):
-        aplicacion_json = aplicacion_schema.load(aplicacion_json)
+        aplicacion_json = sistema_schema.load(aplicacion_json)
         aplicacion_existente = SistemaInformacionModelDto.get_by_id(
-            aplicacion_json["aplicacion_id"]
+            aplicacion_json["sistema_id"]
         )
         if aplicacion_existente:
-            abort(409, "La aplicación ya existe")
+            abort(409, "El sistema ya existe")
         aplicacion = SistemaInformacionModelDto(**aplicacion_json)
         aplicacion.save()
 
     @staticmethod
     def get_aplicaciones(page: int, page_size: int, limitar_a_aplicaciones: list = None):
-        aplicaciones = SistemaInformacionModelDto.query_aplicaciones(page, page_size,
-                                                                     limitar_a_aplicaciones=limitar_a_aplicaciones
-                                                                     )
+        sistemas = SistemaInformacionModelDto.query_sistemas(page, page_size,
+                                                             limitar_a_aplicaciones=limitar_a_aplicaciones
+                                                             )
         #aplicaciones = AplicacionModelDto.get_page(page , page_size)
-        result = aplicaciones_schema.dump(
+        result = sistemas_schema.dump(
             {
-                "items": aplicaciones.items,
-                "total": aplicaciones.total,
+                "items": sistemas.items,
+                "total": sistemas.total,
                 "page": page,
                 "page_size": page_size,
             },
@@ -43,8 +43,8 @@ class AplicacionService:
         return result
 
     @staticmethod
-    def get_aplicacion(idAplicacion: str):
-        aplicacion = SistemaInformacionModelDto.get_by_id(aplicacion_id=idAplicacion)
-        if not aplicacion:
-            abort(404, "Aplicación no encontrada")
-        return aplicacion_schema.dump(aplicacion)
+    def get_sistema(sistema_id: str):
+        sistema = SistemaInformacionModelDto.get_by_id(sistema_id=sistema_id)
+        if not sistema:
+            abort(404, "Sistema no encontrada")
+        return sistema_schema.dump(sistema)

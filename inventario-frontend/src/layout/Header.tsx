@@ -28,17 +28,24 @@ export function Header() {
                         <Nav.Link as={Link} to="/home">Inicio </Nav.Link>
                         <Nav.Link as={Link} to="/sistemas">Sistemas</Nav.Link>
                     </Nav>
+                    <Nav className="me-1">
+                        <Stack direction={"horizontal"} gap={2}>
+                            <FontAwesomeIcon className={user == null ? 'opacity-25' : ''} size={"2x"}
+                                             icon={["fas", "user-circle"]}/>
+                            <Stack direction={"vertical"} gap={0} className={"text-center"}>
+                                {(auth.user?.profile as any)?.principal}
+
+                                <Nav.Link className="p-0 m-0" hidden={user == null}
+                                          onClick={() => logOut()}>Desconectar</Nav.Link>
+                                <Nav.Link className="p-0 m-0" hidden={user != null}
+                                          onClick={() => void auth.signinRedirect()}>Iniciar
+                                    sesión</Nav.Link>
+                            </Stack>
+                        </Stack>
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
-            <Stack direction={"horizontal"} gap={2} className="me-1">
-                <FontAwesomeIcon className={user == null ? 'opacity-25' : ''} size={"2x"}
-                                 icon={["fas", "user-circle"]}/>
-                {(auth.user?.profile as any)?.principal}
 
-                <Nav.Link className="p-0 m-0" hidden={user == null} onClick={() => logOut()}>Desconectar</Nav.Link>
-                <Nav.Link className="p-0 m-0" hidden={user != null} onClick={() => void auth.signinRedirect()}>Iniciar
-                    sesión</Nav.Link>
-            </Stack>
         </Navbar>
         // <Row className={"pt-2 align-items-center border-bottom"}>
         //     <Col>

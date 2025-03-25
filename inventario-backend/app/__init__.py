@@ -1,12 +1,14 @@
 """Módulo de arranque de la aplicación Flask"""
 
 import traceback
+
 from flask import Flask, jsonify
 from flask_restful import Api
-from .ext import ma, migrate
-from app.db import db
+
 from app.common.error_handling import ObjectNotFound, AppErrorBaseClass
-from app.inventario.api_v1_0.resources import authz_v1_0_bp
+from app.db import db
+from app.inventario.api_v1_0.resources import api_v1_0_bp
+from .ext import ma, migrate
 
 
 def create_app(settings_module: str) -> Flask:
@@ -31,7 +33,7 @@ def create_app(settings_module: str) -> Flask:
     # Deshabilita el modo estricto de acabado de una URL con /
     app.url_map.strict_slashes = False
     # Registra los blueprints
-    app.register_blueprint(authz_v1_0_bp)
+    app.register_blueprint(api_v1_0_bp)
 
     # Registra manejadores de errores personalizados
     register_error_handlers(app)

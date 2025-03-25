@@ -118,7 +118,7 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
         return f"{self.nombre}"
 
     @classmethod
-    def query_aplicaciones(
+    def query_sistemas(
             cls, page, page_size, nombre_app=None, limitar_a_aplicaciones: list = None
     ):
         if not limitar_a_aplicaciones:

@@ -7,7 +7,7 @@ import {Sistemas} from "../pages/Sistemas";
 
 export function Template() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Container className="Template-container p-0 ">
                 <Header></Header>
                 <div className="Template-content p-2 m-0">
