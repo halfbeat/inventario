@@ -10,6 +10,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons'
 import {Log, User} from 'oidc-client-ts';
 
 import {Configuration} from './Configuration'
+import {BrowserRouter} from "react-router-dom";
 
 library.add(fas);
 Log.setLogger(console);
@@ -35,7 +36,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <AuthProvider {...oidcConfig}>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
             <App/>
+            </BrowserRouter>
         </AuthProvider>
     </React.StrictMode>
 );

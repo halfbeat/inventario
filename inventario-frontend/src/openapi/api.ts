@@ -25,6 +25,7 @@ export interface ListadoPaginadoSistemasDto {
 export interface SistemaInformacionDto {
   sistema_id: string;
   nombre: string;
+    observaciones?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -254,7 +255,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags sistemas
      * @name GetSistemasInformacion
-     * @summary Listado paginado de aplicaciones
+     * @summary Listado paginado de sistemas de informacón
      * @request GET:/sistemas
      * @response `200` `ListadoPaginadoSistemasDto` Operación realizada con éxito
      * @response `401` `ErrorDto`
@@ -268,6 +269,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+
+      /**
+       * No description
+       *
+       * @tags sistemas
+       * @name RegistrarSistemaInformacion
+       * @summary Registro de un sistema de información
+       * @request POST:/sistemas
+       * @response `200` `SistemaInformacionDto` Operación realizada con éxito
+       * @response `401` `ErrorDto`
+       * @response `403` `ErrorDto`
+       * @response `default` `ErrorDto`
+       */
+      registrarSistemaInformacion: (data: SistemaInformacionDto, params: RequestParams = {}) =>
+          this.request<SistemaInformacionDto, ErrorDto>({
+              path: `/sistemas`,
+              method: "POST",
+              body: data,
+              type: ContentType.Json,
+              format: "json",
+              ...params,
+          }),
 
     /**
      * No description
@@ -288,5 +311,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+
+      /**
+       * No description
+       *
+       * @tags sistemas
+       * @name UpdateSistemaInformacion
+       * @summary Modificar la información de un sistema
+       * @request PUT:/sistemas/{sistemaId}
+       * @response `200` `SistemaInformacionDto` Operación realizada con éxito
+       * @response `401` `ErrorDto`
+       * @response `403` `ErrorDto`
+       * @response `default` `ErrorDto`
+       */
+      updateSistemaInformacion: (sistemaId: string, data: SistemaInformacionDto, params: RequestParams = {}) =>
+          this.request<SistemaInformacionDto, ErrorDto>({
+              path: `/sistemas/${sistemaId}`,
+              method: "PUT",
+              body: data,
+              type: ContentType.Json,
+              format: "json",
+              ...params,
+          }),
   };
 }

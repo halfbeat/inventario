@@ -1,6 +1,5 @@
 var Configuration = {
-    prop1: "abcde",
-    prop2: "123",
+    baseUrl: process.env.REACT_APP_BASE_URL,
     oidc: {
         realm: process.env.REACT_APP_OIDC_REALM,
         client_id: process.env.REACT_APP_OIDC_CLIENT_ID,
