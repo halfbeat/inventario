@@ -1,0 +1,153 @@
+C_ID_UD_ORGANICA;C_DNM_UD_ORGANICA;N_NIVEL_JERARQUICO;C_ID_DEP_UD_SUPERIOR;NIF_CIF;C_DNM_UD_ORGANICA.1
+A07008911;Gerencia de Servicios Sociales de Castilla y León;3;A07002869;S4711001J;Consejería de Familia e Igualdad de Oportunidades
+A07008906;Comisionado Regional para la Droga;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07008907;Dirección General de la Mujer;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07008955;Gerencia Territorial de Servicios Sociales de Ávila;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07008989;Gerencia Territorial de Servicios Sociales de Burgos;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009032;Gerencia Territorial de Servicios Sociales de Palencia;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009067;Gerencia Territorial de Servicios Sociales de Salamanca;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009098;Gerencia Territorial de Servicios Sociales de Segovia;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009128;Gerencia Territorial de Servicios Sociales de Soria;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009156;Gerencia Territorial de Servicios Sociales de Valladolid;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009191;Gerencia Territorial de Servicios Sociales de Zamora;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07009225;Gerencia Territorial de Servicios Sociales de León;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07033032;Fundación de Apoyos y Acción Social de Castilla y León;4;A07008911;G47656731;Gerencia de Servicios Sociales de Castilla y León
+A07033394;Dirección General de Personas Mayores, Personas con Discapacidad y Atención a la Dependencia;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07033418;Dirección General de Familias, Infancia y Atención a la Diversidad;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07033433;Dirección Técnica Administrativa;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07033441;Dirección Técnica de Recursos Humanos y Gestión de Centros;4;A07008911;S4711001J;Gerencia de Servicios Sociales de Castilla y León
+A07033415;Dirección Técnica del Comisionado Regional para la Droga;5;A07008906;S4711001J;Comisionado Regional para la Droga
+A07033410;Dirección Técnica de la Mujer;5;A07008907;S4711001J;Dirección General de la Mujer
+A07010849;Gerencia de Servicios Sociales Residencia de Válidos de Ávila;5;A07008955;Q9750009D;Gerencia Territorial de Servicios Sociales de Ávila
+A07032939;Sección de Prestaciones de Dependencia;5;A07008955;S4711001J;Gerencia Territorial de Servicios Sociales de Ávila
+A07048333;Sección de Atención a Personas Mayores de la Gerencia Territorial de Servicios Sociales de Ávila;5;A07008955;S4711001J;Gerencia Territorial de Servicios Sociales de Ávila
+A07050813;Sección de Inclusión Social;5;A07008955;S4711001J;Gerencia Territorial de Servicios Sociales de Ávila
+A07052332;Sección de Familia de la Gerencia Territorial de los Servicios Sociales de Ávila;5;A07008955;S4711001J;Gerencia Territorial de Servicios Sociales de Ávila
+A07010850;Gerencia de Servicios Sociales Residencia Cortes de Burgos;5;A07008989;Q9750009D;Gerencia Territorial de Servicios Sociales de Burgos
+A07010851;Gerencia de Servicios Sociales Residencia Fuentes Blancas;5;A07008989;Q9750009D;Gerencia Territorial de Servicios Sociales de Burgos
+A07010852;Gerencia de Servicios Sociales Camp Fuentes Blancas de Burgos;5;A07008989;Q9750009D;Gerencia Territorial de Servicios Sociales de Burgos
+A07010853;Gerencia de Servicios Sociales Co el Cid de Burgos;5;A07008989;Q9750009D;Gerencia Territorial de Servicios Sociales de Burgos
+A07010854;Gerencia de Servicios Sociales Residencia de Miranda de Ebro;5;A07008989;Q9750009D;Gerencia Territorial de Servicios Sociales de Burgos
+A07023879;Unidad de Valoración y Atención a Personas con Discapacidad;5;A07008989;;Gerencia Territorial de Servicios Sociales de Burgos
+A07023880;Sección de Prestaciones de Dependencia;5;A07008989;;Gerencia Territorial de Servicios Sociales de Burgos
+A07023881;Sección de Inclusión Social;5;A07008989;;Gerencia Territorial de Servicios Sociales de Burgos
+A07023882;Sección de Familia;5;A07008989;;Gerencia Territorial de Servicios Sociales de Burgos
+A07042692;Sección de Atención a Personas Mayores;5;A07008989;S4711001J;Gerencia Territorial de Servicios Sociales de Burgos
+A07010857;Gerencia de Servicios Sociales Residencia de Palencia;5;A07009032;Q9750009D;Gerencia Territorial de Servicios Sociales de Palencia
+A07010858;Gerencia de Servicios Sociales Camp Nuestra Señora la Calle de Palencia;5;A07009032;Q9750009D;Gerencia Territorial de Servicios Sociales de Palencia
+A07022416;Sección de Infancia Gerencia Territorial de Servicios Sociales de Palencia;5;A07009032;S4711001J;Gerencia Territorial de Servicios Sociales de Palencia
+A07023898;Sección de Protección a la Infancia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07023899;Sección de Prestaciones de Dependencia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07023902;Sección de Personal y Asuntos Generales;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07023903;Sección de Administración Económica;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07024024;Sección de Inclusión Social;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07024025;Sección de Familia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07024711;Sección de Información y Registro de Entidades, Centros y Servicios de la Gerencia Territorial de Servicios Sociales de Palencia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07024712;Sección de Atención a Personas Mayores de la Gerencia Territorial de Servicios Sociales de Palencia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07024788;Unidad de Valoración y Atención a Personas con Discapacidad;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07025166;Centro Base. Unidad de Valoración de la Gerencia Territorial de Servicios Sociales de Palencia;5;A07009032;;Gerencia Territorial de Servicios Sociales de Palencia
+A07010859;Gerencia de Servicios Sociales Residencia Mixta de Salamanca;5;A07009067;Q9750009D;Gerencia Territorial de Servicios Sociales de Salamanca
+A07010860;Gerencia de Servicios Sociales Camp de Salamanca;5;A07009067;Q9750009D;Gerencia Territorial de Servicios Sociales de Salamanca
+A07010861;Gerencia de Servicios Sociales Camp y Co de Béjar;5;A07009067;Q9750009D;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023596;Sección de Personal y Asuntos Generales;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023597;Sección de Atención a Personas con Discapacidad;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023598;Sección de Atención a Personas Mayores;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023599;Sección de Familia;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023603;Sección de Mujer;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023604;Sección de Drogodependencia;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023605;Sección de Administración Económica;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023606;Sección de Protección a la Infancia;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023608;Sección de Registro, Acción Social e Integración;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023609;Unidad de Intervención Educativa;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07023610;Centro Base;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07026397;Sección de Inclusión Social de la Gerencia Territorial de Servicios Sociales de Salamanca;5;A07009067;;Gerencia Territorial de Servicios Sociales de Salamanca
+A07036552;Sección de Prestaciones de Dependencia;5;A07009067;S4711001J;Gerencia Territorial de Servicios Sociales de Salamanca
+A07010862;Gerencia de Servicios Sociales Residencia de Válidos de Segovia;5;A07009098;Q9750009D;Gerencia Territorial de Servicios Sociales de Segovia
+A07010863;Gerencia de Servicios Sociales Residencia Asistida de Segovia;5;A07009098;Q9750009D;Gerencia Territorial de Servicios Sociales de Segovia
+A07023571;Gerente Territorial;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023572;Área de Administración;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023573;Área de Acción Social;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023574;Sección de Drogodependencia;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023575;Sección de Familia;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023576;Sección de Mujer;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023577;Sección de Personal y Asuntos Generales;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023578;Sección de Administración Económica;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023579;Sección de Registro, Acción Social Básica e Integración;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023580;Sección de Atención a Personas Mayores;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023581;Sección de Protección a la Infancia;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023582;Unidad de Información y Orientación;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023583;Sección de Atención a Personas con Discapacidad;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023584;Sección de Prestaciones de Dependencia;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023585;Unidad de Intervención Educativa;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023586;Centro Base de Atención a Personas con Discapacidad;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023587;Residencia Asistida de Personas Mayores;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07023588;Residencia Mixta de Personas Mayores;5;A07009098;S4711001J;Gerencia Territorial de Servicios Sociales de Segovia
+A07025138;Sección de Inclusión Social de la Gerencia Territorial de Servicios Sociales de Segovia;5;A07009098;;Gerencia Territorial de Servicios Sociales de Segovia
+A07025139;Unidad de Valoración y Atención a Personas con Discapacidad de la Gerencia Territorial de Servicios Sociales de Segovia;5;A07009098;;Gerencia Territorial de Servicios Sociales de Segovia
+A07026518;Sección de Información y Registro de Entidades, Centros y Servicios;5;A07009098;;Gerencia Territorial de Servicios Sociales de Segovia
+A07010864;Gerencia de Servicios Sociales Camp y Co de Soria;5;A07009128;Q9750009D;Gerencia Territorial de Servicios Sociales de Soria
+A07010865;Gerencia de Servicios Sociales Residencia de Soria;5;A07009128;Q9750009D;Gerencia Territorial de Servicios Sociales de Soria
+A07023893;Sección de Prestaciones de Dependencia;5;A07009128;;Gerencia Territorial de Servicios Sociales de Soria
+A07023895;Sección de Protección a la Infancia;5;A07009128;;Gerencia Territorial de Servicios Sociales de Soria
+A07023897;Centro Base;5;A07009128;;Gerencia Territorial de Servicios Sociales de Soria
+A07026517;Sección de Inclusión Social;5;A07009128;;Gerencia Territorial de Servicios Sociales de Soria
+A07035872;Sección Familia;5;A07009128;;Gerencia Territorial de Servicios Sociales de Soria
+A07051272;Unidad de Intervención Educativa;5;A07009128;S4711001J;Gerencia Territorial de Servicios Sociales de Soria
+A07009157;Unidad de Valoración y Atención a Personas con Discapacidad;5;A07009156;S4711001J;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010866;Gerencia de Servicios Sociales Residencia Asistida de Valladolid;5;A07009156;Q9750009D;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010867;Gerencia de Servicios Sociales Residencia Parquesol de Valladolid;5;A07009156;Q9750009D;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010868;Gerencia de Servicios Sociales Camp de Valladolid;5;A07009156;Q9750009D;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010869;Gerencia de Servicios Sociales Centro los Manzanos;5;A07009156;Q9750009D;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010870;Gerencia de Servicios Sociales Hogar Residencia Juvenil Zambrana;5;A07009156;Q9750009D;Gerencia Territorial de Servicios Sociales de Valladolid
+A07023568;Área de Administración;5;A07009156;S4711001J;Gerencia Territorial de Servicios Sociales de Valladolid
+A07023569;Sección de Prestaciones;5;A07009156;S4711001J;Gerencia Territorial de Servicios Sociales de Valladolid
+A07023570;Sección de Familia;5;A07009156;S4711001J;Gerencia Territorial de Servicios Sociales de Valladolid
+A07039592;Sección de Inclusión Social;5;A07009156;S4711001J;Gerencia Territorial de Servicios Sociales de Valladolid
+A07010871;Gerencia de Servicios Sociales Residencia de Zamora;5;A07009191;Q9750009D;Gerencia Territorial de Servicios Sociales de Zamora
+A07010872;Gerencia de Servicios Sociales Residencia de Benavente;5;A07009191;Q9750009D;Gerencia Territorial de Servicios Sociales de Zamora
+A07023422;Gerencia de Servicios Sociales Camp Virgen del Yermo de Zamora;5;A07009191;S4711001J;Gerencia Territorial de Servicios Sociales de Zamora
+A07030835;Sección de Prestaciones de Dependencia;5;A07009191;S4711001J;Gerencia Territorial de Servicios Sociales de Zamora
+A07034072;Sección de Familia;5;A07009191;Q9750009D;Gerencia Territorial de Servicios Sociales de Zamora
+A07034074;Unidad de Valoración y Atención a la Personas con Discapacidad;5;A07009191;Q9750009D;Gerencia Territorial de Servicios Sociales de Zamora
+A07034075;Sección de Inclusión Social;5;A07009191;Q9750009D;Gerencia Territorial de Servicios Sociales de Zamora
+A07010855;Gerencia de Servicios Sociales Residencia de León;5;A07009225;Q9750009D;Gerencia Territorial de Servicios Sociales de León
+A07010856;Residencia de Personas Mayores de Ponferrada-León;5;A07009225;Q9750009D;Gerencia Territorial de Servicios Sociales de León
+A07023890;Sección de Prestaciones de Dependencia;5;A07009225;;Gerencia Territorial de Servicios Sociales de León
+A07023891;Sección de Familia de la Gerencia Territorial de Servicios Sociales de León;5;A07009225;;Gerencia Territorial de Servicios Sociales de León
+A07023892;Centro Base de Atención a Discapacitados;5;A07009225;;Gerencia Territorial de Servicios Sociales de León
+A07050812;Sección de Inclusión Social;5;A07009225;;Gerencia Territorial de Servicios Sociales de León
+A07033395;Dirección Técnica de Atención a Personas Mayores y a Personas con Discapacidad;5;A07033394;S4711001J;Dirección General de Personas Mayores, Personas con Discapacidad y Atención a la Dependencia
+A07033404;Dirección Técnica de Acceso a los Servicios Sociales y Atención a la Dependencia;5;A07033394;S4711001J;Dirección General de Personas Mayores, Personas con Discapacidad y Atención a la Dependencia
+A07008919;Dirección Técnica de Atención a la Infancia;5;A07033418;S4711001J;Dirección General de Familias, Infancia y Atención a la Diversidad
+A07033393;Dirección Técnica de Familias;5;A07033418;S4711001J;Dirección General de Familias, Infancia y Atención a la Diversidad
+A07041852;Dirección Técnica de Inclusión Social;5;A07033418;S4711001J;Dirección General de Familias, Infancia y Atención a la Diversidad
+A07033434;Servicio de Administración Económica;5;A07033433;S4711001J;Dirección Técnica Administrativa
+A07033435;Servicio de Tesorería de la Gerencia de Servicios Sociales;5;A07033433;S4711001J;Dirección Técnica Administrativa
+A07033436;Servicio de Informática de la Gerencia de Servicios Sociales;5;A07033433;S4711001J;Dirección Técnica Administrativa
+A07033438;Asesoría Jurídica de la Gerencia de Servicios Sociales;5;A07033433;S4711001J;Dirección Técnica Administrativa
+A07033439;Servicio de Inspección y Registro de Entidades, Servicios y Centros;5;A07033433;S4711001J;Dirección Técnica Administrativa
+A07033442;Servicio de Personal y Asuntos Generales de la Gerencia de Servicios Sociales;5;A07033441;S4711001J;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07033443;Servicio de Infraestructura y Patrimonio;5;A07033441;;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07033444;Servicio de Gestión de Centros;5;A07033441;S4711001J;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07033445;Servicio de Contratación de la Gerencia de Servicios Sociales;5;A07033441;S4711001J;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07033446;Servicio de Programas de Salud y Prevención;5;A07033441;S4711001J;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07033447;Centro Regional de Formación y Estudios Sociales;5;A07033441;S4711001J;Dirección Técnica de Recursos Humanos y Gestión de Centros
+A07021141;Servicio de Prevención y Reinserción Social;6;A07008919;S4711001J;Dirección Técnica de Atención a la Infancia
+A07021142;Servicio de Protección a la Infancia;6;A07008919;S4711001J;Dirección Técnica de Atención a la Infancia
+A07021122;Servicio de Programas de Apoyo a las Familias;6;A07033393;S4711001J;Dirección Técnica de Familias
+A07041992;Servicio de Ayudas a Familias;6;A07033393;S4711001J;Dirección Técnica de Familias
+A07033396;Servicio de Atención a Personas Mayores y Prevención de Dependencia;6;A07033395;S4711001J;Dirección Técnica de Atención a Personas Mayores y a Personas con Discapacidad
+A07033397;Servicio de Autonomía Personal y Atención a Personas con Discapacidad;6;A07033395;S4711001J;Dirección Técnica de Atención a Personas Mayores y a Personas con Discapacidad
+A07033409;Servicio de Concertación;6;A07033395;S4711001J;Dirección Técnica de Atención a Personas Mayores y a Personas con Discapacidad
+A07033452;Servicio de Planificación y Catálogo de Servicios Sociales;6;A07033395;;Dirección Técnica de Atención a Personas Mayores y a Personas con Discapacidad
+A07033405;Servicio de Coordinación Interadministrativa;6;A07033404;S4711001J;Dirección Técnica de Acceso a los Servicios Sociales y Atención a la Dependencia
+A07033406;Servicio de Prestaciones de Dependencia;6;A07033404;S4711001J;Dirección Técnica de Acceso a los Servicios Sociales y Atención a la Dependencia
+A07033407;Servicio de Sistemas de Información e Integración de Procesos;6;A07033404;S4711001J;Dirección Técnica de Acceso a los Servicios Sociales y Atención a la Dependencia
+A07033408;Servicio de Valoración y Atención a la Dependencia;6;A07033404;S4711001J;Dirección Técnica de Acceso a los Servicios Sociales y Atención a la Dependencia
+A07021867;Servicio de Integración;6;A07033410;S4711001J;Dirección Técnica de la Mujer
+A07033413;Servicio de Atención a las Víctimas de Violencia de Género;6;A07033410;S4711001J;Dirección Técnica de la Mujer
+A07033414;Servicio de Promoción de la Igualdad;6;A07033410;S4711001J;Dirección Técnica de la Mujer
+A07033416;Servicio de Evaluación y Prevención del Consumo de Drogas;6;A07033415;S4711001J;Dirección Técnica del Comisionado Regional para la Droga
+A07033417;Servicio de Asistencia a Drogodependientes;6;A07033415;S4711001J;Dirección Técnica del Comisionado Regional para la Droga
+A07021123;Servicio de Inclusión Social;6;A07041852;S4711001J;Dirección Técnica de Inclusión Social
+A07033432;Servicio de Prestaciones a Familias Vulnerables;6;A07041852;S4711001J;Dirección Técnica de Inclusión Social
