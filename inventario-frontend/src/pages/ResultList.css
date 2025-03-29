@@ -1,0 +1,19 @@
+.list {
+    list-style: none;
+    text-align: left;
+}
+
+.list-item {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.list-item.active {
+    background-color: #e0e0e0;
+    color: #333;
+}

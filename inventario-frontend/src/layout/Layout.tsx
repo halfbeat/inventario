@@ -7,6 +7,7 @@ import {SessionExpired} from "../pages/SessionExpired";
 import ListadoSistemas from "../pages/ListadoSistemas";
 import EditorSistema from "../pages/EditorSistema";
 import RegistroSistema from "../pages/RegistroSistema";
+import QueryDir3 from "../pages/QueryDir3";
 
 export function Layout() {
     return (
@@ -17,6 +18,7 @@ export function Layout() {
                     <Route index element={<Home/>}/>
                     <Route path={"/home"} element={<Home/>}/>
                     <Route path={"/session-expired"} element={<SessionExpired/>}/>
+                    <Route path={"/dir3"} element={<QueryDir3/>}/>
                     <Route path={"/sistemas"} element={<ListadoSistemas/>}/>
                     <Route path={"/sistemas/registro"} element={<RegistroSistema/>}/>
                     <Route path={"/sistemas/:sistema_id"} element={<EditorSistema/>}/>

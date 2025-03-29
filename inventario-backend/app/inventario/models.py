@@ -33,6 +33,13 @@ class AuditoriaMixinModelDto(object):
                  fecha_creacion=datetime.now(),
                  usuario_modificacion=None,
                  fecha_modificacion=None):
+        self.update_auditoria(usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
+
+    def update_auditoria(self,
+                         usuario_creacion=None,
+                         fecha_creacion=datetime.now(),
+                         usuario_modificacion=None,
+                         fecha_modificacion=None):
         self.usuario_creacion = usuario_creacion
         self.fecha_creacion = fecha_creacion
         self.usuario_modificacion = usuario_modificacion
@@ -52,7 +59,7 @@ class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     )
 
 
-class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
+class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixin):
     """DTO de base de datos correspondiente a una aplicación    """
     __tablename__ = "INVEGSS_SISTEMAS"
     sistema_id = db.Column("C_SISINFO_ID", db.String(10))
@@ -84,32 +91,26 @@ class SistemaInformacionModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDt
 
     def __init__(
             self,
-            sistema_id,
-            nombre,
-            usuario_creacion=None,
-            fecha_creacion=datetime.now(),
-            usuario_modificacion=None,
-            fecha_modificacion=None
+            **kwargs
     ):
-        """Constructor de la clase
+        self.sistema_id = kwargs.get("sistema_id")
+        self.nombre = kwargs.get("nombre")
+        self.observaciones = kwargs.get("observaciones")
+        super(SistemaInformacionModelDto, self).__init__(kwargs.get('usuario_creacion'), kwargs.get('fecha_creacion'),
+                                                         kwargs.get('usuario_modificacion'),
+                                                         kwargs.get('fecha_modificacion'))
 
-        sistema_id: str
-            Identificador de la aplicación
-        nombre: str
-            Nombre de la aplicación
-        usuario_creacion: str
-            Principal del usuario que crea el registro
-        fecha_creacion: datetime
-            Fecha y hora de creación del registro
-        usuario_modificacion: str | None
-            Último usuario que actualiza el registro. None si el registro no se ha modificado
-        fecha_modificacion: datetime | None
-            Última fecha de modificación del registro. None si el registro no se ha modificado
-        """
-        self.sistema_id = sistema_id
-        self.nombre = nombre
-        super(SistemaInformacionModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
-                                                         fecha_modificacion)
+    def update(
+            self,
+            **kwargs
+    ):
+        self.sistema_id = kwargs.get("sistema_id")
+        self.nombre = kwargs.get("nombre")
+        self.observaciones = kwargs.get("observaciones")
+        super(SistemaInformacionModelDto, self).update_auditoria(kwargs.get('usuario_creacion'),
+                                                                 kwargs.get('fecha_creacion'),
+                                                                 kwargs.get('usuario_modificacion'),
+                                                                 kwargs.get('fecha_modificacion'))
 
     def __repr__(self):
         return f"Aplicacion([{self.sistema_id}] {self.nombre})"
@@ -215,3 +216,32 @@ class AsignacionEmpresaComponenteModelDto(db.Model, BaseModelMixin):
             [ComponenteModelDto.sistema_id, ComponenteModelDto.componente_id]
         )
     )
+
+
+class UnidadDir3ModelDo(BaseModelMixin, db.Model):
+    __tablename__ = "INVESGSS_UNIDADES_DIR3"
+
+    C_ID_UD_ORGANICA = db.Column("C_ID_UD_ORGANICA", db.String(9), nullable=False)
+    C_DNM_UD_ORGANICA = db.Column("C_DNM_UD_ORGANICA", db.String(150), nullable=False)
+    N_NIVEL_JERARQUICO = db.Column("N_NIVEL_JERARQUICO", db.Integer, nullable=True)
+    C_ID_DEP_UD_SUPERIOR = db.Column("C_ID_DEP_UD_SUPERIOR", db.String(9), nullable=True)
+    NIF_CIF = db.Column("NIF_CIF", db.String(9), nullable=True)
+    C_DNM_UD_ORGANICA_SUPERIOR = db.Column("C_DNM_UD_ORGANICA_SUPERIOR", db.String(150), nullable=True)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(C_ID_UD_ORGANICA),
+        ForeignKeyConstraint(
+            [C_ID_DEP_UD_SUPERIOR],
+            [C_ID_UD_ORGANICA]
+        )
+    )
+
+    @classmethod
+    def query(cls, page, page_size, unidad_id=None, nombre=None):
+        filter_query = db.select(cls).filter()
+        if unidad_id is not None:
+            filter_query = filter_query.filter(UnidadDir3ModelDo.C_ID_UD_ORGANICA.like(f"%{unidad_id}%"))
+        if nombre is not None:
+            filter_query = filter_query.filter(UnidadDir3ModelDo.C_DNM_UD_ORGANICA.like(f"%{nombre}%"))
+        paged = db.paginate(filter_query, page=page, per_page=page_size, error_out=False)
+        return paged

@@ -28,6 +28,20 @@ export interface SistemaInformacionDto {
     observaciones?: string;
 }
 
+export interface UnidadDIR3Dto {
+    unidad_id: string;
+    unidad_padre_id?: string;
+    nombre: string;
+    nombre_unidad_padre?: string;
+}
+
+export interface ListadoPaginadoUnidadesDIR3Dto {
+    total: number;
+    page: number;
+    page_size: number;
+    items: UnidadDIR3Dto[];
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -333,5 +347,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
               format: "json",
               ...params,
           }),
+  };
+    dir3 = {
+        /**
+         * No description
+         *
+         * @tags dir3
+         * @name QueryUnidadesDir3
+         * @summary consulta de unidades dir3
+         * @request GET:/dir3/unidades
+         * @response `200` `ListadoPaginadoUnidadesDIR3Dto` Operación realizada con éxito
+         * @response `401` `ErrorDto`
+         * @response `403` `ErrorDto`
+         * @response `default` `ErrorDto`
+         */
+        queryUnidadesDir3: (
+            query?: {
+                nombre?: string;
+                id?: string;
+            },
+            params: RequestParams = {},
+        ) =>
+            this.request<ListadoPaginadoUnidadesDIR3Dto, ErrorDto>({
+                path: `/dir3/unidades`,
+                method: "GET",
+                query: query,
+                format: "json",
+                ...params,
+            }),
   };
 }

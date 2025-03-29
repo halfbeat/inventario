@@ -18,7 +18,7 @@ servers:
 paths:
   /sistemas:
     get:
-      summary: Listado paginado de aplicaciones
+      summary: Listado paginado de sistemas de informacón
       operationId: getSistemasInformacion
       tags:
         - sistemas
@@ -29,6 +29,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListadoPaginadoSistemas'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+    post:
+      summary: Registro de un sistema de información
+      operationId: registrarSistemaInformacion
+      tags:
+        - sistemas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SistemaInformacion'
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SistemaInformacion'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -64,7 +87,67 @@ paths:
         default:
           $ref: '#/components/responses/UnspecifiedError'
 
+    put:
+      summary: Modificar la información de un sistema
+      operationId: updateSistemaInformacion
+      tags:
+        - sistemas
+      parameters:
+        - name: sistemaId
+          in: path
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SistemaInformacion'
 
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SistemaInformacion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+  /dir3/unidades:
+    get:
+      summary: consulta de unidades dir3
+      operationId: queryUnidadesDIR3
+      tags:
+        - dir3
+      parameters:
+        - name: nombre
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListadoPaginadoUnidadesDIR3'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
 
 components:
   securitySchemes:
@@ -124,7 +207,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
 
-
   schemas:
     Error:
       type: object
@@ -168,5 +250,39 @@ components:
           type: string
         nombre:
           type: string
+        observaciones:
+          type: string
 
+    UnidadDIR3:
+      type: object
+      required:
+        - unidad_id
+        - nombre
+      properties:
+        unidad_id:
+          type: string
+        unidad_padre_id:
+          type: string
+        nombre:
+          type: string
+        nombre_unidad_padre:
+          type: string
 
+    ListadoPaginadoUnidadesDIR3:
+      type: object
+      required:
+        - total
+        - page
+        - page_size
+        - items
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnidadDIR3'

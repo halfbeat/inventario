@@ -53,7 +53,7 @@ class BaseModelMixin:
 
     @classmethod
     def get_by_id(cls, **kwargs):
-        return db.session.execute(db.select(cls).filter_by(**kwargs)).scalar_one()
+        return db.session.execute(db.select(cls).filter_by(**kwargs)).scalar_one_or_none()
 
     @classmethod
     def simple_filter(cls, **kwargs):
