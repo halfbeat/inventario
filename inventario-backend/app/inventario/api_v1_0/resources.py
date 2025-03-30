@@ -39,6 +39,11 @@ class UnidadesDir3Resource(Resource):
     def get(self, jwt_token=None):
         return UnidadDir3Service.buscar_unidades(unidad_id=request.args.get('id'), nombre=request.args.get('nombre'))
 
+class UnidadDir3Resource(Resource):
+    @token_required
+    def get(self, unidad_id, jwt_token=None):
+        return UnidadDir3Service.obtener_unidad(unidad_id=unidad_id)
+
 api.add_resource(
     SistemasInformacionResource,
     "/api/v1/sistemas/",
@@ -55,4 +60,10 @@ api.add_resource(
     UnidadesDir3Resource,
     '/api/v1/dir3/unidades/',
     endpoint="unidades_resource",
+)
+
+api.add_resource(
+    UnidadDir3Resource,
+    '/api/v1/dir3/unidades/<unidad_id>',
+    endpoint="unidad_resource",
 )

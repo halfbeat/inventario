@@ -79,8 +79,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "sta": "sta -p ../api/api.yaml -r --type-suffix Dto -o ./src/openapi -n api.ts",
-    "postinstall": "node ./postinstall.js"
+    "sta": "sta -p ../api/api.yaml -r --type-suffix Dto -o ./src/openapi -n api.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -101,7 +100,7 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.80.6",
+    "sass": "~1.32.0",
     "swagger-typescript-api": "^13.0.22"
   },
   "jest": {

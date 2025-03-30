@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 10dbf522121e
+Revision ID: 363df1a5f0c9
 Revises: 
-Create Date: 2025-03-25 19:38:09.033669
+Create Date: 2025-03-30 09:25:47.270736
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '10dbf522121e'
+revision = '363df1a5f0c9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,11 +29,21 @@ def upgrade():
     sa.Column('F_MODIFICACION', sa.DateTime(timezone=True), nullable=True),
     sa.PrimaryKeyConstraint('C_EMPRESA_ID')
     )
+    op.create_table('INVESGSS_UNIDADES_DIR3',
+    sa.Column('C_ID_UD_ORGANICA', sa.String(length=9), nullable=False),
+    sa.Column('C_DNM_UD_ORGANICA', sa.String(length=150), nullable=False),
+    sa.Column('N_NIVEL_JERARQUICO', sa.Integer(), nullable=True),
+    sa.Column('C_ID_DEP_UD_SUPERIOR', sa.String(length=9), nullable=True),
+    sa.Column('NIF_CIF', sa.String(length=9), nullable=True),
+    sa.Column('C_DNM_UD_ORGANICA_SUPERIOR', sa.String(length=150), nullable=True),
+    sa.ForeignKeyConstraint(['C_ID_DEP_UD_SUPERIOR'], ['INVESGSS_UNIDADES_DIR3.C_ID_UD_ORGANICA'], ),
+    sa.PrimaryKeyConstraint('C_ID_UD_ORGANICA')
+    )
     op.create_table('INVEGSS_SISTEMAS',
     sa.Column('C_SISINFO_ID', sa.String(length=10), nullable=False),
     sa.Column('D_NOMBRE', sa.String(length=50), nullable=False),
     sa.Column('C_RESPONSABLE_TECNICO_ID', sa.Integer(), nullable=True),
-    sa.Column('C_RESPONSABLE_FUNCIONAL_ID', sa.Integer(), nullable=True),
+    sa.Column('C_UNIDAD_FUNCIONAL_ID', sa.String(length=9), nullable=True),
     sa.Column('F_PUESTA_PRODUCCION', sa.Date(), nullable=True),
     sa.Column('F_SALIDA_PRODUCCION', sa.Date(), nullable=True),
     sa.Column('D_OBSERVACIONES', sa.Text(), nullable=True),
@@ -41,8 +51,8 @@ def upgrade():
     sa.Column('F_CREACION', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('C_USR_MODIFICACION', sa.String(length=10), nullable=True),
     sa.Column('F_MODIFICACION', sa.DateTime(timezone=True), nullable=True),
-    sa.ForeignKeyConstraint(['C_RESPONSABLE_FUNCIONAL_ID'], ['INVESGSS_EMPRESAS.C_EMPRESA_ID'], ),
     sa.ForeignKeyConstraint(['C_RESPONSABLE_TECNICO_ID'], ['INVESGSS_EMPRESAS.C_EMPRESA_ID'], ),
+    sa.ForeignKeyConstraint(['C_UNIDAD_FUNCIONAL_ID'], ['INVESGSS_UNIDADES_DIR3.C_ID_UD_ORGANICA'], ),
     sa.PrimaryKeyConstraint('C_SISINFO_ID')
     )
     op.create_table('INVESGSS_COMPONENTES',
@@ -79,5 +89,6 @@ def downgrade():
     op.drop_table('INVESGSS_EMPRESAS_COMPONENTES')
     op.drop_table('INVESGSS_COMPONENTES')
     op.drop_table('INVEGSS_SISTEMAS')
+    op.drop_table('INVESGSS_UNIDADES_DIR3')
     op.drop_table('INVESGSS_EMPRESAS')
     # ### end Alembic commands ###

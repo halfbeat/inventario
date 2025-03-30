@@ -45,6 +45,34 @@ class AuditoriaMixinModelDto(object):
         self.usuario_modificacion = usuario_modificacion
         self.fecha_modificacion = fecha_modificacion
 
+class UnidadDir3ModelDto(BaseModelMixin, db.Model):
+    __tablename__ = "INVESGSS_UNIDADES_DIR3"
+
+    C_ID_UD_ORGANICA = db.Column("C_ID_UD_ORGANICA", db.String(9), nullable=False)
+    C_DNM_UD_ORGANICA = db.Column("C_DNM_UD_ORGANICA", db.String(150), nullable=False)
+    N_NIVEL_JERARQUICO = db.Column("N_NIVEL_JERARQUICO", db.Integer, nullable=True)
+    C_ID_DEP_UD_SUPERIOR = db.Column("C_ID_DEP_UD_SUPERIOR", db.String(9), nullable=True)
+    NIF_CIF = db.Column("NIF_CIF", db.String(9), nullable=True)
+    C_DNM_UD_ORGANICA_SUPERIOR = db.Column("C_DNM_UD_ORGANICA_SUPERIOR", db.String(150), nullable=True)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(C_ID_UD_ORGANICA),
+        ForeignKeyConstraint(
+            [C_ID_DEP_UD_SUPERIOR],
+            [C_ID_UD_ORGANICA]
+        )
+    )
+
+    @classmethod
+    def query(cls, page, page_size, unidad_id=None, nombre=None):
+        filter_query = db.select(cls).filter()
+        if unidad_id is not None:
+            filter_query = filter_query.filter(UnidadDir3ModelDto.C_ID_UD_ORGANICA.like(f"%{unidad_id}%"))
+        if nombre is not None:
+            filter_query = filter_query.filter(UnidadDir3ModelDto.C_DNM_UD_ORGANICA.like(f"%{nombre}%"))
+        paged = db.paginate(filter_query, page=page, per_page=page_size, error_out=False)
+        return paged
+
 
 class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     __tablename__ = "INVESGSS_EMPRESAS"
@@ -65,7 +93,7 @@ class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixi
     sistema_id = db.Column("C_SISINFO_ID", db.String(10))
     nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
     responsable_tecnico = db.Column("C_RESPONSABLE_TECNICO_ID", db.Integer)
-    responsable_funcional = db.Column("C_RESPONSABLE_FUNCIONAL_ID", db.Integer)
+    unidad_responsable = db.Column("C_UNIDAD_FUNCIONAL_ID", db.String(9))
     fecha_entrada_produccion = db.Column(
         "F_PUESTA_PRODUCCION", db.Date(),
         nullable=True,
@@ -84,8 +112,8 @@ class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixi
             [EmpresaModelDto.empresa_id]
         ),
         ForeignKeyConstraint(
-            [responsable_funcional],
-            [EmpresaModelDto.empresa_id]
+            [unidad_responsable],
+            [UnidadDir3ModelDto.C_ID_UD_ORGANICA]
         )
     )
 
@@ -218,30 +246,3 @@ class AsignacionEmpresaComponenteModelDto(db.Model, BaseModelMixin):
     )
 
 
-class UnidadDir3ModelDo(BaseModelMixin, db.Model):
-    __tablename__ = "INVESGSS_UNIDADES_DIR3"
-
-    C_ID_UD_ORGANICA = db.Column("C_ID_UD_ORGANICA", db.String(9), nullable=False)
-    C_DNM_UD_ORGANICA = db.Column("C_DNM_UD_ORGANICA", db.String(150), nullable=False)
-    N_NIVEL_JERARQUICO = db.Column("N_NIVEL_JERARQUICO", db.Integer, nullable=True)
-    C_ID_DEP_UD_SUPERIOR = db.Column("C_ID_DEP_UD_SUPERIOR", db.String(9), nullable=True)
-    NIF_CIF = db.Column("NIF_CIF", db.String(9), nullable=True)
-    C_DNM_UD_ORGANICA_SUPERIOR = db.Column("C_DNM_UD_ORGANICA_SUPERIOR", db.String(150), nullable=True)
-
-    __table_args__ = (
-        PrimaryKeyConstraint(C_ID_UD_ORGANICA),
-        ForeignKeyConstraint(
-            [C_ID_DEP_UD_SUPERIOR],
-            [C_ID_UD_ORGANICA]
-        )
-    )
-
-    @classmethod
-    def query(cls, page, page_size, unidad_id=None, nombre=None):
-        filter_query = db.select(cls).filter()
-        if unidad_id is not None:
-            filter_query = filter_query.filter(UnidadDir3ModelDo.C_ID_UD_ORGANICA.like(f"%{unidad_id}%"))
-        if nombre is not None:
-            filter_query = filter_query.filter(UnidadDir3ModelDo.C_DNM_UD_ORGANICA.like(f"%{nombre}%"))
-        paged = db.paginate(filter_query, page=page, per_page=page_size, error_out=False)
-        return paged

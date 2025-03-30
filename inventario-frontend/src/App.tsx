@@ -2,12 +2,10 @@ import React from 'react';
 import './App.scss';
 import {useAuth} from "react-oidc-context";
 import {Layout} from "./layout/Layout";
-import {useNavigate} from "react-router-dom";
 import {Configuration} from './Configuration'
 
 function App() {
     const auth = useAuth();
-    const navigate = useNavigate();
 
     auth.events.addSilentRenewError(() => console.log('Silent Renew Error'));
     auth.events.addAccessTokenExpiring(() => console.log('Access Token Expiring'));
@@ -24,32 +22,6 @@ function App() {
     auth.events.addUserSignedIn(() => console.log('User Signed in'));
     auth.events.addUserSignedOut(() => console.log('User Signed Out'));
     auth.events.addAccessTokenExpired(() => console.log('Access Token Expired'));
-
-//    useEffect(() => {
-//        if (auth.isAuthenticated) {
-//            const handle = setInterval(() => {
-//                auth.signinSilent();
-//            }, tokenRenewalInterval);
-//            return () => clearInterval(handle);
-//        }
-//    }, [auth, tokenRenewalInterval]);
-//    useEffect(() => {
-//
-//      if (auth.isAuthenticated) {switch (auth.activeNavigator) {
-//        case "signinSilent":
-//        const handle = setInterval(() => {        return <div>Signing you in...</div>;
-//        case "signoutRedirect":
-//          auth.signinSilent();        return <div>Signing you out...</div>;
-//    }
-//        }, tokenRenewalInterval);
-//    if (auth.isLoading) {
-//        return <div>Loading...</div>;
-//        return () => clearInterval(handle);}
-//
-//      }
-//    return (<Layout/>);
-//}   }, [auth, tokenRenewalInterval]);
-
     return (<Layout/>);
 }
 

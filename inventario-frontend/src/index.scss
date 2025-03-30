@@ -1,146 +1,47 @@
-// Custom.scss
-// Option A: Include all of Bootstrap
+// Override default variables before the import
+// you can open the bootstrap.scss module and check any available variables.
+$primary: #362ec4;
+$secondary: #8f5325;
+$success: #3e8d63;
+$info: #7854e4;
+$warning: #b8c924;
+$danger: #d62518;
+$light: #f8f9fa;
+$dark: #343a40;
 
-// Include any default variable overrides here (though functions won't be available)
+//custom color to be mapped
+$accent : #da6d25;
 
-// scss-docs-start import-stack
-// Configuration
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/variables-dark";
+// this is used to map colors. change accordingly.
+$theme-colors: (
+        primary: $primary,
+        secondary: $secondary,
+        success: $success,
+        info: $info,
+        warning: $warning,
+        danger: $danger,
+        light: $light,
+        dark: $dark,
+  // add any additional color below
+        accent: $accent,
+  // now bg-accent,btn-accent,etc.. can be called
+);
 
-$white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #F8F5F0;
-$gray-300: #DFD7CA;
-$gray-400: #ced4da;
-$gray-500: #98978B;
-$gray-600: #8E8C84;
-$gray-700: #495057;
-$gray-800: #3E3F3A;
-$gray-900: #212529;
-$blue-100: #c2cfdd;
-$blue-200: #abc4dd;
-$blue-300: #94b9dd;
-$blue-400: #80aedd;
-$blue-500: #69a3dd;
-$blue-600: #579add;
-$blue-700: #4491dd;
-$blue-800: #3288dd;
-$blue-900: #0772dd;
-$black: #000;
-$blue: #325D88;
-$indigo: #6610f2;
-$purple: #6f42c1;
-$pink: #e83e8c;
-$red: #d9534f;
-$orange: #F47C3C;
-$yellow: #ffc107;
-$green: #93C54B;
-$teal: #20c997;
-$cyan: #29ABE0;
+$font-size-base: 0.8rem;
 
-$primary: $blue;
-$secondary: $gray-400;
-$success: $green;
-$info: $cyan;
-$warning: $orange;
-$danger: $red;
-$light: $blue-200;
-$dark: $gray-800;
-$body-color: $gray-800;
-$dropdown-link-color: $gray-600;
-$dropdown-link-hover-color: $dropdown-link-color;
-$dropdown-link-hover-bg: $gray-200;
-$navbar-dark-hover-color: $white;
-
-$form-label-color: $blue;
-$form-label-font-weight: bold;
-$form-label-margin-bottom: 0 !default;
-
-$form-check-input-width: 1.25em;
-$form-check-input-border: 2px solid $gray-400;
-
-$font-size-base: 0.9em;
-
-//$body-bg: $blue-100;
-//
-//$table-bg: $white;
-//.app-bg {
-//  background-color: red;
-//}
-
-
-@import "~bootstrap/scss/maps";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/utilities";
-
-// Layout & components
-@import "~bootstrap/scss/root";
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/type";
-@import "~bootstrap/scss/images";
-@import "~bootstrap/scss/containers";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/tables";
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
-@import "~bootstrap/scss/transitions";
-@import "~bootstrap/scss/dropdown";
-@import "~bootstrap/scss/button-group";
-@import "~bootstrap/scss/nav";
-@import "~bootstrap/scss/navbar";
-@import "~bootstrap/scss/card";
-@import "~bootstrap/scss/accordion";
-@import "~bootstrap/scss/breadcrumb";
-@import "~bootstrap/scss/pagination";
-@import "~bootstrap/scss/badge";
-@import "~bootstrap/scss/alert";
-@import "~bootstrap/scss/progress";
-@import "~bootstrap/scss/list-group";
-@import "~bootstrap/scss/close";
-@import "~bootstrap/scss/toasts";
-@import "~bootstrap/scss/modal";
-@import "~bootstrap/scss/tooltip";
-@import "~bootstrap/scss/popover";
-@import "~bootstrap/scss/carousel";
-@import "~bootstrap/scss/spinners";
-@import "~bootstrap/scss/offcanvas";
-@import "~bootstrap/scss/placeholders";
-
-// Helpers
-@import "~bootstrap/scss/helpers";
-
-// Utilities
-@import "~bootstrap/scss/utilities/api";
-// scss-docs-end import-stack
-
-// Then add additional custom code here
-
-
-.fill-remaining-space {
-  /*This fills the remaining space, by using flexbox.
- Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
-}
-
-.modal-backdrop {
-  z-index: 1020 !important;
-}
-
+@import '~bootstrap/scss/bootstrap';
 
 body {
   background-color: var(--bs-gray-900);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
-

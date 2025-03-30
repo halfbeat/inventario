@@ -149,6 +149,34 @@ paths:
         default:
           $ref: '#/components/responses/UnspecifiedError'
 
+  /dir3/unidades/{unidad_id}:
+    get:
+      summary: Recuperar unidad DIR3
+      operationId: getUnidadDIR3
+      tags:
+        - dir3
+      parameters:
+        - name: unidad_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnidadDIR3'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
 components:
   securitySchemes:
     keycloak:
@@ -251,6 +279,8 @@ components:
         nombre:
           type: string
         observaciones:
+          type: string
+        unidad_responsable:
           type: string
 
     UnidadDIR3:

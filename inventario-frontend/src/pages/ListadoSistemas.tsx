@@ -1,21 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {useAuth, withAuthenticationRequired} from "react-oidc-context";
-import {Api, ApiConfig, ListadoPaginadoSistemasDto, RequestParams} from "../openapi/api";
-import {Configuration} from '../Configuration'
+import {withAuthenticationRequired} from "react-oidc-context";
+import {ListadoPaginadoSistemasDto} from "../openapi/api";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import useApi from "../common/useApi";
 
 const ListadoSistemas = () => {
-    const auth = useAuth();
     const [sistemas, setSistemas] = useState({} as ListadoPaginadoSistemasDto);
-    const token = auth.user?.access_token;
-    const rp = {headers: {Authorization: `Bearer ${token}`}} as RequestParams
-    const api = new Api({
-        baseUrl: Configuration.backend.baseUrl,
-        baseApiParams: rp
-    } as ApiConfig);
+    const api = useApi();
     useEffect(() => {
-        if (token) {
+        if (api) {
             api.sistemas.getSistemasInformacion()
                 .then(res => res.data)
                 .then(data => {
@@ -23,7 +17,7 @@ const ListadoSistemas = () => {
                 })
                 .catch(err => console.error(err));
         }
-    }, [token]);
+    },[api]);
 
     const listaSistemas = sistemas?.items?.map(s =>
         <li key={s.sistema_id}>

@@ -7,6 +7,7 @@ class SistemaSchema(ma.Schema):
     sistema_id = fields.String()
     nombre = fields.String()
     observaciones = fields.String(required=False)
+    unidad_responsable = fields.String(required=False)
     
 class ListaPaginable:
     def __init__(self, items, total, page, page_size):

@@ -25,21 +25,22 @@ export interface ListadoPaginadoSistemasDto {
 export interface SistemaInformacionDto {
   sistema_id: string;
   nombre: string;
-    observaciones?: string;
+  observaciones?: string;
+  unidad_responsable?: string;
 }
 
 export interface UnidadDIR3Dto {
-    unidad_id: string;
-    unidad_padre_id?: string;
-    nombre: string;
-    nombre_unidad_padre?: string;
+  unidad_id: string;
+  unidad_padre_id?: string;
+  nombre: string;
+  nombre_unidad_padre?: string;
 }
 
 export interface ListadoPaginadoUnidadesDIR3Dto {
-    total: number;
-    page: number;
-    page_size: number;
-    items: UnidadDIR3Dto[];
+  total: number;
+  page: number;
+  page_size: number;
+  items: UnidadDIR3Dto[];
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -284,27 +285,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
 
-      /**
-       * No description
-       *
-       * @tags sistemas
-       * @name RegistrarSistemaInformacion
-       * @summary Registro de un sistema de información
-       * @request POST:/sistemas
-       * @response `200` `SistemaInformacionDto` Operación realizada con éxito
-       * @response `401` `ErrorDto`
-       * @response `403` `ErrorDto`
-       * @response `default` `ErrorDto`
-       */
-      registrarSistemaInformacion: (data: SistemaInformacionDto, params: RequestParams = {}) =>
-          this.request<SistemaInformacionDto, ErrorDto>({
-              path: `/sistemas`,
-              method: "POST",
-              body: data,
-              type: ContentType.Json,
-              format: "json",
-              ...params,
-          }),
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name RegistrarSistemaInformacion
+     * @summary Registro de un sistema de información
+     * @request POST:/sistemas
+     * @response `200` `SistemaInformacionDto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    registrarSistemaInformacion: (data: SistemaInformacionDto, params: RequestParams = {}) =>
+      this.request<SistemaInformacionDto, ErrorDto>({
+        path: `/sistemas`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
 
     /**
      * No description
@@ -326,54 +327,75 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
 
-      /**
-       * No description
-       *
-       * @tags sistemas
-       * @name UpdateSistemaInformacion
-       * @summary Modificar la información de un sistema
-       * @request PUT:/sistemas/{sistemaId}
-       * @response `200` `SistemaInformacionDto` Operación realizada con éxito
-       * @response `401` `ErrorDto`
-       * @response `403` `ErrorDto`
-       * @response `default` `ErrorDto`
-       */
-      updateSistemaInformacion: (sistemaId: string, data: SistemaInformacionDto, params: RequestParams = {}) =>
-          this.request<SistemaInformacionDto, ErrorDto>({
-              path: `/sistemas/${sistemaId}`,
-              method: "PUT",
-              body: data,
-              type: ContentType.Json,
-              format: "json",
-              ...params,
-          }),
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name UpdateSistemaInformacion
+     * @summary Modificar la información de un sistema
+     * @request PUT:/sistemas/{sistemaId}
+     * @response `200` `SistemaInformacionDto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    updateSistemaInformacion: (sistemaId: string, data: SistemaInformacionDto, params: RequestParams = {}) =>
+      this.request<SistemaInformacionDto, ErrorDto>({
+        path: `/sistemas/${sistemaId}`,
+        method: "PUT",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
   };
-    dir3 = {
-        /**
-         * No description
-         *
-         * @tags dir3
-         * @name QueryUnidadesDir3
-         * @summary consulta de unidades dir3
-         * @request GET:/dir3/unidades
-         * @response `200` `ListadoPaginadoUnidadesDIR3Dto` Operación realizada con éxito
-         * @response `401` `ErrorDto`
-         * @response `403` `ErrorDto`
-         * @response `default` `ErrorDto`
-         */
-        queryUnidadesDir3: (
-            query?: {
-                nombre?: string;
-                id?: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<ListadoPaginadoUnidadesDIR3Dto, ErrorDto>({
-                path: `/dir3/unidades`,
-                method: "GET",
-                query: query,
-                format: "json",
-                ...params,
-            }),
+  dir3 = {
+    /**
+     * No description
+     *
+     * @tags dir3
+     * @name QueryUnidadesDir3
+     * @summary consulta de unidades dir3
+     * @request GET:/dir3/unidades
+     * @response `200` `ListadoPaginadoUnidadesDIR3Dto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    queryUnidadesDir3: (
+      query?: {
+        nombre?: string;
+        id?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ListadoPaginadoUnidadesDIR3Dto, ErrorDto>({
+        path: `/dir3/unidades`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags dir3
+     * @name GetUnidadDir3
+     * @summary Recuperar unidad DIR3
+     * @request GET:/dir3/unidades/{unidad_id}
+     * @response `200` `UnidadDIR3Dto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `404` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    getUnidadDir3: (unidadId: string, params: RequestParams = {}) =>
+      this.request<UnidadDIR3Dto, ErrorDto>({
+        path: `/dir3/unidades/${unidadId}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
   };
 }

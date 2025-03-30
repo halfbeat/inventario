@@ -30,7 +30,7 @@ const RegistroSistema = () => {
         register,
         handleSubmit,
         setValue,
-        formState: {errors},
+        // formState: {errors},
     } = useForm<FormProps>()
 
     const navigate = useNavigate()

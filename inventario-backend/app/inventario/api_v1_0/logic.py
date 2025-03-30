@@ -5,7 +5,7 @@ from app.inventario.api_v1_0.schemas import (
     ListaPaginableSistemasSchema, UnidadSchema, ListaPaginableUnidadesSchema,
 )
 from app.inventario.models import (
-    SistemaInformacionModelDto, UnidadDir3ModelDo,
+    SistemaInformacionModelDto, UnidadDir3ModelDto,
 )
 
 sistema_schema = SistemaSchema()
@@ -68,7 +68,7 @@ class UnidadDir3Service:
     @staticmethod
     def buscar_unidades(unidad_id: str = None, nombre: str = None):
         print(unidad_id, nombre)
-        unidades = UnidadDir3ModelDo.query(page=1, page_size=100, unidad_id=unidad_id, nombre=nombre)
+        unidades = UnidadDir3ModelDto.query(page=1, page_size=100, unidad_id=unidad_id, nombre=nombre)
 
         print(unidades)
         result = unidades_schema.dump(
@@ -82,3 +82,10 @@ class UnidadDir3Service:
         )
         print(result)
         return result
+
+    @classmethod
+    def obtener_unidad(cls, unidad_id):
+        unidad = UnidadDir3ModelDto.get_by_id(C_ID_UD_ORGANICA=unidad_id)
+        if not unidad:
+            abort(404, "Unidad no encontrada")
+        return unidad_schema.dump(unidad)

@@ -18,7 +18,7 @@ export function Layout() {
                     <Route index element={<Home/>}/>
                     <Route path={"/home"} element={<Home/>}/>
                     <Route path={"/session-expired"} element={<SessionExpired/>}/>
-                    <Route path={"/dir3"} element={<QueryDir3/>}/>
+                    <Route path={"/dir3"} element={<QueryDir3 codigo_unidad={"A07009156"} label={"Código unidad"}/>}/>
                     <Route path={"/sistemas"} element={<ListadoSistemas/>}/>
                     <Route path={"/sistemas/registro"} element={<RegistroSistema/>}/>
                     <Route path={"/sistemas/:sistema_id"} element={<EditorSistema/>}/>

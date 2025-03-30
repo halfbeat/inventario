@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Api, ApiConfig, ListadoPaginadoSistemasDto, RequestParams} from "../openapi/api";
+import React, {useEffect} from "react";
+import {Api, ApiConfig, RequestParams} from "../openapi/api";
 import {Configuration} from "../Configuration";
 import {useAuth} from "react-oidc-context";
 
 export default function useApi() {
     const auth = useAuth();
-    const [sistemas, setSistemas] = useState({} as ListadoPaginadoSistemasDto);
     const token = auth.user?.access_token;
 
     const [api, setApi] = React.useState<Api<any>>();
