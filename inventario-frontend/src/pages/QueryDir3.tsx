@@ -9,6 +9,7 @@ import './QueryDir3.css'
 type Props = {
     codigo_unidad?: string,
     label?: string;
+    onChange?: (codigoDir3: string | undefined) => void
 };
 
 const QueryDir3 = (props: Props) => {
@@ -22,6 +23,9 @@ const QueryDir3 = (props: Props) => {
 
     const handleSelect = (codigoDir3: string) => {
         setCodigoSeleccionado(codigoDir3);
+        if (props.onChange) {
+            props.onChange(codigoDir3)
+        }
         const name = unidadesDir3.find(u => u.unidad_id === codigoDir3)?.nombre;
         setSearchTerm(name || ``)
         setActiveIndex(-1)

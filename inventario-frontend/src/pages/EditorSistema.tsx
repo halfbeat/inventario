@@ -15,7 +15,7 @@ const EditorSistema = () => {
     const api = useApi();
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [sistema, setSistema] = useState({} as SistemaInformacionDto);
-    const [unidadResponsableFuncional, setUnidadResponsableFuncional] = useState('');
+    const [unidadResponsableFuncional, setUnidadResponsableFuncional] = useState<string | undefined>('');
 
     type FormProps = {
         id: string
@@ -39,21 +39,22 @@ const EditorSistema = () => {
                     editorRef.current?.setContent(data.observaciones || '')
                     setValue('id', data.sistema_id)
                     setValue('nombre', data.nombre)
-                    setUnidadResponsableFuncional('A07009156')
+                    setUnidadResponsableFuncional(data.unidad_responsable)
                     setValue('observaciones', data.observaciones)
                 })
                 .catch(err => console.error(err));
         }
-    }, [api,params.sistema_id,setValue])
+    }, [api, params.sistema_id, setValue])
 
     const onSubmit: SubmitHandler<FormProps> = (data) => {
         data.observaciones = editorRef.current?.getContent()
         const sistemaDto = {
             sistema_id: data.id,
             nombre: data.nombre,
+            unidad_responsable: unidadResponsableFuncional,
             observaciones: data.observaciones
         } as SistemaInformacionDto;
-        if(api) {
+        if (api) {
             api.sistemas.updateSistemaInformacion(params.sistema_id as string, sistemaDto)
                 .then(res => res.data)
                 .then(data => {
@@ -61,6 +62,7 @@ const EditorSistema = () => {
                     setValue('id', data.sistema_id)
                     setValue('nombre', data.nombre)
                     setValue('observaciones', data.observaciones)
+                    setUnidadResponsableFuncional(data.unidad_responsable)
                 })
                 .catch(err => alert(JSON.stringify(err)));
         }
@@ -82,7 +84,8 @@ const EditorSistema = () => {
                     </Form.Group>
                 </Row>
                 <Row>
-                    <QueryDir3  codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable funcional"}/>
+                    <QueryDir3 codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable funcional"}
+                    onChange={setUnidadResponsableFuncional} />
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md={2} controlId="fecha_registro">
@@ -90,6 +93,7 @@ const EditorSistema = () => {
                         <Form.Control type="date" placeholder="Fecha de registro"/>
                     </Form.Group>
                 </Row>
+                X = {unidadResponsableFuncional}
                 <Row className="mb-3">
                     <Form.Group as={Col} md={12} controlId="observaciones">
                         <Form.Label>Observaciones</Form.Label>
