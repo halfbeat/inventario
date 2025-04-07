@@ -278,10 +278,17 @@ components:
           type: string
         nombre:
           type: string
-        observaciones:
-          type: string
         unidad_responsable:
           type: string
+        tecnico_responsable:
+          type: string
+        componentes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Componente'
+        observaciones:
+          type: string
+
 
     UnidadDIR3:
       type: object
@@ -316,3 +323,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UnidadDIR3'
+
+    Componente:
+      type: object
+      required:
+        - sistema_id
+        - componente_id
+      properties:
+        sistema_id:
+          type: string
+        componente_id:
+          type: string
+        nombre:
+          type: string
+        git-repo:
+          type: string
+        observaciones:
+          type: string
