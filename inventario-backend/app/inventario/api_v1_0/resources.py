@@ -34,6 +34,17 @@ class SistemaInformacionResource(Resource):
         return SistemaInformacionService.get_sistema(sistema_id)
 
 
+class ComponentesSistemaInformacionResource(Resource):
+    @token_required
+    def get(self, sistema_id, jwt_token=None):
+        return SistemaInformacionService.get_componentes_sistema(sistema_id)
+
+
+class ComponenteSistemaInformacionResource(Resource):
+    @token_required
+    def get(self, sistema_id, componente_id, jwt_token=None):
+        return SistemaInformacionService.get_componente_sistema(sistema_id, componente_id)
+
 class UnidadesDir3Resource(Resource):
     @token_required
     def get(self, jwt_token=None):
@@ -54,6 +65,18 @@ api.add_resource(
     SistemaInformacionResource,
     "/api/v1/sistemas/<sistema_id>",
     endpoint="sistema_resource",
+)
+
+api.add_resource(
+    ComponentesSistemaInformacionResource,
+    "/api/v1/sistemas/<sistema_id>/componentes",
+    endpoint="componentes_sistema_resource",
+)
+
+api.add_resource(
+    ComponenteSistemaInformacionResource,
+    "/api/v1/sistemas/<sistema_id>/componentes/<componente_id>",
+    endpoint="componente_sistema_resource",
 )
 
 api.add_resource(

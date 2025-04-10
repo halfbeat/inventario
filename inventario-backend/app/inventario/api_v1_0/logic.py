@@ -2,17 +2,18 @@ from flask import abort
 
 from app.inventario.api_v1_0.schemas import (
     SistemaSchema,
-    ListaPaginableSistemasSchema, UnidadSchema, ListaPaginableUnidadesSchema,
+    ListaPaginableSistemasSchema, UnidadSchema, ListaPaginableUnidadesSchema, ComponenteSchema,
 )
 from app.inventario.models import (
-    SistemaInformacionModelDto, UnidadDir3ModelDto,
+    SistemaInformacionModelDto, UnidadDir3ModelDto, ComponenteModelDto,
 )
 
 sistema_schema = SistemaSchema()
 sistemas_schema = ListaPaginableSistemasSchema()
 unidad_schema = UnidadSchema()
 unidades_schema = ListaPaginableUnidadesSchema()
-
+componentes_schema = ComponenteSchema(many=True)
+componente_schema = ComponenteSchema()
 
 class SistemaInformacionService:
 
@@ -62,6 +63,20 @@ class SistemaInformacionService:
         if not sistema:
             abort(404, "Sistema no encontrada")
         return sistema_schema.dump(sistema)
+
+    @classmethod
+    def get_componentes_sistema(cls, sistema_id):
+        sistema = SistemaInformacionModelDto.get_by_id(sistema_id=sistema_id)
+        if not sistema:
+            abort(404, "Sistema no encontrada")
+        return componentes_schema.dump(sistema.componentes)
+
+    @classmethod
+    def get_componente_sistema(cls, sistema_id, componente_id):
+        componente = ComponenteModelDto.get_by_id(sistema_id=sistema_id, componente_id=componente_id)
+        if not componente:
+            abort(404, "Componente no encontrada")
+        return componente_schema.dump(componente)
 
 
 class UnidadDir3Service:

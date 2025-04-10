@@ -2,13 +2,14 @@ import {useParams} from "react-router-dom";
 import {withAuthenticationRequired} from "react-oidc-context";
 import React, {useEffect, useRef, useState} from "react";
 import {SistemaInformacionDto} from "../openapi/api";
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import {Editor} from '@tinymce/tinymce-react';
 import {Editor as TinyMCEEditor} from 'tinymce';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import QueryDir3 from "./QueryDir3";
 import useApi from "../common/useApi";
+import {ComponentesSistema} from "./ComponentesSistema";
 
 const EditorSistema = () => {
     let params = useParams();
@@ -16,6 +17,7 @@ const EditorSistema = () => {
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [sistema, setSistema] = useState({} as SistemaInformacionDto);
     const [unidadResponsableFuncional, setUnidadResponsableFuncional] = useState<string | undefined>('');
+    const [key, setKey] = useState<string>("general")
 
     type FormProps = {
         id: string
@@ -68,64 +70,77 @@ const EditorSistema = () => {
         }
     }
 
+    function handleOnChange(codigoDir3: string | undefined): void {
+        setUnidadResponsableFuncional(codigoDir3)
+    }
+
     return (
         <div>
             <p className={"h4 border border-2 rounded p-2"}>{sistema?.sistema_id}: {sistema?.nombre}</p>
+            <Tabs id="tabs"
+                  defaultActiveKey="general"
+                  activeKey={key}
+                  onSelect={(k) => setKey(k || "")}
+                  className="mb-3">
+                <Tab eventKey="general" title="General" className="px-2">
+                    <Form onSubmit={handleSubmit(onSubmit)}>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} md={2} controlId="id">
+                                <Form.Label>ID</Form.Label>
+                                <Form.Control type="text" disabled placeholder="Id del sistema" {...register("id")}/>
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="nombre">
+                                <Form.Label>Nombre</Form.Label>
+                                <Form.Control type="text" placeholder="Nombre del sistema" {...register("nombre")}/>
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <QueryDir3 codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable"}
+                                       onChange={handleOnChange}/>
+                        </Row>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} md={2} controlId="fecha_registro">
+                                <Form.Label>F. Registro</Form.Label>
+                                <Form.Control type="date" placeholder="Fecha de registro"/>
+                            </Form.Group>
+                        </Row>
+                        <Row className="mb-3">
+                            <Form.Group as={Col} md={12} controlId="observaciones">
+                                <Form.Label>Observaciones</Form.Label>
 
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md={2} controlId="id">
-                        <Form.Label>ID</Form.Label>
-                        <Form.Control type="text" disabled placeholder="Id del sistema" {...register("id")}/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="nombre">
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control type="text" placeholder="Nombre del sistema" {...register("nombre")}/>
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <QueryDir3 codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable funcional"}
-                    onChange={setUnidadResponsableFuncional} />
-                </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md={2} controlId="fecha_registro">
-                        <Form.Label>F. Registro</Form.Label>
-                        <Form.Control type="date" placeholder="Fecha de registro"/>
-                    </Form.Group>
-                </Row>
-                X = {unidadResponsableFuncional}
-                <Row className="mb-3">
-                    <Form.Group as={Col} md={12} controlId="observaciones">
-                        <Form.Label>Observaciones</Form.Label>
-
-                        <Editor
-                            apiKey='vq8eank4cb7vdktoumj0sjzr05e52q0qrt89oa1xkpc4ivlt'
-                            onInit={(evt, editor) => editorRef.current = editor}
-                            initialValue={sistema.observaciones}
-                            init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    // 'advlist autolink lists link image charmap print preview anchor',
-                                    // 'searchreplace visualblocks code fullscreen',
-                                    // 'insertdatetime media table paste code help wordcount'
-                                ],
-                                toolbar: 'undo redo | formatselect | ' +
-                                    'bold italic backcolor | alignleft aligncenter ' +
-                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                    'removeformat | help',
-                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                            }}
-                        />
-                    </Form.Group>
-                </Row>
-                <div className={"text-end mt-3"}>
-                    <Button disabled={params.sistema_id != null && sistema.sistema_id == null} type={"submit"}
-                            className={" "} variant={"primary"}>
-                        <FontAwesomeIcon icon={"floppy-disk"}/> {params.sistema_id ? 'Modificar' : 'Registrar'}
-                    </Button>
-                </div>
-            </Form>
+                                <Editor
+                                    apiKey='vq8eank4cb7vdktoumj0sjzr05e52q0qrt89oa1xkpc4ivlt'
+                                    onInit={(evt, editor) => editorRef.current = editor}
+                                    initialValue={sistema.observaciones}
+                                    init={{
+                                        height: 500,
+                                        menubar: false,
+                                        plugins: [
+                                            // 'advlist autolink lists link image charmap print preview anchor',
+                                            // 'searchreplace visualblocks code fullscreen',
+                                            // 'insertdatetime media table paste code help wordcount'
+                                        ],
+                                        toolbar: 'undo redo | formatselect | ' +
+                                            'bold italic backcolor | alignleft aligncenter ' +
+                                            'alignright alignjustify | bullist numlist outdent indent | ' +
+                                            'removeformat | help',
+                                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                    }}
+                                />
+                            </Form.Group>
+                        </Row>
+                        <div className={"text-end mt-3"}>
+                            <Button disabled={params.sistema_id != null && sistema.sistema_id == null} type={"submit"}
+                                    className={" "} variant={"primary"}>
+                                <FontAwesomeIcon icon={"floppy-disk"}/> {params.sistema_id ? 'Modificar' : 'Registrar'}
+                            </Button>
+                        </div>
+                    </Form>
+                </Tab>
+                <Tab eventKey="componenetes" title="Componentes" className="px-2">
+                    <ComponentesSistema sistemaId={sistema?.sistema_id}/>
+                </Tab>
+            </Tabs>
         </div>
     )
 }

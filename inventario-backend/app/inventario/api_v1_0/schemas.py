@@ -37,3 +37,13 @@ class ListaPaginableUnidadesSchema(ma.Schema):
     total = fields.Integer()
     page = fields.Integer()
     page_size = fields.Integer()
+
+
+class ComponenteSchema(ma.Schema):
+    sistema_id = fields.String()
+    componente_id = fields.String()
+    tipo = fields.String()
+    nombre = fields.String()
+    observaciones = fields.String(required=False, missing=None)
+    git_repo = fields.String(required=False, missing=None)
+    tags = fields.List(fields.String(), required=False, missing=[])

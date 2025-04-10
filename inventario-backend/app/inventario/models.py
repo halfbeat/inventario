@@ -2,8 +2,10 @@
 import enum
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Set, List
 
 from sqlalchemy import Enum, ForeignKeyConstraint, PrimaryKeyConstraint
+from sqlalchemy.orm import Mapped, relationship
 
 from app.db import db, BaseModelMixin
 
@@ -44,6 +46,7 @@ class AuditoriaMixinModelDto(object):
         self.fecha_creacion = fecha_creacion
         self.usuario_modificacion = usuario_modificacion
         self.fecha_modificacion = fecha_modificacion
+
 
 class UnidadDir3ModelDto(BaseModelMixin, db.Model):
     __tablename__ = "INVESGSS_UNIDADES_DIR3"
@@ -87,6 +90,21 @@ class EmpresaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     )
 
 
+class PersoanaModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
+    __tablename__ = "INVESGSS_PERSONAS"
+    persona_id = db.Column("C_PERSONA_ID", db.Integer, autoincrement=True)
+    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
+    apellido1 = db.Column("D_APELLIDO1", db.String(50), nullable=False)
+    apellido2 = db.Column("D_APELLIDO2", db.String(50), nullable=False)
+    email = db.Column("D_EMAIL", db.String(50), nullable=False)
+    ldap_id = db.Column("D_LDAP_ID", db.String(50), nullable=True)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(persona_id),
+        {}
+    )
+
+
 class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixin):
     """DTO de base de datos correspondiente a una aplicación    """
     __tablename__ = "INVEGSS_SISTEMAS"
@@ -105,11 +123,13 @@ class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixi
     observaciones = db.Column(
         "D_OBSERVACIONES", db.Text(), nullable=True
     )
+    componentes: Mapped[List["ComponenteModelDto"]] = relationship(back_populates="sistema")
+
     __table_args__ = (
         PrimaryKeyConstraint(sistema_id),
         ForeignKeyConstraint(
             [responsable_tecnico],
-            [EmpresaModelDto.empresa_id]
+            [PersoanaModelDto.persona_id]
         ),
         ForeignKeyConstraint(
             [unidad_responsable],
@@ -135,6 +155,7 @@ class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixi
         self.sistema_id = kwargs.get("sistema_id")
         self.nombre = kwargs.get("nombre")
         self.observaciones = kwargs.get("observaciones")
+        self.unidad_responsable = kwargs.get("unidad_responsable")
         super(SistemaInformacionModelDto, self).update_auditoria(kwargs.get('usuario_creacion'),
                                                                  kwargs.get('fecha_creacion'),
                                                                  kwargs.get('usuario_modificacion'),
@@ -175,16 +196,59 @@ class SistemaInformacionModelDto(AuditoriaMixinModelDto, db.Model, BaseModelMixi
                 )
 
 
+class TipoComponenteModelDto(db.Model, BaseModelMixin):
+    __tablename__ = 'INVESGSS_TIPO_COMPONENTES'
+    tipo_componente = db.Column("C_TP_COMPONENTE_ID", db.String(20), nullable=False)
+    nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(tipo_componente),
+
+    )
+
+
+class TagComponenteModelDto(db.Model, BaseModelMixin):
+    __tablename__ = 'INVESGSS_TAGS'
+    tag = db.Column("C_TAG_ID", db.String(20), nullable=False)
+    descripcion = db.Column("D_DESCRIPCION", db.String(50), nullable=True)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(tag),
+    )
+
+
+class TagsComponente(db.Model, BaseModelMixin):
+    __tablename__ = "INVESGSS_TAGS_COMPONENTE"
+    sistema_id = db.Column("C_SISINFO_ID", db.String(10))
+    componente_id = db.Column("C_COMPONENTE_ID", db.String(10))
+    tag = db.Column("C_TAG_ID", db.String(20), nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(sistema_id, componente_id, tag),
+        ForeignKeyConstraint(
+            [sistema_id, componente_id],
+            ["INVESGSS_COMPONENTES.C_SISINFO_ID", "INVESGSS_COMPONENTES.C_COMPONENTE_ID"]
+        ),
+        ForeignKeyConstraint(
+            [tag],
+            [TagComponenteModelDto.tag]
+        ),
+    )
+
+
 class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
     __tablename__ = "INVESGSS_COMPONENTES"
     sistema_id = db.Column("C_SISINFO_ID", db.String(10))
     componente_id = db.Column("C_COMPONENTE_ID", db.String(10))
+    tipo_componente = db.Column("C_TP_COMPONENTE_ID", db.String(20), nullable=False)
     componente_padre_id = db.Column("C_COMPONENTE_PADRE_ID", db.String(10))
     nombre = db.Column("D_NOMBRE", db.String(50), nullable=False)
     git_project = db.Column("D_GIT_PROJECT", db.String(500), nullable=True)
     observaciones = db.Column(
         "D_OBSERVACIONES", db.Text(), nullable=True
     )
+    sistema: Mapped[SistemaInformacionModelDto] = relationship(back_populates="componentes")
+    tags: Mapped[Set[TagComponenteModelDto]] = relationship(secondary=TagsComponente.__table__)
 
     __table_args__ = (
         PrimaryKeyConstraint(sistema_id, componente_id),
@@ -195,7 +259,11 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
         ForeignKeyConstraint(
             [sistema_id, componente_padre_id],
             [sistema_id, componente_id]
-        )
+        ),
+        ForeignKeyConstraint(
+            [tipo_componente],
+            [TipoComponenteModelDto.tipo_componente]
+        ),
     )
 
     def __init__(
@@ -214,7 +282,6 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
         self.nombre = nombre
         super(ComponenteModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
                                                  fecha_modificacion)
-
 
 class RolAsignacionEnum(enum.Enum):
     JEFE_DE_PROYECTO = 'JEFE_DE_PROYECTO'
@@ -244,5 +311,3 @@ class AsignacionEmpresaComponenteModelDto(db.Model, BaseModelMixin):
             [ComponenteModelDto.sistema_id, ComponenteModelDto.componente_id]
         )
     )
-
-

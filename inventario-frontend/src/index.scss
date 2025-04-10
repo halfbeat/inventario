@@ -27,7 +27,13 @@ $theme-colors: (
   // now bg-accent,btn-accent,etc.. can be called
 );
 
-$font-size-base: 0.8rem;
+$form-label-color: #325D88;
+;
+$form-label-font-weight: bold;
+$form-label-margin-bottom: 0 !default;
+$font-size-base: 0.85rem;
+
+$input-btn-font-size: 0.90rem;
 
 @import '~bootstrap/scss/bootstrap';
 

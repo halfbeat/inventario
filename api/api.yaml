@@ -118,6 +118,71 @@ paths:
           $ref: '#/components/responses/Forbidden'
         default:
           $ref: '#/components/responses/UnspecifiedError'
+
+  /sistemas/{sistemaId}/componentes:
+    get:
+      summary: Recuperar los componentes de un sistema
+      operationId: getComponentesSistemaInformacion
+      tags:
+        - sistemas
+      parameters:
+        - name: sistemaId
+          in: path
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComponenteSistema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
+  /sistemas/{sistemaId}/componentes/{componenteId}:
+    get:
+      summary: Recuperar un componente del sistema
+      operationId: getComponenteSistemaInformacion
+      tags:
+        - sistemas
+      parameters:
+        - name: sistemaId
+          in: path
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: componenteId
+          in: path
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponenteSistema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
   /dir3/unidades:
     get:
       summary: consulta de unidades dir3
@@ -282,10 +347,6 @@ components:
           type: string
         tecnico_responsable:
           type: string
-        componentes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Componente'
         observaciones:
           type: string
 
@@ -324,13 +385,17 @@ components:
           items:
             $ref: '#/components/schemas/UnidadDIR3'
 
-    Componente:
+    ComponenteSistema:
       type: object
       required:
         - sistema_id
         - componente_id
+        - tipo
+        - nombre
       properties:
         sistema_id:
+          type: string
+        tipo:
           type: string
         componente_id:
           type: string

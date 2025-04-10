@@ -25,9 +25,8 @@ export function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/home">Inicio </Nav.Link>
-                        <Nav.Link as={Link} to="/sistemas">Sistemas</Nav.Link>
-                        <Nav.Link as={Link} to="/dir3">DIR3</Nav.Link>
+                        <Nav.Link hidden={user == null} as={Link} to="/sistemas">Sistemas</Nav.Link>
+                        <Nav.Link hidden={user == null} as={Link} to="/dir3">DIR3</Nav.Link>
                     </Nav>
                     <Nav className="me-1">
                         <Stack direction={"horizontal"} gap={2}>
