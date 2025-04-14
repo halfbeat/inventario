@@ -10,3 +10,11 @@ marshmallow-sqlalchemy==1.1.0
 gunicorn==23.0.0
 setuptools
 pydantic
+
+# dev/tests
+pytest
+pytest-icdiff
+mypy
+pylint
+requests
+tenacity
