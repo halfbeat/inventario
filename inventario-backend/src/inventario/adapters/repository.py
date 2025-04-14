@@ -1,10 +1,12 @@
 import abc
-from typing import Set
+from typing import Set, Optional
 
+from .database.mapper import SistemaInformaciomDomainModelMapper
+from .database.model import SistemaInformacionModelDto
 from ..domain import model
 
 
-class AbstractRepository(abc.ABC):
+class SistemaRepository(abc.ABC):
     def __init__(self):
         self.seen = set()  # type: Set[model.Sistema]
 
@@ -12,11 +14,11 @@ class AbstractRepository(abc.ABC):
         self._add(product)
         self.seen.add(product)
 
-    def get(self, sku) -> model.Sistema:
-        product = self._get(sku)
-        if product:
-            self.seen.add(product)
-        return product
+    def get(self, sistema_id) -> model.Sistema:
+        sistema = self._get(sistema_id)
+        if sistema:
+            self.seen.add(sistema)
+        return sistema
 
     @abc.abstractmethod
     def _add(self, product: model.Sistema):
@@ -27,13 +29,16 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
 
-class SqlAlchemyRepository(AbstractRepository):
+class SqlAlchemyRepository(SistemaRepository):
     def __init__(self, session):
         super().__init__()
         self.session = session
+        self.mapper = SistemaInformaciomDomainModelMapper()
 
     def _add(self, product):
         self.session.add(product)
 
     def _get(self, sistema_id):
-        return self.session.query(model.Sistema).filter_by(sistema_id=sistema_id).first()
+        model_dto: Optional[SistemaInformacionModelDto] = self.session.query(SistemaInformacionModelDto).filter_by(
+            sistema_id=sistema_id).first()
+        return self.mapper.to_domain(model_dto)

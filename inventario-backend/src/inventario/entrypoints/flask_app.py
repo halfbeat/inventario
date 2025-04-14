@@ -1,13 +1,20 @@
 import os
-from datetime import datetime
-from flask import Flask, request
+from logging.config import dictConfig
+
+from flask import Flask
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Table, Column, String, Text
 from sqlalchemy.orm import sessionmaker
-from ..adapters import orm
 
+from ..adapters.database import model
+from ..adapters.view.mapper import SistemaViewModekMapper
+from ..service_layer import unit_of_work
 
+dictConfig({
+    'version': 1,
+    'root': {
+        'level': 'DEBUG'
+    }
+})
 
 settings_module = os.getenv("APP_SETTINGS_MODULE")
 
@@ -17,10 +24,20 @@ app.config.from_object(settings_module)
 # Carga la configuración del directorio instance
 app.config.from_pyfile("config.py", silent=True)
 
-# Inicializa las extensiones
-orm.db.init_app(app)
-migrate = Migrate(app, orm.db)
 
-@app.route("/add_batch", methods=["GET"])
-def add_batch():
-    pass
+# Inicializa las extensiones
+model.db.init_app(app)
+migrate = Migrate(app, model.db)
+
+
+@app.route("/sistemas", methods=["GET"])
+def get_sistemas():
+    mapper = SistemaViewModekMapper()
+    uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
+    with uow:
+        sistema = uow.sistemas.get("AUTHZ")
+
+    if not sistema:
+        return "Not found", 404
+
+    return mapper.to_view(sistema).model_dump(mode="json", exclude_none=True), 200
