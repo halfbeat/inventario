@@ -8,6 +8,7 @@ from sqlalchemy import Enum, ForeignKeyConstraint, PrimaryKeyConstraint
 from sqlalchemy.orm import Mapped, relationship
 
 from app.db import db, BaseModelMixin
+from sqlalchemy.orm import mapper, relationship
 
 
 @dataclass
@@ -283,6 +284,7 @@ class ComponenteModelDto(db.Model, BaseModelMixin, AuditoriaMixinModelDto):
         super(ComponenteModelDto, self).__init__(usuario_creacion, fecha_creacion, usuario_modificacion,
                                                  fecha_modificacion)
 
+
 class RolAsignacionEnum(enum.Enum):
     JEFE_DE_PROYECTO = 'JEFE_DE_PROYECTO'
     ANALISTA = 'ANALISTA'
@@ -311,3 +313,4 @@ class AsignacionEmpresaComponenteModelDto(db.Model, BaseModelMixin):
             [ComponenteModelDto.sistema_id, ComponenteModelDto.componente_id]
         )
     )
+
