@@ -15,11 +15,18 @@ export interface ErrorDto {
   descripcionDetallada?: string;
 }
 
-export interface ListadoPaginadoSistemasDto {
+export interface ListadoPaginadoResumenSistemasDto {
   total: number;
   page: number;
   page_size: number;
-  items: SistemaInformacionDto[];
+    items: ResumenSistemaInformacionDto[];
+}
+
+export interface ResumenSistemaInformacionDto {
+    sistema_id: string;
+    nombre: string;
+    unidad_responsable?: string;
+    tecnico_responsable?: string;
 }
 
 export interface SistemaInformacionDto {
@@ -28,6 +35,7 @@ export interface SistemaInformacionDto {
   unidad_responsable?: string;
     tecnico_responsable?: string;
     observaciones?: string;
+    componentes?: ComponenteSistemaDto[];
 }
 
 export interface UnidadDIR3Dto {
@@ -49,7 +57,7 @@ export interface ComponenteSistemaDto {
     tipo: string;
     componente_id: string;
     nombre: string;
-    "git-repo"?: string;
+    git_repo?: string;
     observaciones?: string;
 }
 
@@ -282,15 +290,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name GetSistemasInformacion
      * @summary Listado paginado de sistemas de informacón
      * @request GET:/sistemas
-     * @response `200` `ListadoPaginadoSistemasDto` Operación realizada con éxito
+     * @response `200` `ListadoPaginadoResumenSistemasDto` Operación realizada con éxito
      * @response `401` `ErrorDto`
      * @response `403` `ErrorDto`
      * @response `default` `ErrorDto`
      */
-    getSistemasInformacion: (params: RequestParams = {}) =>
-      this.request<ListadoPaginadoSistemasDto, ErrorDto>({
+    getSistemasInformacion: (
+        query?: {
+            page?: any;
+            page_size?: any;
+        },
+        params: RequestParams = {},
+    ) =>
+        this.request<ListadoPaginadoResumenSistemasDto, ErrorDto>({
         path: `/sistemas`,
         method: "GET",
+            query: query,
         format: "json",
         ...params,
       }),

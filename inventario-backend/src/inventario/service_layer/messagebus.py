@@ -1,11 +1,11 @@
 # pylint: disable=broad-except
 from __future__ import annotations
+
 import logging
 from typing import List, Dict, Callable, Type, Union, TYPE_CHECKING
 
-from ..domain import commands, events
-
 from . import handlers
+from ..domain import commands, events
 
 if TYPE_CHECKING:
     from . import unit_of_work, handlers
@@ -70,6 +70,7 @@ EVENT_HANDLERS = {
 
 COMMAND_HANDLERS = {
     commands.ObtenerSistema: handlers.obtener_sistema,
+    commands.BuscarUnidadesDir3: handlers.buscar_unidades_dir3,
     # commands.CreateBatch: handlers.add_batch,
     # commands.ChangeBatchQuantity: handlers.change_batch_quantity,
 }  # type: Dict[Type[commands.Command], Callable]

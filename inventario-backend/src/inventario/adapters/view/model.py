@@ -1,5 +1,4 @@
-from datetime import date
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, Field, PositiveInt
 from typing_extensions import Annotated
@@ -27,12 +26,32 @@ class PersonaViewDto(BaseModel):
     empresa: Optional[EmpresaViewDto] = None
 
 
+class ComponenteViewDto(BaseModel):
+    sistema_id: str
+    componente_id: str
+    nombre: str
+    observaciones: Optional[str] = None
+    git_repo: Optional[str] = None
+
+
 class SistemaInformacionViewDto(BaseModel):
     sistema_id: str
     nombre: Annotated[str, Field(min_length=4, max_length=50)]
+    unidad_responsable: Optional[str] = None
+    tecnico_responsable: Optional[str] = None
     observaciones: Optional[str] = None
-    entidad_responsable: Optional[EntidadDir3ViewDto] = None
-    responsable_tecnico: Optional[PersonaViewDto] = None
-    responsable_funcional: Optional[PersonaViewDto] = None
-    fecha_entrada_produccion: Optional[date] = None
-    fecha_salida_produccion: Optional[date] = None
+    componentes: Optional[List[ComponenteViewDto]] = []
+
+
+class ResumenSistemaInformacionViewDto(BaseModel):
+    sistema_id: str
+    nombre: Annotated[str, Field(min_length=4, max_length=50)]
+    observaciones: Optional[str] = None
+    entidad_responsable: Optional[str] = None
+
+
+class ListadoPaginadoResumenSistemasViewDto(BaseModel):
+    items: List[ResumenSistemaInformacionViewDto]
+    total: int
+    page: int
+    page_size: int

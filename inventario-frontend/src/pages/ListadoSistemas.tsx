@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {withAuthenticationRequired} from "react-oidc-context";
-import {ListadoPaginadoSistemasDto} from "../openapi/api";
+import {ListadoPaginadoResumenSistemasDto} from "../openapi/api";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useApi from "../common/useApi";
 
 const ListadoSistemas = () => {
-    const [sistemas, setSistemas] = useState({} as ListadoPaginadoSistemasDto);
+    const [sistemas, setSistemas] = useState({} as ListadoPaginadoResumenSistemasDto);
     const api = useApi();
     useEffect(() => {
         if (api) {

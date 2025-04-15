@@ -22,13 +22,20 @@ paths:
       operationId: getSistemasInformacion
       tags:
         - sistemas
+      parameters:
+        - name: page
+          in: query
+          required: false
+        - name: page_size
+          in: query
+          required: false
       responses:
         '200':
           description: Operación realizada con éxito
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListadoPaginadoSistemas'
+                $ref: '#/components/schemas/ListadoPaginadoResumenSistemas'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -314,7 +321,7 @@ components:
         descripcionDetallada:
           type: string
 
-    ListadoPaginadoSistemas:
+    ListadoPaginadoResumenSistemas:
       type: object
       required:
         - total
@@ -331,7 +338,22 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/SistemaInformacion'
+            $ref: '#/components/schemas/ResumenSistemaInformacion'
+
+    ResumenSistemaInformacion:
+      type: object
+      required:
+        - sistema_id
+        - nombre
+      properties:
+        sistema_id:
+          type: string
+        nombre:
+          type: string
+        unidad_responsable:
+          type: string
+        tecnico_responsable:
+          type: string
 
     SistemaInformacion:
       type: object
@@ -349,7 +371,10 @@ components:
           type: string
         observaciones:
           type: string
-
+        componentes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ComponenteSistema"
 
     UnidadDIR3:
       type: object
@@ -401,7 +426,7 @@ components:
           type: string
         nombre:
           type: string
-        git-repo:
+        git_repo:
           type: string
         observaciones:
           type: string

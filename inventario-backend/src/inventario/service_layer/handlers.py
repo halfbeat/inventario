@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from ..domain import commands
@@ -11,4 +12,12 @@ def obtener_sistema(
         uow: unit_of_work.AbstractUnitOfWork
 ):
     with uow:
-        return uow.sistemas.get("AUTHZ")
+        return uow.sistemas.get(cmd.sistema_id)
+
+
+def buscar_unidades_dir3(
+        cmd: commands.BuscarUnidadesDir3,
+        uow: unit_of_work.AbstractUnitOfWork
+):
+    with uow:
+        return []
