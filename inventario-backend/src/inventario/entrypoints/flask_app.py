@@ -79,14 +79,15 @@ def get_componentes_sistema(sistema_id: str):
 
 @app.route("/api/v1/dir3/unidades", methods=["GET"])
 def get_unidades_dir3():
+    page = request.args.get("page", 1, type=int)
+    page_size = request.args.get("page_size", 10, type=int)
+    if page < 1:
+        return "El número de página no puede ser menor que 1", 400
+    if page_size < 0:
+        return "El número de página no puede ser negativo", 400
     id_unidad = request.args.get("id", None)
     nombre_unidad = request.args.get("nombre", None)
 
-    cmd = commands.BuscarUnidadesDir3(id_unidad, nombre_unidad)
     uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
-    results = messagebus.handle(cmd, uow)
-    unidades = results.pop(0)
-    if not unidades:
-        unidades = []
-
-    return Response(json.dumps(unidades), status=200, mimetype='application/json')
+    listado_unidades = cqrs.unidades_dir3(id_unidad, nombre_unidad, page, page_size, uow)
+    return listado_unidades.model_dump(mode="json", exclude_none=True), 200

@@ -70,7 +70,6 @@ EVENT_HANDLERS = {
 
 COMMAND_HANDLERS = {
     commands.ObtenerSistema: handlers.obtener_sistema,
-    commands.BuscarUnidadesDir3: handlers.buscar_unidades_dir3,
     # commands.CreateBatch: handlers.add_batch,
     # commands.ChangeBatchQuantity: handlers.change_batch_quantity,
 }  # type: Dict[Type[commands.Command], Callable]

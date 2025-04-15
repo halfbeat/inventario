@@ -17,6 +17,13 @@ class EntidadDir3ViewDto(BaseModel):
     codigo_dir3_entidad_padre: Optional[str] = None
 
 
+class ListadoPaginadoEntidadDir3ViewDto(BaseModel):
+    items: List[EntidadDir3ViewDto]
+    total: int
+    page: int
+    page_size: int
+
+
 class PersonaViewDto(BaseModel):
     persona_id: PositiveInt
     nombre: str
