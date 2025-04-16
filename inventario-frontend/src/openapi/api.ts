@@ -19,23 +19,22 @@ export interface ListadoPaginadoResumenSistemasDto {
   total: number;
   page: number;
   page_size: number;
-    items: ResumenSistemaInformacionDto[];
+  items: ResumenSistemaInformacionDto[];
 }
 
 export interface ResumenSistemaInformacionDto {
-    sistema_id: string;
-    nombre: string;
-    unidad_responsable?: string;
-    tecnico_responsable?: string;
+  sistema_id: string;
+  nombre: string;
+  unidad_responsable?: string;
+  tecnico_responsable?: string;
 }
 
 export interface SistemaInformacionDto {
   sistema_id: string;
   nombre: string;
   unidad_responsable?: string;
-    tecnico_responsable?: string;
-    observaciones?: string;
-    componentes?: ComponenteSistemaDto[];
+  tecnico_responsable?: string;
+  observaciones?: string;
 }
 
 export interface UnidadDIR3Dto {
@@ -53,12 +52,12 @@ export interface ListadoPaginadoUnidadesDIR3Dto {
 }
 
 export interface ComponenteSistemaDto {
-    sistema_id: string;
-    tipo: string;
-    componente_id: string;
-    nombre: string;
-    git_repo?: string;
-    observaciones?: string;
+  sistema_id: string;
+  tipo: string;
+  componente_id: string;
+  nombre: string;
+  git_repo?: string;
+  observaciones?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -296,16 +295,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @response `default` `ErrorDto`
      */
     getSistemasInformacion: (
-        query?: {
-            page?: any;
-            page_size?: any;
-        },
-        params: RequestParams = {},
+      query?: {
+        page?: any;
+        page_size?: any;
+      },
+      params: RequestParams = {},
     ) =>
-        this.request<ListadoPaginadoResumenSistemasDto, ErrorDto>({
+      this.request<ListadoPaginadoResumenSistemasDto, ErrorDto>({
         path: `/sistemas`,
         method: "GET",
-            query: query,
+        query: query,
         format: "json",
         ...params,
       }),
@@ -374,45 +373,45 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
 
-      /**
-       * No description
-       *
-       * @tags sistemas
-       * @name GetComponentesSistemaInformacion
-       * @summary Recuperar los componentes de un sistema
-       * @request GET:/sistemas/{sistemaId}/componentes
-       * @response `200` `(ComponenteSistemaDto)[]` Operación realizada con éxito
-       * @response `401` `ErrorDto`
-       * @response `403` `ErrorDto`
-       * @response `default` `ErrorDto`
-       */
-      getComponentesSistemaInformacion: (sistemaId: string, params: RequestParams = {}) =>
-          this.request<ComponenteSistemaDto[], ErrorDto>({
-              path: `/sistemas/${sistemaId}/componentes`,
-              method: "GET",
-              format: "json",
-              ...params,
-          }),
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name GetComponentesSistemaInformacion
+     * @summary Recuperar los componentes de un sistema
+     * @request GET:/sistemas/{sistemaId}/componentes
+     * @response `200` `(ComponenteSistemaDto)[]` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    getComponentesSistemaInformacion: (sistemaId: string, params: RequestParams = {}) =>
+      this.request<ComponenteSistemaDto[], ErrorDto>({
+        path: `/sistemas/${sistemaId}/componentes`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
 
-      /**
-       * No description
-       *
-       * @tags sistemas
-       * @name GetComponenteSistemaInformacion
-       * @summary Recuperar un componente del sistema
-       * @request GET:/sistemas/{sistemaId}/componentes/{componenteId}
-       * @response `200` `ComponenteSistemaDto` Operación realizada con éxito
-       * @response `401` `ErrorDto`
-       * @response `403` `ErrorDto`
-       * @response `default` `ErrorDto`
-       */
-      getComponenteSistemaInformacion: (sistemaId: string, componenteId: string, params: RequestParams = {}) =>
-          this.request<ComponenteSistemaDto, ErrorDto>({
-              path: `/sistemas/${sistemaId}/componentes/${componenteId}`,
-              method: "GET",
-              format: "json",
-              ...params,
-          }),
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name GetComponenteSistemaInformacion
+     * @summary Recuperar un componente del sistema
+     * @request GET:/sistemas/{sistemaId}/componentes/{componenteId}
+     * @response `200` `ComponenteSistemaDto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    getComponenteSistemaInformacion: (sistemaId: string, componenteId: string, params: RequestParams = {}) =>
+      this.request<ComponenteSistemaDto, ErrorDto>({
+        path: `/sistemas/${sistemaId}/componentes/${componenteId}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
   };
   dir3 = {
     /**

@@ -371,10 +371,10 @@ components:
           type: string
         observaciones:
           type: string
-        componentes:
-          type: array
-          items:
-            $ref: "#/components/schemas/ComponenteSistema"
+#        componentes:
+#          type: array
+#          items:
+#            $ref: "#/components/schemas/ComponenteSistema"
 
     UnidadDIR3:
       type: object

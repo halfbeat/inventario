@@ -37,8 +37,6 @@ export const ComponentesSistema = ({sistemaId}: ComponentesSistemaProps) => {
 
     return (
         <>
-            <h2></h2>
-            <p className={"h4 p-2"}>Componentes del sistema {sistemaId}</p>
             <Table bordered>
                 <thead>
                 <tr>
@@ -50,8 +48,8 @@ export const ComponentesSistema = ({sistemaId}: ComponentesSistemaProps) => {
                 {componentes?.map(s =>
                     <tr style={{cursor: "pointer"}} key={s.componente_id}
                         onClick={() => selectComponente(s.componente_id)}>
-                        <td className={selectedKey == s.componente_id ? 'selected' : ''}> {s.componente_id}</td>
-                        <td className={selectedKey == s.componente_id ? 'selected' : ''}>{s.nombre}</td>
+                        <td className={selectedKey === s.componente_id ? 'selected' : ''}> {s.componente_id}</td>
+                        <td className={selectedKey === s.componente_id ? 'selected' : ''}>{s.nombre}</td>
                     </tr>)}
                 </tbody>
             </Table>

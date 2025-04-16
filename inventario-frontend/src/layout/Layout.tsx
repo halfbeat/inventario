@@ -4,10 +4,11 @@ import {Route, Routes} from "react-router-dom";
 import {Footer} from "./Footer";
 import {Home} from "../pages/Home";
 import {SessionExpired} from "../pages/SessionExpired";
-import ListadoSistemas from "../pages/ListadoSistemas";
-import EditorSistema from "../pages/EditorSistema";
-import RegistroSistema from "../pages/RegistroSistema";
-import QueryDir3 from "../pages/QueryDir3";
+import ListadoSistemasPAge from "../pages/ListadoSistemas";
+import EditorSistemaPage from "../pages/EditorSistema";
+import RegistroSistemaPage from "../pages/RegistroSistema";
+import QueryDir3Page from "../pages/QueryDir3";
+import ComponentesSistemaPage from "../pages/ComponentesSistemaPage";
 
 export function Layout() {
     return (
@@ -18,10 +19,11 @@ export function Layout() {
                     <Route index element={<Home/>}/>
                     <Route path={"/home"} element={<Home/>}/>
                     <Route path={"/session-expired"} element={<SessionExpired/>}/>
-                    <Route path={"/dir3"} element={<QueryDir3 codigo_unidad={"A07009156"} label={"Código unidad"}/>}/>
-                    <Route path={"/sistemas"} element={<ListadoSistemas/>}/>
-                    <Route path={"/sistemas/registro"} element={<RegistroSistema/>}/>
-                    <Route path={"/sistemas/:sistema_id"} element={<EditorSistema/>}/>
+                    <Route path={"/dir3"} element={<QueryDir3Page codigo_unidad={"A07009156"} label={"Código unidad"}/>}/>
+                    <Route path={"/sistemas"} element={<ListadoSistemasPAge/>}/>
+                    <Route path={"/sistemas/registro"} element={<RegistroSistemaPage/>}/>
+                    <Route path={"/sistemas/:sistema_id"} element={<EditorSistemaPage/>}/>
+                    <Route path={"/sistemas/:sistema_id/componentes"} element={<ComponentesSistemaPage/>}/>
                 </Routes>
             </div>
             <Footer></Footer>

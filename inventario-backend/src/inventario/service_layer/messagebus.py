@@ -38,6 +38,9 @@ def handle_event(
         queue: List[Message],
         uow: unit_of_work.AbstractUnitOfWork,
 ):
+    if EVENT_HANDLERS.get(type(event)) is None:
+        return
+
     for handler in EVENT_HANDLERS[type(event)]:
         try:
             logger.debug("handling event %s with handler %s", event, handler)
@@ -70,6 +73,7 @@ EVENT_HANDLERS = {
 
 COMMAND_HANDLERS = {
     commands.ObtenerSistema: handlers.obtener_sistema,
+    commands.ModificarSistema: handlers.modificar_sistema,
     # commands.CreateBatch: handlers.add_batch,
     # commands.ChangeBatchQuantity: handlers.change_batch_quantity,
 }  # type: Dict[Type[commands.Command], Callable]

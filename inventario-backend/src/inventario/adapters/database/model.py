@@ -61,8 +61,8 @@ class SistemaInformacionModelDto(Base, AuditoriaMixinModelDto):
     __tablename__ = "INVE_SISTEMAS"
     sistema_id = Column("C_SISINFO_ID", String(10))
     nombre = Column("D_NOMBRE", String(50), nullable=False)
-    responsable_tecnico = Column("C_RESPONSABLE_TECNICO_ID", Integer)
     unidad_responsable = Column("C_UNIDAD_FUNCIONAL_ID", String(9))
+    tecnico_responsable = Column("C_RESPONSABLE_TECNICO_ID", Integer)
     fecha_entrada_produccion = Column(
         "F_PUESTA_PRODUCCION", Date(),
         nullable=True,
@@ -79,7 +79,7 @@ class SistemaInformacionModelDto(Base, AuditoriaMixinModelDto):
     __table_args__ = (
         PrimaryKeyConstraint(sistema_id),
         ForeignKeyConstraint(
-            [responsable_tecnico],
+            [tecnico_responsable],
             [PersoanaModelDto.persona_id]
         ),
         ForeignKeyConstraint(
@@ -87,6 +87,16 @@ class SistemaInformacionModelDto(Base, AuditoriaMixinModelDto):
             [UnidadDir3ModelDto.C_ID_UD_ORGANICA]
         )
     )
+
+    def __init__(
+            self,
+            **kwargs
+    ):
+        self.sistema_id = kwargs.get("sistema_id")
+        self.nombre = kwargs.get("nombre")
+        self.unidad_responsable = kwargs.get("unidad_responsable")
+        self.tecnico_responsable = kwargs.get("tecnico_responsable")
+        self.observaciones = kwargs.get("observaciones")
 
 
 class ComponenteModelDto(Base, AuditoriaMixinModelDto):

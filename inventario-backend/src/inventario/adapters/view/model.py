@@ -12,10 +12,10 @@ class EmpresaViewDto(BaseModel):
 
 
 class EntidadDir3ViewDto(BaseModel):
-    codigo_dir3: str
+    unidad_id: str
     nombre: str
-    codigo_dir3_entidad_padre: Optional[str] = None
-
+    unidad_padre_id: Optional[str] = None,
+    nombre_unidad_padre: Optional[str] = None
 
 class ListadoPaginadoEntidadDir3ViewDto(BaseModel):
     items: List[EntidadDir3ViewDto]
@@ -47,7 +47,7 @@ class SistemaInformacionViewDto(BaseModel):
     unidad_responsable: Optional[str] = None
     tecnico_responsable: Optional[str] = None
     observaciones: Optional[str] = None
-    componentes: Optional[List[ComponenteViewDto]] = []
+    # componentes: Optional[List[ComponenteViewDto]] = []
 
 
 class ResumenSistemaInformacionViewDto(BaseModel):

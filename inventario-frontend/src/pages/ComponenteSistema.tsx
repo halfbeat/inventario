@@ -13,7 +13,7 @@ interface ComponenteSistemaProps {
 
 type FormProps = {
     nombre: string,
-    gitUrl: string | null,
+    gitUrl: string | undefined,
     observaciones: string | undefined,
 }
 
@@ -35,6 +35,8 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
                 .then(data => {
                     setComponente(data);
                     setValue('nombre', data.nombre);
+                    setValue("gitUrl", data.git_repo)
+                    setValue("observaciones", data.observaciones)
                     editorRef.current?.setContent(data.observaciones || '')
                 })
                 .catch(err => console.error(err));
@@ -79,7 +81,7 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
                                 onInit={(evt, editor) => editorRef.current = editor}
                                 initialValue={componente?.observaciones}
                                 init={{
-                                    height: 500,
+                                    height: 300,
                                     menubar: false,
                                     plugins: [
                                         // 'advlist autolink lists link image charmap print preview anchor',

@@ -70,9 +70,10 @@ const QueryDir3 = (props: Props) => {
         inputRef.current?.focus()
     }
 
+
+
     return (
         <div>
-
             <Form.Label>{props.label || 'Código unidad'}</Form.Label>
             <InputGroup>
                 <InputGroup.Text as={Col} md={2}>{codigoSeleccionado}</InputGroup.Text>

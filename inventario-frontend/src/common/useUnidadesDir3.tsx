@@ -22,11 +22,11 @@ export default function useUnidadesDir3(searchTerm: string) {
 
         let key = "unidadesdir3_" + searchTerm;
         const cachedData = sessionStorage.getItem(key);
-        if (cachedData) {
-            setUnidades(JSON.parse(cachedData));
-            setLoading(false);
-            return;
-        }
+        // if (cachedData) {
+        //     setUnidades(JSON.parse(cachedData));
+        //     setLoading(false);
+        //     return;
+        // }
         const getUnidadesDir3 = setTimeout(async () => {
             try {
                 api?.dir3.queryUnidadesDir3({nombre: searchTerm})

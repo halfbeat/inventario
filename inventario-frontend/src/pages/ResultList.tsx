@@ -36,6 +36,7 @@ export default function ResultList({
     if (Object.keys(results).length === 0) {
         return <div className={"list"}>Se se han encontrado resultados</div>;
     }
+
     return (
         <>
             <div className={"list"}>
