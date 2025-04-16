@@ -3,7 +3,8 @@ FROM python:${PYTHON_VERSION}-slim as base
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-
+ARG http_proxy
+ARG https_proxy
 
 WORKDIR /app
 
@@ -22,11 +23,17 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
 
+
+COPY requirements.txt .
+COPY src/inventario inventario
+COPY src/instance instance
+COPY src/config config
+
+RUN chown -R appuser .
+
 USER appuser
 
-COPY .. .
-
-EXPOSE 8000
+EXPOSE 5000
 
 # Run the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "entrypoint:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--log-level=debug", "--capture-output", "inventario.entrypoints.flask_app:app"]

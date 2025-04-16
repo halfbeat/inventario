@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: despliegues.ae.jcyl.es/jcyl-docker-repo/postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=inventario
+      - POSTGRES_USER=inventario
+      - POSTGRES_DB=inventario
+  inventario-backend:
+    image: inventario-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - APP_SETTINGS_MODULE=config.dev

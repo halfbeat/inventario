@@ -10,7 +10,7 @@ def sistemas(page: int, page_size: int, uow: unit_of_work.SqlAlchemyUnitOfWork):
     with uow:
         results = uow.session.execute(text(
             """
-            SELECT * FROM INVE_SISTEMAS 
+            SELECT * FROM "INVE_SISTEMAS" 
             LIMIT :num_rows OFFSET :offset
             """),
             dict(offset=(page - 1) * page_size, num_rows=page_size),
