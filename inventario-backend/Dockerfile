@@ -1,5 +1,6 @@
 ARG PYTHON_VERSION=3.13
-FROM python:${PYTHON_VERSION}-slim as base
+ARG REPO_PREFIX=""
+FROM ${REPO_PREFIX}python:${PYTHON_VERSION}-slim as base
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -33,7 +34,7 @@ RUN chown -R appuser .
 
 USER appuser
 
-EXPOSE 5000
+EXPOSE 80
 
 # Run the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--log-level=debug", "--capture-output", "inventario.entrypoints.flask_app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "--log-level=debug", "--capture-output", "inventario.entrypoints.flask_app:app"]

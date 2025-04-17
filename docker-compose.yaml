@@ -1,15 +1,59 @@
 services:
   postgres:
-    image: despliegues.ae.jcyl.es/jcyl-docker-repo/postgres:14-alpine
+    image: postgres:17-alpine
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=inventario
       - POSTGRES_USER=inventario
       - POSTGRES_DB=inventario
+    volumes:
+      - type: volume
+        source: volume_inventario
+        target: /var/lib/postgresql/data
+        volume:
+          subpath: postgres_data
+    restart: on-failure
+    healthcheck:
+      test: "PGPASSWORD=$${POSTGRES_PASSWORD} pg_isready -h 127.0.0.1 -U docker -d inventario"
+  postgress-backup:
+    image: kartoza/pg-backup:17-3.5
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - POSTGRES_USER=inventario
+      - POSTGRES_PASS=inventario
+      - POSTGRES_DB=inventario
+      - POSTGRES_HOST=postgres
+      - CRON_SCHEDULE="0 23 * * * "
+    volumes:
+      - type: volume
+        source: volume_inventario
+        target: /backups
+        volume:
+          subpath: postgres_backup
   inventario-backend:
     image: inventario-backend
+    build:
+      dockerfile: ../inventario-backend/Dockerfile
+      context: inventario-backend
     ports:
-      - "5000:5000"
+      - "5000:80"
     environment:
       - APP_SETTINGS_MODULE=config.dev
+  inventario-frontend:
+    image: inventario-frontend
+    build:
+      dockerfile: ../inventario-frontend/Dockerfile
+      context: inventario-frontend
+      args:
+        STAGE: local
+    ports:
+      - "8080:80"
+    environment:
+      - APP_SETTINGS_MODULE=config.dev
+volumes:
+  volume_inventario:
+    external: true
