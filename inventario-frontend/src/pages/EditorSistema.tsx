@@ -2,14 +2,13 @@ import {useParams} from "react-router-dom";
 import {withAuthenticationRequired} from "react-oidc-context";
 import React, {useEffect, useRef, useState} from "react";
 import {SistemaInformacionDto} from "../openapi/api";
-import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 import {Editor} from '@tinymce/tinymce-react';
 import {Editor as TinyMCEEditor} from 'tinymce';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import QueryDir3 from "./QueryDir3";
 import useApi from "../common/useApi";
-import {ComponentesSistema} from "./ComponentesSistema";
 import {SistemaHeader} from "./SistemaHeader";
 
 const EditorSistema = () => {
@@ -18,7 +17,6 @@ const EditorSistema = () => {
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [sistema, setSistema] = useState({} as SistemaInformacionDto);
     const [unidadResponsableFuncional, setUnidadResponsableFuncional] = useState<string | undefined>('');
-    const [key, setKey] = useState<string>("general")
 
     type FormProps = {
         id: string
