@@ -1,6 +1,6 @@
 import {Alert} from "react-bootstrap";
 
-export function Unauthorized() {
+export function UnauthorizedPage() {
     return (
         <Alert variant="warning">
             Usted tiene permisos para realizar la operación o no se encuentra autenticado.<br/>

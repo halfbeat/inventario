@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {Button, Col, Form, InputGroup} from "react-bootstrap";
 import useUnidadesDir3 from "../common/useUnidadesDir3";
 import useUnidadDir3 from "../common/useUnidadDir3";
-import ResultList from "./ResultList";
+import Dir3ResultList from "./Dir3ResultList";
 import './QueryDir3.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -87,7 +87,7 @@ const QueryDir3 = (props: Props) => {
             </InputGroup>
             {searchTerm && !selected ? (
                 <div className={"result-container"}>
-                    <ResultList
+                    <Dir3ResultList
                         results={unidades}
                         searchTerm={searchTerm}
                         loading={loading}

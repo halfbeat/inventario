@@ -55,8 +55,8 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
     }
 
     return (
-        <Card hidden={componente == undefined}>
-            <Card.Header><b>{componente?.nombre}</b></Card.Header>
+        <Card >
+            <Card.Header><b>{componente?.nombre || 'NUEVO COMPONENTE'}</b></Card.Header>
             <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Row className="mb-3">

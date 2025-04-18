@@ -1,5 +1,5 @@
 import {Breadcrumb, Nav} from "react-bootstrap";
-import {Link, useLocation, useParams, useRoutes} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import React from "react";
 
 export const SistemaHeader = () => {
@@ -21,7 +21,7 @@ export const SistemaHeader = () => {
                               to={`/sistemas/${params.sistema_id}`}>General</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} active={location.pathname == `/sistemas/${params.sistema_id}/componentes`}
+                    <Nav.Link as={Link} active={location.pathname.startsWith(`/sistemas/${params.sistema_id}/componentes`)}
                               to={`/sistemas/${params.sistema_id}/componentes`}>Componentes</Nav.Link>
                 </Nav.Item>
             </Nav>

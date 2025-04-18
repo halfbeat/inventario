@@ -8,8 +8,9 @@ import {Configuration} from "../Configuration";
 import {Editor as TinyMCEEditor} from "tinymce";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import QueryDir3 from "../componentes/QueryDir3";
 
-const RegistroSistema = () => {
+const RegistroSistemaPage = () => {
     const auth = useAuth();
     const token = auth.user?.access_token;
     const rp = {headers: {Authorization: `Bearer ${token}`}} as RequestParams
@@ -20,6 +21,7 @@ const RegistroSistema = () => {
 
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [sistema, setSistema] = useState({} as SistemaInformacionDto);
+    const [unidadResponsableFuncional, setUnidadResponsableFuncional] = useState<string | undefined>('');
 
     type FormProps = {
         id: string
@@ -35,11 +37,16 @@ const RegistroSistema = () => {
 
     const navigate = useNavigate()
 
+    function handleOnChange(codigoDir3: string | undefined): void {
+        setUnidadResponsableFuncional(codigoDir3)
+    }
+
     const onSubmit: SubmitHandler<FormProps> = (data) => {
         data.observaciones = editorRef.current?.getContent()
         const sistemaDto = {
             sistema_id: data.id,
             nombre: data.nombre,
+            unidad_responsable: unidadResponsableFuncional,
             observaciones: data.observaciones
         } as SistemaInformacionDto;
         api.sistemas.registrarSistemaInformacion(sistemaDto)
@@ -49,7 +56,8 @@ const RegistroSistema = () => {
                 setValue('id', data.sistema_id)
                 setValue('nombre', data.nombre)
                 setValue('observaciones', data.observaciones)
-                navigate("/dashboard")
+                setUnidadResponsableFuncional(data.unidad_responsable)
+                navigate(`/sistemas/${data.sistema_id}`)
             })
             .catch(err => alert(JSON.stringify(err)));
     }
@@ -69,12 +77,16 @@ const RegistroSistema = () => {
                         <Form.Control type="text" placeholder="Nombre del sistema" {...register("nombre")}/>
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md={2} controlId="fecha_registro">
-                        <Form.Label>F. Registro</Form.Label>
-                        <Form.Control type="date" placeholder="Fecha de registro"/>
-                    </Form.Group>
+                <Row>
+                    <QueryDir3 codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable"}
+                               onChange={handleOnChange}/>
                 </Row>
+                {/*<Row className="mb-3">*/}
+                {/*    <Form.Group as={Col} md={2} controlId="fecha_registro">*/}
+                {/*        <Form.Label>F. Registro</Form.Label>*/}
+                {/*        <Form.Control type="date" placeholder="Fecha de registro"/>*/}
+                {/*    </Form.Group>*/}
+                {/*</Row>*/}
                 <Row className="mb-3">
                     <Form.Group as={Col} md={12} controlId="observaciones">
                         <Form.Label>Observaciones</Form.Label>
@@ -84,7 +96,7 @@ const RegistroSistema = () => {
                             onInit={(evt, editor) => editorRef.current = editor}
                             initialValue={sistema.observaciones}
                             init={{
-                                height: 500,
+                                height: 300,
                                 menubar: false,
                                 plugins: [
                                     // 'advlist autolink lists link image charmap print preview anchor',
@@ -110,6 +122,6 @@ const RegistroSistema = () => {
     )
 }
 
-export default withAuthenticationRequired(RegistroSistema, {
+export default withAuthenticationRequired(RegistroSistemaPage, {
     OnRedirecting: () => (<div>Redirecting to the login page...</div>)
 });

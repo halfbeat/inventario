@@ -1,8 +1,9 @@
 import {withAuthenticationRequired} from "react-oidc-context";
 import React from "react";
-import {useParams} from "react-router-dom";
-import {ComponentesSistema} from "./ComponentesSistema";
+import {Link, useParams} from "react-router-dom";
 import {SistemaHeader} from "./SistemaHeader";
+import {ComponentesSistema} from "../componentes/ComponentesSistema";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 const ComponentesSistemaPage = () => {
@@ -12,6 +13,9 @@ const ComponentesSistemaPage = () => {
             <SistemaHeader/>
             <p className={"h4 p-2"}>Componentes del sistema </p>
             <ComponentesSistema sistemaId={params.sistema_id}></ComponentesSistema>
+            <div className={"text-end mt-3"}>
+                <Link className={"btn btn-primary"} to={"registro"}><FontAwesomeIcon icon={"plus"}/> Registrar componente</Link>
+            </div>
         </>
 
     )

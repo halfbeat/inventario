@@ -1,5 +1,5 @@
 import React from "react";
-import './ResultList.css'
+import './Dir3ResultList.css'
 
 interface ResultListProps {
     results: { [str: string]: string };
@@ -9,7 +9,7 @@ interface ResultListProps {
     activeIndex: number;
 }
 
-export default function ResultList({
+export default function Dir3ResultList({
                                        results,
                                        searchTerm,
                                        loading,

@@ -1,4 +1,4 @@
-export function SessionExpired() {
+export function SessionExpiredPage() {
     return (
         <div>
             <h1>Sesión expirada</h1>

@@ -7,11 +7,11 @@ import {Editor} from '@tinymce/tinymce-react';
 import {Editor as TinyMCEEditor} from 'tinymce';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import QueryDir3 from "./QueryDir3";
 import useApi from "../common/useApi";
 import {SistemaHeader} from "./SistemaHeader";
+import QueryDir3 from "../componentes/QueryDir3";
 
-const EditorSistema = () => {
+const EditorSistemaPage = () => {
     let params = useParams();
     const api = useApi();
     const editorRef = useRef<TinyMCEEditor | null>(null);
@@ -92,12 +92,12 @@ const EditorSistema = () => {
                     <QueryDir3 codigo_unidad={unidadResponsableFuncional} label={"Unidad responsable"}
                                onChange={handleOnChange}/>
                 </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md={2} controlId="fecha_registro">
-                        <Form.Label>F. Registro</Form.Label>
-                        <Form.Control type="date" placeholder="Fecha de registro"/>
-                    </Form.Group>
-                </Row>
+                {/*<Row className="mb-3">*/}
+                {/*    <Form.Group as={Col} md={2} controlId="fecha_registro">*/}
+                {/*        <Form.Label>F. Registro</Form.Label>*/}
+                {/*        <Form.Control type="date" placeholder="Fecha de registro"/>*/}
+                {/*    </Form.Group>*/}
+                {/*</Row>*/}
                 <Row className="mb-3">
                     <Form.Group as={Col} md={12} controlId="observaciones">
                         <Form.Label>Observaciones</Form.Label>
@@ -107,7 +107,7 @@ const EditorSistema = () => {
                             onInit={(evt, editor) => editorRef.current = editor}
                             initialValue={sistema.observaciones}
                             init={{
-                                height: 500,
+                                height: 300,
                                 menubar: false,
                                 plugins: [
                                     // 'advlist autolink lists link image charmap print preview anchor',
@@ -134,6 +134,6 @@ const EditorSistema = () => {
     )
 }
 
-export default withAuthenticationRequired(EditorSistema, {
+export default withAuthenticationRequired(EditorSistemaPage, {
     OnRedirecting: () => (<div>Redirecting to the login page...</div>)
 });

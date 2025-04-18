@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useApi from "../common/useApi";
 
-const ListadoSistemas = () => {
+const BuscadorSistemasPage = () => {
     const [sistemas, setSistemas] = useState({} as ListadoPaginadoResumenSistemasDto);
     const api = useApi();
     useEffect(() => {
@@ -36,6 +36,6 @@ const ListadoSistemas = () => {
     )
 }
 
-export default withAuthenticationRequired(ListadoSistemas, {
+export default withAuthenticationRequired(BuscadorSistemasPage, {
     OnRedirecting: () => (<div>Redirecting to the login page...</div>)
 });
