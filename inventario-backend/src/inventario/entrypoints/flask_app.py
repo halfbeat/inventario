@@ -66,6 +66,26 @@ def get_sistema(sistema_id: str):
         json.dumps(sistema_mapper.to_view(sistema).model_dump(mode="json", exclude_none=True), sort_keys=False),
         status=200, mimetype='application/json')
 
+@app.route("/api/v1/sistemas", methods=["POST"])
+def post_sistema():
+    json_sistema = request.get_json()
+
+    sistema_view = SistemaInformacionViewDto(**json_sistema)
+    cmd = commands.RegistrarSistema(
+        sistema_view.sistema_id,
+        sistema_view.nombre,
+        sistema_view.unidad_responsable,
+        sistema_view.tecnico_responsable,
+        sistema_view.observaciones
+    )
+    uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
+    results = messagebus.handle(cmd, uow)
+    sistema = results.pop(0)
+    if not sistema:
+        return "Not found", 404
+    return Response(
+        json.dumps(sistema_mapper.to_view(sistema).model_dump(mode="json", exclude_none=True), sort_keys=False),
+        status=200, mimetype='application/json')
 
 @app.route("/api/v1/sistemas/<sistema_id>", methods=["PUT"])
 def put_sistema(sistema_id: str):

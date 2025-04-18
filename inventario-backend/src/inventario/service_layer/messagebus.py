@@ -72,6 +72,7 @@ EVENT_HANDLERS = {
 }  # type: Dict[Type[events.Event], List[Callable]]
 
 COMMAND_HANDLERS = {
+    commands.RegistrarSistema: handlers.registrar_sistema,
     commands.ObtenerSistema: handlers.obtener_sistema,
     commands.ModificarSistema: handlers.modificar_sistema,
     # commands.CreateBatch: handlers.add_batch,
