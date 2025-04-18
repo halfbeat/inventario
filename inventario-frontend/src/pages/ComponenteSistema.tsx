@@ -77,7 +77,7 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
                             <Form.Label>Observaciones</Form.Label>
 
                             <Editor
-                                apiKey='vq8eank4cb7vdktoumj0sjzr05e52q0qrt89oa1xkpc4ivlt'
+                                tinymceScriptSrc={`${process.env.PUBLIC_URL}/tinymce/tinymce.min.js`}
                                 onInit={(evt, editor) => editorRef.current = editor}
                                 initialValue={componente?.observaciones}
                                 init={{
