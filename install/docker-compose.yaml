@@ -34,26 +34,53 @@ services:
         target: /backups
         volume:
           subpath: postgres_backup
+
   inventario-backend:
     image: inventario-backend
     build:
       dockerfile: ../inventario-backend/Dockerfile
-      context: inventario-backend
+      context: ../inventario-backend
     ports:
       - "5000:80"
     environment:
       - APP_SETTINGS_MODULE=config.dev
+    restart: on-failure
+    healthcheck:
+      test: curl --fail http://localhost/api/v1/sistemas || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      postgres:
+        condition: service_healthy
   inventario-frontend:
     image: inventario-frontend
     build:
       dockerfile: ../inventario-frontend/Dockerfile
-      context: inventario-frontend
+      context: ../inventario-frontend
       args:
         STAGE: local
     ports:
       - "8080:80"
+      - "8443:443"
     environment:
       - APP_SETTINGS_MODULE=config.dev
+    secrets:
+      - source: secret_inventario_nginx_crt
+        target: /etc/nginx/nginx.crt
+      - source: secret_inventario_nginx_key
+        target: /etc/nginx/nginx.key
+    restart: on-failure
+    healthcheck:
+      test: curl --fail --insecure https://localhost/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      inventario-backend:
+        condition: service_healthy
   redis:
     image: redis/redis-stack:6.2.6-v19
     ports:
@@ -70,3 +97,11 @@ services:
 volumes:
   volume_inventario:
     external: true
+
+secrets:
+  secret_inventario_nginx_key:
+    file: gatewayserver.key
+  secret_inventario_nginx_crt:
+    file: gatewayserver.crt
+  secret_inventario_nginx_pass:
+    file: gatewayserver.pass

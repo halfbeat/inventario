@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED=1
 ARG http_proxy
 ARG https_proxy
 
+RUN apt-get -y update; apt-get -y install curl
 WORKDIR /app
 
 ARG UID=10001

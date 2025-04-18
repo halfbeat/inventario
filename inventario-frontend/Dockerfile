@@ -5,7 +5,12 @@ ARG STAGE=local
 WORKDIR /app
 COPY package*.json .
 RUN npm install
-COPY . .
+COPY config /app/config
+COPY public /app/public
+COPY scripts /app/scripts
+COPY src /app/src
+COPY .env* /app/
+COPY tsconfig.json /app/
 RUN npm run-script "build:${STAGE}"
 
 FROM ${REPO_PREFIX}nginx:1.25.4-alpine
@@ -16,6 +21,8 @@ COPY --from=build-stage /app/build /usr/share/nginx/html/inventario/
 COPY install/set_config.sh /docker-entrypoint.d/41-set_config.sh
 RUN chmod u+x /docker-entrypoint.d/41-set_config.sh
 COPY install/nginx.conf /etc/nginx/conf.d/default.conf
+COPY install/gatewayserver.crt /etc/nginx/nginx.crt
+COPY install/gatewayserver.key /etc/nginx/nginx.key
 RUN mkdir /usr/share/nginx/html/config
 RUN chmod 777 /usr/share/nginx/html/config
 EXPOSE 80
