@@ -77,12 +77,8 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "env-cmd -f .env node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build:local": "env-cmd -f .env.local npm run build",
-    "build:des": "env-cmd -f .env.des npm run build",
-    "build:pre": "env-cmd -f .env.pre npm run build",
-    "build:exp": "env-cmd -f .env.exp npm run build",
     "test": "node scripts/test.js",
     "sta": "sta -p ../api/api.yaml -r --type-suffix Dto -o ./src/openapi -n api.ts"
   },
