@@ -23,10 +23,8 @@ dictConfig({
 settings_module = os.getenv("APP_SETTINGS_MODULE")
 
 app = Flask(__name__, instance_relative_config=True)
-# Carga los parámetros de configuración según el entorno
-app.config.from_object(settings_module)
-# Carga la configuración del directorio instance
-app.config.from_pyfile("config.py", silent=True)
+# Carga los parámetros de configuración desde variables de entorno
+app.config.from_prefixed_env()
 
 # Inicializa las extensiones
 model.db.init_app(app)
