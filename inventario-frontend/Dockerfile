@@ -1,7 +1,6 @@
 ARG REPO_PREFIX=""
 
 FROM ${REPO_PREFIX}node:14.21.2 as build-stage
-ARG STAGE=local
 WORKDIR /app
 COPY package*.json .
 RUN npm install
@@ -11,7 +10,7 @@ COPY scripts /app/scripts
 COPY src /app/src
 COPY .env* /app/
 COPY tsconfig.json /app/
-RUN npm run-script "build:${STAGE}"
+RUN npm run-script "build"
 
 FROM ${REPO_PREFIX}nginx:1.25.4-alpine
 ARG GIT_COMMIT=unspecified

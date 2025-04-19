@@ -62,8 +62,6 @@ services:
     build:
       dockerfile: ../inventario-frontend/Dockerfile
       context: ../inventario-frontend
-      args:
-        STAGE: local
     ports:
       - "8080:80"
       - "8443:443"
