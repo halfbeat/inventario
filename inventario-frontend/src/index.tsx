@@ -9,7 +9,6 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 import {Log, User} from 'oidc-client-ts';
 
-import {Configuration} from './Configuration'
 import {BrowserRouter} from "react-router-dom";
 
 library.add(fas);
@@ -17,11 +16,11 @@ Log.setLogger(console);
 
 
 const oidcConfig: AuthProviderProps = {
-    authority: Configuration.oidc.realm,
-    client_id: Configuration.oidc.client_id,
-    redirect_uri: Configuration.oidc.redirect_uri,
-    scope: Configuration.oidc.scope,
-    post_logout_redirect_uri: Configuration.oidc.post_logout_redirect_uri,
+    authority: window.REACT_APP_OIDC_REALM,
+    client_id: window.REACT_APP_OIDC_CLIENT_ID,
+    redirect_uri: window.REACT_APP_OIDC_REDIRECT_URI,
+    scope: window.REACT_APP_OIDC_SCOPE,
+    post_logout_redirect_uri: window.REACT_APP_OIDC_REDIRECT_URI,
     automaticSilentRenew: true,
     onSigninCallback: async (user: User | undefined) => {
         if (user) {
@@ -36,7 +35,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <AuthProvider {...oidcConfig}>
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <BrowserRouter basename={window.PUBLIC_URL}>
             <App/>
             </BrowserRouter>
         </AuthProvider>

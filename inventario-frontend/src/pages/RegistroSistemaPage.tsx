@@ -4,20 +4,17 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import {Editor} from "@tinymce/tinymce-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Api, ApiConfig, RequestParams, SistemaInformacionDto} from "../openapi/api";
-import {Configuration} from "../Configuration";
 import {Editor as TinyMCEEditor} from "tinymce";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import QueryDir3 from "../componentes/QueryDir3";
+import useApi from "../common/useApi";
 
 const RegistroSistemaPage = () => {
     const auth = useAuth();
     const token = auth.user?.access_token;
     const rp = {headers: {Authorization: `Bearer ${token}`}} as RequestParams
-    const api = new Api({
-        baseUrl: Configuration.backend.baseUrl,
-        baseApiParams: rp
-    } as ApiConfig);
+    const api = useApi();
 
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [sistema, setSistema] = useState({} as SistemaInformacionDto);
@@ -49,17 +46,19 @@ const RegistroSistemaPage = () => {
             unidad_responsable: unidadResponsableFuncional,
             observaciones: data.observaciones
         } as SistemaInformacionDto;
-        api.sistemas.registrarSistemaInformacion(sistemaDto)
-            .then(res => res.data)
-            .then(data => {
-                setSistema(data);
-                setValue('id', data.sistema_id)
-                setValue('nombre', data.nombre)
-                setValue('observaciones', data.observaciones)
-                setUnidadResponsableFuncional(data.unidad_responsable)
-                navigate(`/sistemas/${data.sistema_id}`)
-            })
-            .catch(err => alert(JSON.stringify(err)));
+        if (api) {
+            api.sistemas.registrarSistemaInformacion(sistemaDto)
+                .then(res => res.data)
+                .then(data => {
+                    setSistema(data);
+                    setValue('id', data.sistema_id)
+                    setValue('nombre', data.nombre)
+                    setValue('observaciones', data.observaciones)
+                    setUnidadResponsableFuncional(data.unidad_responsable)
+                    navigate(`/sistemas/${data.sistema_id}`)
+                })
+                .catch(err => alert(JSON.stringify(err)));
+        }
     }
 
     return (

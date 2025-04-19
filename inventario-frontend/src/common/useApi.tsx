@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {Api, ApiConfig, RequestParams} from "../openapi/api";
-import {Configuration} from "../Configuration";
 import {useAuth} from "react-oidc-context";
 
 export default function useApi() {
@@ -12,7 +11,7 @@ export default function useApi() {
     useEffect(() => {
         const rp = {headers: {Authorization: `Bearer ${token}`}} as RequestParams
         const api = new Api({
-            baseUrl: Configuration.backend.baseUrl,
+            baseUrl: window.REACT_APP_BACKEND_BASE_URL,
             baseApiParams: rp
         } as ApiConfig);
 
