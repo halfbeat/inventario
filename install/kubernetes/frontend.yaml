@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventario-frontend
+  namespace: inventario
+  labels:
+    app: inventario-frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: inventario-frontend
+    spec:
+      containers:
+        - name: inventario-frontend
+          image:  registry.k3s.aika.website/inventario-frontend:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: inventario-configmap
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "100Mi"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+  selector:
+    matchLabels:
+      app: inventario-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventario-frontend
+spec:
+  selector:
+    app: inventario-frontend
+  ports:
+    - port: 8080
+      name: http
+      targetPort: 80
+    - port: 8443
+      name: https
+      targetPort: 443
+

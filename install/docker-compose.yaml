@@ -43,7 +43,10 @@ services:
     ports:
       - "5000:80"
     environment:
-      - APP_SETTINGS_MODULE=config.dev
+      - FLASK_SECRET_KEY="123447a47f563e90fe2db0f56b1b17be62378e31b7cfd3adc776c59ca4c75e2fc512c15f69bb38307d11d5d17a41a7936789"
+      - FLASK_OAUTH2_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxI3eBpbelH0fBKi39umLZGXPCtOH7EvPk605C0Ytzp3HrSh9Ep7y0y2exaG7mn09YYsmjtOmNx4b7wd47lHHgJ0Y0SEM49O6cvsTX+jne8b6MKQmsU0HYGuLVoFfuOlLeGpl9h+YZkkT2LMrROqQDRbdcoOjljYOS++HIpduzokCdQmXPEaseYI6Fk5UI49MQcmdGgbY/+19eClOuASVqGlbacKB91vOkGBrXlIhwpOZ/CgEOP3yh8cuPlRq4PeVYPu0/NjubFDRWypAGsAc7Yj1Yi8DRfelQ32EwxURpx3SqpRK9d2nEbDCEHGRfMKxwNDxlbNL/H87ntNNDZVmSwIDAQAB-----END PUBLIC KEY-----"
+      - FLASK_SQLALCHEMY_DATABASE_URI="postgresql://inventario:inventario@postgres:5432/inventario"
+      - FLASK_DEBUG=1
     restart: on-failure
     healthcheck:
       test: curl --fail http://localhost/api/v1/sistemas || exit 1
@@ -65,7 +68,13 @@ services:
       - "8080:80"
       - "8443:443"
     environment:
-      - APP_SETTINGS_MODULE=config.dev
+      - PUBLIC_URL=/inventario
+      - REACT_APP_BASE_URL=https://localhost:8443/inventario
+      - REACT_APP_OIDC_REALM=https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet
+      - REACT_APP_OIDC_CLIENT_ID=familias
+      - REACT_APP_OIDC_REDIRECT_URI=https://localhost:8443/inventario
+      - REACT_APP_OIDC_SCOPE=email profile openid
+      - REACT_APP_BACKEND_BASE_URL=https://localhost:8443/backend/api/v1
     secrets:
       - source: secret_inventario_nginx_crt
         target: /etc/nginx/nginx.crt

@@ -3,8 +3,8 @@ kind: Secret
 type: kubernetes.io/dockerconfigjson
 metadata:
   name: regcred
-  namespace: familias
+  namespace: inventario
 data:
   .dockerconfigjson: >-
-    ewogICAgImF1dGhzIjogewogICAgICAgICJyZXBvc2l0b3Jpb2dpdC5hZS5qY3lsLmVzIjogewogICAgICAgICAgICAiYXV0aCI6ICJaMmwwYkdGaVNtVnVhMmx1Y3pveFJFVmFiVWwyZDFOR1RFZHZOVGd4VkdkNVFRPT0iCiAgICAgICAgfSwKICAgICAgICAiZGVzcGxpZWd1ZXMuYWUuamN5bC5lcyI6IHsKICAgICAgICAgICAgImF1dGgiOiAiYVc1MFpXZHlZUzFuYzNNNk1XNTBaV2R5WVdRdyIKICAgICAgICB9CiAgICB9Cn0=
+    ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5rM3MuYWlrYS53ZWJzaXRlIjogewoJCQkiYXV0aCI6ICJZV1J0YVc0NllXUnRhVzQ9IgoJCX0KCX0KfQ==
 

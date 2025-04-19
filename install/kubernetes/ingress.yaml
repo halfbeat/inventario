@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: inventario-backend
+  namespace: inventario
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /inventario/backend(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: inventario-backend
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: inventario-frontend
+  namespace: inventario
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /inventario(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: inventario-frontend
+                port:
+                  number: 80

@@ -1,77 +1,32 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: authz
-  name: authz-configmap
+  namespace: inventario
+  name: inventario-configmap
 data:
   http_proxy: ""
   https_proxy: ""
   TZ: "Europe/Madrid"
 
-  eureka.instance.preferIpAddress: "true"
-  SPRING_CLOUD_CONFIG_ENABLED: "false"
-  PORT: "8080"
-  DISCOVERY_HOST: "discovery-microservice"
-  DISCOVERY_PORT: "8080"
-  COSS_SERVICE_URL: "https://servicios.jcyl.es/comu/services/gss/"
-  DB_URL: "jdbc:postgresql://authz-db:5432/authz"
-  DB_DRIVER: "org.postgresql.Driver"
-  DB_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
-  RABBIT_HOST: "rabbitmq"
-  RABBIT_PORT: "5672"
-  RABBIT_VHOST: "SHSS"
-  RESOURCE_SERVER_PUBLIC_KEYS: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwCkbm4ImvCU+eSkzW8Yf9XwyAibu7Jx+WTn69bwimHyE6JWhk3van5oaIOlOFRN8z9RMC/VCOodquo0LhS7Wi1Q6LyhwaNiDBOcTXktrzVOcCheyWi26zGJoMT0nt59+74EJyHKRZfjrSaa8/ey9RoCne4egpA4dXy7AeNlHxhMvW/Omdfd0007QPhjdMVVBnRiFrb4P9DSIHMRphx2V4nGdBqRbv7dCse9SQLy0dVIRMaPaNegBUUcnxTgg983oACC/BeY5AJll+ZvrbUqwVsqubVZ6mND7Fkvx/bqo9PdCFbbkQY5cbJxRkzB1JimgAnGawwRCh46fE0XCb+M03QIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmDiEgYUKCuukfEFTWde4jZrdq+5Z4p6DzV+AuKbgxWV9s/XSDHYeGA/uVGjRNmqFBygQ72MgDEdlrOTNdRnjV2VO+1a0ITQFe8xO+YPN0IfJJP0TJ3izumgCPbMv0ykvobd2BIAVz1VW5qQtmOnko8ReL8Jwfvm/CBFTaJTbe7lZZQQwY9sQMjKaiVirfHsjMFpy5sQbHSOzL+0YUmgKqT2dYoAR7hnBGIoFAA4mnpmyOiLtYWRZiu88F1Fe+ZYN0H7JHs5a+kMtp663r17iYdbeMpAscthQ3mH1efGSCizg35eherkziU+3DXyguISOTWrSi1FfeL9gBkE4VmpWiwIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPAqcZRo8rlWpJ7MMbefs1/i/asPlYq89Evm/Ckzp7RUU+vDevxUN4vtAUThQBM9QU4XQNuE2FBch6u/my8j/3hrVGdkedAvbV3X9KIQAzgdYJeBDT/lPDiDQ4U4kW9tt7kwRjRfYZ/nFzmOYRI3Gv/XMsh3KaAwxemvIzYv8A+IapFp0i+3NPOQuxfir4ZoijDmTZcC1+NCJeNkaRoWPESZgDTyB0lRq9K/KmSIiRETzQ8bQoNTOe4TRSb5G+8b3FVsVBBWM4zemAlcqL/lKkofKVJRvR3cte8bxoUiDizZJMYpAJz+e3vCO/pdElmHhFflbzWPTIA/cfJdRnEk5QIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwCMMgcYbsSvTA3gEdCUXg37DG4w4qjV5ywVgH6TifhmxvfPRLRXjVvytF0GsICKMR39pgCHT73D61yZCGF+zOaV++qvKLiLIw1QClzpWxSPCI+XEBcO9mU8BcfPdH9KGe1UeGiya7tmvQXZXWIGM5z7YPamCPGQZGBf75ryehLSy3iUYvt3cOKZC9imsgsQfE7Bsr30PcPuNxP54oJWxROm597/gcjYLI9uPdGWEGtrvrB27FxF9omihZSaL5/IlOMxS4z6GB9wIZj7nxqjLVZUJbtgfvLp/vvVjk02J4rdCjO9h/xjgxbWeY5iPn8CK+pY30r2tDtMOVGYfKHrvXwIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7+Cb8iuO17iu2lEVr6WecThGxmsS7gqAI545JCvd2+vC2DQiHvl7k2gUa/zuggOamPBjwWkLyoKL7hUSA6oWj4VwpRpmsPowRlg8ggAqUzAi+9ImRESNSzCI9iQWXDdathdfRLZFmS+haBv8dvVWkMmTFZDCdtY116A2UelTbZqJVzrGscEZs230xxTGdazDYewgXNXFnNA5EiA+9CbSyt6hbIuduoLADlmCiaEwRmbp/tTqD8oCrtYqcB/7pjWdP7RVy2l9VkIW9qx/9o/L+gnNWY1ZBEHpQ/v07Xv4UybniLMgfdS3fzI2IVIBGk4/vYgnvshbBmQNN0beh4cM2wIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxI3eBpbelH0fBKi39umLZGXPCtOH7EvPk605C0Ytzp3HrSh9Ep7y0y2exaG7mn09YYsmjtOmNx4b7wd47lHHgJ0Y0SEM49O6cvsTX+jne8b6MKQmsU0HYGuLVoFfuOlLeGpl9h+YZkkT2LMrROqQDRbdcoOjljYOS++HIpduzokCdQmXPEaseYI6Fk5UI49MQcmdGgbY/+19eClOuASVqGlbacKB91vOkGBrXlIhwpOZ/CgEOP3yh8cuPlRq4PeVYPu0/NjubFDRWypAGsAc7Yj1Yi8DRfelQ32EwxURpx3SqpRK9d2nEbDCEHGRfMKxwNDxlbNL/H87ntNNDZVmSwIDAQAB,MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtfc45cOJALiEx6OqMzEVo7qo3zV2Vunp+u3M/D0wrDbZesYEcC+hNFjYqnvr5Bock0UozE381Qdd1erBakY3+xBbWLd082p/ZoJC08H89ncj4l0B2YQ4X/tIS9PIW91n+Kzh+wais/r3n1uK0XYdHuDYg3uUHFnMFEO8eGYeHpLqTsmPJXB4BYbdP3rHNxP63hgpZmLB1RsstK0K3vug+ux0lndbVge2jk9AUoeH+D1Cgqs5oTRIjcx4fLexGBqaqW6jt7qnT9ZSSBwnDFqNnw9gk1nwaj4w9SYr4ppb6ILVp9Es6ytag2pX9P0TnomRMPv6gRpGq9zW3A8849VYwwIDAQAB"
-  CITIZEN-ISSUERS: "https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet,https://ssokc.jcyl.es/auth/realms/GSS-ciudadanos-extranet,http://localhost:9099/auth/realms/GSS-ciudadanos,http://localhost:9090/auth/realms/GSS-ciudadanos,https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet"
-  AUTHZ_SERVICE_URL: "http://jcwbl12des001.ae.jcyl.es/authz/services"
-  AUTHZ_PRINCIPAL: "FAMI"
-  AUTHZ_TOKEN: "eyJraWQiOiJkYjQzMDY1MmFkMGU5MTQ4ZmNjNzVhZWM4M2NjYmIxNDIwYTBhNWYzYjhlNWExNDBjMjM1YmQ4Nzc5Y2JlZTU1IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJGQU1JIiwiZXhwIjoyMDIxNTMzMjkzLCJpc3MiOiJBVVRIWiIsImlhdCI6MTcwNjE3MzI5MywianRpIjoiTkVXTWd3bFBNYnNhNTlBd05JcWN4bW5iTk5lblJTQlciLCJwcmluY2lwYWwiOiJGQU1JIn0.SRDUqlElf6cnSwMtJ7CddIFm1yTbr3n9ju66TIQfezfb1-EfwonG-8xmNhdM0U9zjSL5lRqkLYyB347pPvxeHB9En-1jdqriZ3FCg8zLsOvBhs_9UahVMqU3RtN7uo4vbd9OUWdOZtSXsCN6qZaPYMyEskHmdNSq6j6q1QBf6RUjAzGEyWW2OrUFdit93HS58k9VgEKgzBM6eTLNgTuuc83ArgaMGTcjJbdqRq2JjGA1Gl4FWD-znFTyAQ8_XYAZoP0pgnzFG_pnIyjqpGt7BJ4Vs9Nlk10rx8uOp2VQSHXlEcmvUgEbC9TuNN9I7Pk0tPwuzIbUHm9HnlU-4X0YfQ"
-  SAGD_SERVICE_URL: "http://jcwbl12des001.ae.jcyl.es/sagd"
-  SAGD_SERVICE_PARTITION: "FAMI"
-  SAGD_SERVICE_ROOT_PATH: "/FAMI"
-  FIRE_ID: "15EBD0067C50"
-  FIRE_APP_ID: "adna"
-  FIRE_SERVICE_URL: "https://prefirejcyl.ae.jcyl.es/firesignature/fireService"
-  FIRE_KEYSTORE_FILE: "keystore.jks"
-  FIRE_KEYSTORE_PASS: "pe11gr0s0"
-  FIRE_TRUSTSTORE_FILE: "truststore.jks"
-  FIRE_TRUSTSTORE_PASS: "pe11gr0s0"
-  AFIRMA_APP_ID: "jcyl.gss.adnabackend"
-  AFIRMA_URL_FIRMA: "https://afirmapre.ae.jcyl.es"
-  AFIRMA_URL_FIRMA_SERVIDOR: "https://wwwpre.ae.jcyl.es"
-  AFIRMA_KEYSTORE_FILE: "keystore.jks"
-  AFIRMA_KEYSTORE_PASS: "pe11gr0s0"
-  AFIRMA_PRIVATE_KEY_ALIAS: "adna"
-  AFIRMA_PRIVATE_KEY_PASSWORD: "pe11gr0s0"
-  SDOE_SERVICE_URL: "https://wwwpre.ae.jcyl.es/sdoe/sdoeHessian"
-  SDOE_KEYSTORE_FILE: "keystore.jks"
-  SDOE_KEYSTORE_PASS: "pe11gr0s0"
-  SDOE_PRIVATE_KEY_ALIAS: "adna"
-  SDOE_PRIVATE_KEY_PASS: "pe11gr0s0"
-  RETE_SERVICE_URL: "https://wwwpre.ae.jcyl.es/retews30/services/RegistroTelematicoServicio"
-  RETE_USER: "AYCI"
-  RETE_PASS: "AYCI_1010"
+  # BACKEND
+  FLASK_SECRET_KEY: "123447a47f563e90fe2db0f56b1b17be62378e31b7cfd3adc776c59ca4c75e2fc512c15f69bb38307d11d5d17a41a7936789"
+  FLASK_OAUTH2_PUBLIC_KEY: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxI3eBpbelH0fBKi39um
+    LZGXPCtOH7EvPk605C0Ytzp3HrSh9Ep7y0y2exaG7mn09YYsmjtOmNx4b7wd47l
+    HHgJ0Y0SEM49O6cvsTX+jne8b6MKQmsU0HYGuLVoFfuOlLeGpl9h+YZkkT2LMrR
+    OqQDRbdcoOjljYOS++HIpduzokCdQmXPEaseYI6Fk5UI49MQcmdGgbY/+19eClO
+    uASVqGlbacKB91vOkGBrXlIhwpOZ/CgEOP3yh8cuPlRq4PeVYPu0/NjubFDRWyp
+    AGsAc7Yj1Yi8DRfelQ32EwxURpx3SqpRK9d2nEbDCEHGRfMKxwNDxlbNL/H87nt
+    NNDZVmSwIDAQAB
+    -----END PUBLIC KEY-----
+  FLASK_SQLALCHEMY_DATABASE_URI: postgresql://inventario:inventario@inventario-db:5432/inventario
 
-  CIUDADANOS_KEYCLOAK_URL: "https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet"
-  CIUDADANOS_KEYCLOAK_REDIRECT_URL: "https://jcdkr27des101.ae.jcyl.es:31262/authz/ciudadanos/"
-  CIUDADANOS_KEYCLOAK_CLIENT_ID: "authz"
-  CIUDADANOS_KEYCLOAK_SCOPE: "profile email openid"
-  CIUDADANOS_OIDC_ISSUER: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet"
-  CIUDADANOS_OIDC_AUTHORIZATION_ENDPOINT: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet/protocol/openid-connect/auth"
-  CIUDADANOS_OIDC_TOKEN_ENDPOINT: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet/protocol/openid-connect/token"
-  CIUDADANOS_OIDC_USERINFO_ENDPOINT: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet/protocol/openid-connect/userinfo"
-  CIUDADANOS_OIDC_LOGOUT_ENDPOINT: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet/protocol/openid-connect/logout"
-  CIUDADANOS_OIDC_REDIRECT_URI: "https://jcdkr27des101.ae.jcyl.es:31262/authz/ciudadanos/"
-  CIUDADANOS_OIDC_SESSIONCHECK_URI: "https://ssokc2des.jcyl.es/realms/GSS-conciliacion-extranet/protocol/openid-connect/login-status-iframe.html"
-  CIUDADANOS_OIDC_CLIENT_ID: "authz"
-  CIUDADANOS_OIDC_CLIENT_SECRET: "qtfsWn1sECoeHVk6SV74IEtdsHvU4isx"
-  CIUDADANOS_OIDC_SCOPE: "email profile openid offline_access"
-  CIUDADANOS_API_URL: "https://jcdkr27des101.ae.jcyl.es:31262/authz"
-  CIUDADANOS_API_COS_URL: "https://jcwbl12des001.ae.jcyl.es/comu/services/gss"
-  CIUDADANOS_CONTEXT_ROOT: "/authz/ciudadanos"
-  GESTORES_KEYCLOAK_URL: "https://ssokcpre.jcyl.es/auth/realms/GSS"
-  GESTORES_KEYCLOAK_REDIRECT_URL: "https://jcdkr27des101.ae.jcyl.es:31262/authz/gestion/"
-  GESTORES_KEYCLOAK_CLIENT_ID: "authz"
-  GESTORES_KEYCLOAK_SCOPE: "profile email openid"
-  GESTORES_API_URL: "https://jcdkr27des101.ae.jcyl.es:31262/authz"
-  GESTORES_API_COS_URL: "https://jcwbl12des001.ae.jcyl.es/comu/services/gss"
-  GESTORES_CONTEXT_ROOT: "/authz/gestion"
+  #FRONTEND
+  PUBLIC_URL: /inventario
+  REACT_APP_BASE_URL: https://localhost:8443/inventario
+  REACT_APP_OIDC_REALM: https://ssokcpre.jcyl.es/auth/realms/GSS-conciliacion-extranet
+  REACT_APP_OIDC_CLIENT_ID: familias
+  REACT_APP_OIDC_REDIRECT_URI: https://localhost:8443/inventario
+  REACT_APP_OIDC_SCOPE: email profile openid
+  REACT_APP_BACKEND_BASE_URL: https://localhost:8443/backend/api/v1
