@@ -19,12 +19,12 @@ LABEL org.opencontainers.image.revision=$GIT_COMMIT
 
 COPY --from=build-stage /app/build /usr/share/nginx/html/inventario/
 COPY install/set_config.sh /docker-entrypoint.d/41-set_config.sh
+COPY install/config.js.template /docker-entrypoint.d/config.js.template
 RUN chmod u+x /docker-entrypoint.d/41-set_config.sh
 COPY install/nginx.conf /etc/nginx/conf.d/default.conf
 COPY install/gatewayserver.crt /etc/nginx/nginx.crt
 COPY install/gatewayserver.key /etc/nginx/nginx.key
-RUN mkdir /usr/share/nginx/html/config
-RUN chmod 777 /usr/share/nginx/html/config
+
 EXPOSE 80
 VOLUME /usr/share/nginx/html
 STOPSIGNAL SIGTERM
