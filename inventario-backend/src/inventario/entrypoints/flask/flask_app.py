@@ -1,34 +1,16 @@
 import json
-import os
-from logging.config import dictConfig
 
-from flask import Flask, request, Response
-from flask_migrate import Migrate
+from flask import request, Response
 from sqlalchemy.orm import sessionmaker
 
-from ..adapters.database import model
-from ..adapters.view import cqrs
-from ..adapters.view.mapper import SistemaViewModekMapper, ComponenteViewModelMapper
-from ..adapters.view.model import SistemaInformacionViewDto
-from ..domain import commands
-from ..service_layer import unit_of_work, messagebus
-
-dictConfig({
-    'version': 1,
-    'root': {
-        'level': 'DEBUG'
-    }
-})
-
-settings_module = os.getenv("APP_SETTINGS_MODULE")
-
-app = Flask(__name__, instance_relative_config=True)
-# Carga los parámetros de configuración desde variables de entorno
-app.config.from_prefixed_env()
-
-# Inicializa las extensiones
-model.db.init_app(app)
-migrate = Migrate(app, model.db)
+from .. import app
+from .security import token_required
+from ...adapters.database import model
+from ...adapters.view import cqrs
+from ...adapters.view.mapper import SistemaViewModekMapper, ComponenteViewModelMapper
+from ...adapters.view.model import SistemaInformacionViewDto
+from ...domain import commands
+from ...service_layer import unit_of_work, messagebus
 
 sistema_mapper = SistemaViewModekMapper()
 componente_mapper = ComponenteViewModelMapper()
@@ -41,9 +23,13 @@ def _get_sistema(sistema_id: str):
     sistema = results.pop(0)
     return sistema
 
+@app.route("/healthcheck", methods=["GET"])
+def healthcheck():
+    return Response("OK", status=200, mimetype="text/plain")
 
 @app.route("/api/v1/sistemas", methods=["GET"])
-def get_sistemas():
+@token_required
+def get_sistemas(jwt_token=None):
     page = request.args.get("page", 1, type=int)
     page_size = request.args.get("page_size", 10, type=int)
     if page < 1:
@@ -56,7 +42,8 @@ def get_sistemas():
 
 
 @app.route("/api/v1/sistemas/<sistema_id>", methods=["GET"])
-def get_sistema(sistema_id: str):
+@token_required
+def get_sistema(sistema_id: str, jwt_token=None):
     sistema = _get_sistema(sistema_id)
     if not sistema:
         return "Not found", 404
@@ -64,8 +51,10 @@ def get_sistema(sistema_id: str):
         json.dumps(sistema_mapper.to_view(sistema).model_dump(mode="json", exclude_none=True), sort_keys=False),
         status=200, mimetype='application/json')
 
+
 @app.route("/api/v1/sistemas", methods=["POST"])
-def post_sistema():
+@token_required
+def post_sistema(jwt_token=None):
     json_sistema = request.get_json()
 
     sistema_view = SistemaInformacionViewDto(**json_sistema)
@@ -85,8 +74,10 @@ def post_sistema():
         json.dumps(sistema_mapper.to_view(sistema).model_dump(mode="json", exclude_none=True), sort_keys=False),
         status=200, mimetype='application/json')
 
+
 @app.route("/api/v1/sistemas/<sistema_id>", methods=["PUT"])
-def put_sistema(sistema_id: str):
+@token_required
+def put_sistema(sistema_id: str, ):
     json_sistema = request.get_json()
 
     sistema_view = SistemaInformacionViewDto(**json_sistema)
@@ -108,7 +99,8 @@ def put_sistema(sistema_id: str):
 
 
 @app.route("/api/v1/sistemas/<sistema_id>/componentes", methods=["GET"])
-def get_componentes_sistema(sistema_id: str):
+@token_required
+def get_componentes_sistema(sistema_id: str, jwt_token=None):
     sistema = _get_sistema(sistema_id)
     if not sistema:
         return "Not found", 404
@@ -120,7 +112,8 @@ def get_componentes_sistema(sistema_id: str):
 
 
 @app.route("/api/v1/sistemas/<sistema_id>/componentes/<componente_id>", methods=["GET"])
-def get_componente_sistema(sistema_id: str, componente_id: str):
+@token_required
+def get_componente_sistema(sistema_id: str, componente_id: str, jwt_token=None):
     sistema = _get_sistema(sistema_id)
     if not sistema:
         return "Not found", 404
@@ -136,7 +129,8 @@ def get_componente_sistema(sistema_id: str, componente_id: str):
 
 
 @app.route("/api/v1/dir3/unidades", methods=["GET"])
-def get_unidades_dir3():
+@token_required
+def get_unidades_dir3(jwt_token=None):
     page = request.args.get("page", 1, type=int)
     page_size = request.args.get("page_size", 300, type=int)
     if page < 1:
@@ -152,7 +146,8 @@ def get_unidades_dir3():
 
 
 @app.route("/api/v1/dir3/unidades/<unidad_id>", methods=["GET"])
-def get_unidad_dir3(unidad_id):
+@token_required
+def get_unidad_dir3(unidad_id, jwt_token=None):
     uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
     unidad = cqrs.unidad_dir3(unidad_id, uow)
     if unidad is None:
