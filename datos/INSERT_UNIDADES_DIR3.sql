@@ -611,3 +611,5 @@ VALUES ('A07033432', 'Dirección Técnica de Inclusión Social', 'Servicio de Pr
         'A07041852', 'S4711001J', 6);
 
 COMMIT;
+
+

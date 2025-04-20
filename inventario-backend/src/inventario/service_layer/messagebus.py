@@ -75,6 +75,5 @@ COMMAND_HANDLERS = {
     commands.RegistrarSistema: handlers.registrar_sistema,
     commands.ObtenerSistema: handlers.obtener_sistema,
     commands.ModificarSistema: handlers.modificar_sistema,
-    # commands.CreateBatch: handlers.add_batch,
-    # commands.ChangeBatchQuantity: handlers.change_batch_quantity,
+    commands.ModificarComponente: handlers.modificar_componente,
 }  # type: Dict[Type[commands.Command], Callable]

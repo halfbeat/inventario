@@ -98,12 +98,20 @@ class SistemaInformacionModelDto(Base, AuditoriaMixinModelDto):
         self.tecnico_responsable = kwargs.get("tecnico_responsable")
         self.observaciones = kwargs.get("observaciones")
 
+class TipoComponenteModelDto(Base):
+    __tablename__ = 'INVE_TIPOS_COMPONENTE'
+    tipo_componente = Column("C_TP_COMPONENTE_ID", String(20), nullable=False)
+    nombre = Column("D_NOMBRE", String(50), nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint(tipo_componente),
+    )
 
 class ComponenteModelDto(Base, AuditoriaMixinModelDto):
     __tablename__ = "INVE_COMPONENTES"
     sistema_id = Column("C_SISINFO_ID", String(10))
     componente_id = Column("C_COMPONENTE_ID", String(10))
-    tipo_componente = Column("C_TP_COMPONENTE_ID", String(20), nullable=False)
+    tipo = Column("C_TP_COMPONENTE_ID", String(20), nullable=False)
     componente_padre_id = Column("C_COMPONENTE_PADRE_ID", String(10))
     nombre = Column("D_NOMBRE", String(50), nullable=False)
     url_proyecto_git = Column("D_GIT_PROJECT", String(500), nullable=True)
@@ -117,6 +125,10 @@ class ComponenteModelDto(Base, AuditoriaMixinModelDto):
         ForeignKeyConstraint(
             [sistema_id],
             [SistemaInformacionModelDto.sistema_id]
+        ),
+        ForeignKeyConstraint(
+            [tipo],
+            [TipoComponenteModelDto.tipo_componente]
         ),
         ForeignKeyConstraint(
             [sistema_id, componente_padre_id],

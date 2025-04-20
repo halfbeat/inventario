@@ -23,6 +23,9 @@ class ListadoPaginadoEntidadDir3ViewDto(BaseModel):
     page: int
     page_size: int
 
+class TipoComponenteViewDto(BaseModel):
+    tipo: str
+    nombre: str
 
 class PersonaViewDto(BaseModel):
     persona_id: PositiveInt
@@ -37,6 +40,7 @@ class ComponenteViewDto(BaseModel):
     sistema_id: str
     componente_id: str
     nombre: str
+    tipo: str
     observaciones: Optional[str] = None
     git_repo: Optional[str] = None
 

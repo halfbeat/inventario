@@ -62,3 +62,27 @@ def modificar_sistema(
         uow.commit()
 
         return sistema
+
+
+def modificar_componente(
+        cmd: commands.ModificarComponente,
+        uow: unit_of_work.AbstractUnitOfWork
+):
+    with uow:
+        sistema = uow.sistemas.get(cmd.sistema_id)
+        if not sistema:
+            raise SistemaNoEncontrado()
+
+        componente = next(
+            iter([componente for componente in sistema.componentes if componente.componente_id == cmd.componente_id]),
+            None)
+        if not componente:
+            componente = sistema.agregar_componente(cmd.componente_id, cmd.nombre, cmd.tipo, cmd.url_proyecto_git,
+                                                    cmd.observaciones)
+        else:
+            componente.modificar(cmd.nombre, cmd.tipo, cmd.url_proyecto_git, cmd.observaciones)
+
+        uow.sistemas.update(sistema)
+        uow.commit()
+
+        return componente

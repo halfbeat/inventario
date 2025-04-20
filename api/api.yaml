@@ -157,25 +157,47 @@ paths:
           $ref: '#/components/responses/UnspecifiedError'
 
   /sistemas/{sistemaId}/componentes/{componenteId}:
+    parameters:
+      - name: sistemaId
+        in: path
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
+      - name: componenteId
+        in: path
+        required: true
+        allowEmptyValue: false
+        schema:
+          type: string
     get:
       summary: Recuperar un componente del sistema
       operationId: getComponenteSistemaInformacion
       tags:
         - sistemas
-      parameters:
-        - name: sistemaId
-          in: path
-          required: true
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: componenteId
-          in: path
-          required: true
-          allowEmptyValue: false
-          schema:
-            type: string
-
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponenteSistema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+    put:
+      summary: Modificar un componente del sistema
+      operationId: modificarComponenteSistemaInformacion
+      tags:
+        - sistemas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponenteSistema'
       responses:
         '200':
           description: Operación realizada con éxito
@@ -248,6 +270,31 @@ paths:
           $ref: '#/components/responses/Forbidden'
         default:
           $ref: '#/components/responses/UnspecifiedError'
+
+  /tiposComponente:
+    get:
+      summary: Recuperar tipos de componentes
+      operationId: getTiposComponente
+      tags:
+        - tiposComponente
+      responses:
+        '200':
+          description: Operación realizada con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TipoComponente'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/UnspecifiedError'
+
 
 components:
   securitySchemes:
@@ -430,3 +477,15 @@ components:
           type: string
         observaciones:
           type: string
+
+    TipoComponente:
+      type: object
+      required:
+        - tipo
+        - nombre
+      properties:
+        tipo:
+          type: string
+        nombre:
+          type: string
+

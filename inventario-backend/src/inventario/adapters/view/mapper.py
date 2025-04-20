@@ -16,6 +16,7 @@ class ComponenteViewModelMapper(DomainViewMapper):
             sistema_id=domain_entity.sistema.sistema_id,
             componente_id=domain_entity.componente_id,
             nombre=domain_entity.nombre,
+            tipo=domain_entity.tipo,
             observaciones=domain_entity.observaciones,
             git_repo=domain_entity.url_proyecto_git
         )

@@ -60,6 +60,11 @@ export interface ComponenteSistemaDto {
   observaciones?: string;
 }
 
+export interface TipoComponenteDto {
+  tipo: string;
+  nombre: string;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -412,6 +417,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags sistemas
+     * @name ModificarComponenteSistemaInformacion
+     * @summary Modificar un componente del sistema
+     * @request PUT:/sistemas/{sistemaId}/componentes/{componenteId}
+     * @response `200` `ComponenteSistemaDto` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    modificarComponenteSistemaInformacion: (
+      sistemaId: string,
+      componenteId: string,
+      data: ComponenteSistemaDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<ComponenteSistemaDto, ErrorDto>({
+        path: `/sistemas/${sistemaId}/componentes/${componenteId}`,
+        method: "PUT",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
   };
   dir3 = {
     /**
@@ -457,6 +489,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getUnidadDir3: (unidadId: string, params: RequestParams = {}) =>
       this.request<UnidadDIR3Dto, ErrorDto>({
         path: `/dir3/unidades/${unidadId}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  tiposComponente = {
+    /**
+     * No description
+     *
+     * @tags tiposComponente
+     * @name GetTiposComponente
+     * @summary Recuperar tipos de componentes
+     * @request GET:/tiposComponente
+     * @response `200` `(TipoComponenteDto)[]` Operación realizada con éxito
+     * @response `401` `ErrorDto`
+     * @response `403` `ErrorDto`
+     * @response `404` `ErrorDto`
+     * @response `default` `ErrorDto`
+     */
+    getTiposComponente: (params: RequestParams = {}) =>
+      this.request<TipoComponenteDto[], ErrorDto>({
+        path: `/tiposComponente`,
         method: "GET",
         format: "json",
         ...params,

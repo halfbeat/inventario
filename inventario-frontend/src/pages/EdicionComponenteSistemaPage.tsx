@@ -11,7 +11,7 @@ const EdicionComponenteSistemaPage = () => {
     return (
         <>
             <SistemaHeader/>
-            <div className={"text-end mb-1"}>
+            <div className={"text-end"}>
                 <Link className={"btn btn-primary btn-sm"} to={`/sistemas/${params.sistema_id}/componentes`}><FontAwesomeIcon icon={"arrow-left"}/> Volver</Link>
             </div>
             <ComponenteSistema sistemaId={params.sistema_id} componenteId={params.componente_id}/>

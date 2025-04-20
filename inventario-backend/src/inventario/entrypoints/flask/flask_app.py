@@ -8,7 +8,7 @@ from .security import token_required
 from ...adapters.database import model
 from ...adapters.view import cqrs
 from ...adapters.view.mapper import SistemaViewModekMapper, ComponenteViewModelMapper
-from ...adapters.view.model import SistemaInformacionViewDto
+from ...adapters.view.model import SistemaInformacionViewDto, ComponenteViewDto
 from ...domain import commands
 from ...service_layer import unit_of_work, messagebus
 
@@ -77,7 +77,7 @@ def post_sistema(jwt_token=None):
 
 @app.route("/api/v1/sistemas/<sistema_id>", methods=["PUT"])
 @token_required
-def put_sistema(sistema_id: str, ):
+def put_sistema(sistema_id: str, jwt_token=None):
     json_sistema = request.get_json()
 
     sistema_view = SistemaInformacionViewDto(**json_sistema)
@@ -127,6 +127,38 @@ def get_componente_sistema(sistema_id: str, componente_id: str, jwt_token=None):
             componente_mapper.to_view(componente).model_dump(mode="json")),
         status=200, mimetype='application/json')
 
+@app.route("/api/v1/sistemas/<sistema_id>/componentes/<componente_id>", methods=["PUT"])
+@token_required
+def put_componente_sistema(sistema_id: str, componente_id: str, jwt_token=None):
+    json_componente = request.get_json()
+
+    componente_view = ComponenteViewDto(**json_componente)
+    sistema = _get_sistema(sistema_id)
+    if not sistema:
+        return "Not found", 404
+    # componente = next(
+    #     iter([componente for componente in sistema.componentes if componente.componente_id == componente_id]), None)
+    # if not componente:
+    #     return "Not found", 404
+
+    cmd = commands.ModificarComponente(
+        sistema_id,
+        componente_id,
+        componente_view.nombre,
+        componente_view.tipo,
+        componente_view.observaciones
+    )
+    uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
+    results = messagebus.handle(cmd, uow)
+    componente = results.pop(0)
+
+    if not componente:
+        return "Not found", 404
+
+    return Response(
+        json.dumps(
+            componente_mapper.to_view(componente).model_dump(mode="json")),
+        status=200, mimetype='application/json')
 
 @app.route("/api/v1/dir3/unidades", methods=["GET"])
 @token_required
@@ -154,4 +186,13 @@ def get_unidad_dir3(unidad_id, jwt_token=None):
         return "Unidad no encontrada", 404
     return Response(
         json.dumps(unidad.model_dump(mode="json")),
+        status=200, mimetype='application/json')
+
+@app.route("/api/v1/tiposComponente", methods=["GET"])
+@token_required
+def get_tipos_componente(jwt_token=None):
+    uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
+    tipos_componente = cqrs.tipos_componente(uow)
+    return Response(
+        json.dumps(tipos_componente.model_dump(mode="json")),
         status=200, mimetype='application/json')

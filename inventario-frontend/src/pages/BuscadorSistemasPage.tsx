@@ -4,6 +4,7 @@ import {ListadoPaginadoResumenSistemasDto} from "../openapi/api";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useApi from "../common/useApi";
+import {Table} from "react-bootstrap";
 
 const BuscadorSistemasPage = () => {
     const [sistemas, setSistemas] = useState({} as ListadoPaginadoResumenSistemasDto);
@@ -17,16 +18,28 @@ const BuscadorSistemasPage = () => {
                 })
                 .catch(err => console.error(err));
         }
-    },[api]);
+    }, [api]);
 
-    const listaSistemas = sistemas?.items?.map(s =>
-        <li key={s.sistema_id}>
-            <Link to={s.sistema_id}>{s.nombre}</Link>
-        </li>)
     return (
         <div>
             <p className={"h4 border border-2 rounded p-2"}>Sistemas registrados</p>
-            <ul>{listaSistemas}</ul>
+            <Table bordered>
+                <thead>
+                <tr>
+                    <th>Id.</th>
+                    <th>Nombre</th>
+                </tr>
+                </thead>
+                <tbody>
+                {sistemas?.items?.map(s =>
+                    <tr style={{cursor: "pointer"}} key={s.sistema_id}>
+                        <td>
+                            <Link to={s.sistema_id}>{s.sistema_id}</Link>
+                        </td>
+                        <td>{s.nombre}</td>
+                    </tr>)}
+                </tbody>
+            </Table>
             <p hidden={sistemas?.total !== 0}>No se ha encontrado ningún sistema</p>
             <div className={"text-end mt-3"}>
                 <Link className={"btn btn-primary"} to={"registro"}><FontAwesomeIcon icon={"plus"}/> Registrar

@@ -27,3 +27,12 @@ class ModificarSistema(Command):
     unidad_responsable: Optional[str] = None
     tecnico_responsable: Optional[str] = None
     observaciones: Optional[str] = None
+
+@dataclass
+class ModificarComponente(Command):
+    sistema_id: str
+    componente_id: str
+    nombre: str
+    tipo: str
+    url_proyecto_git: Optional[str] = None
+    observaciones: Optional[str] = None

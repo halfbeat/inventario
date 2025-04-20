@@ -25,6 +25,7 @@ class ComponenteModelMapper(DomainModelMapper):
             sistema=None,
             componente_id=model_entity.componente_id,
             nombre=model_entity.nombre,
+            tipo = model_entity.tipo,
             url_proyecto_git=model_entity.url_proyecto_git,
             observaciones=model_entity.observaciones
         )

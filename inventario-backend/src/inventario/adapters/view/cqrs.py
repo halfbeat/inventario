@@ -1,8 +1,9 @@
+from pydantic import RootModel
 from sqlalchemy import text
 
 from .model import ListadoPaginadoResumenSistemasViewDto, ResumenSistemaInformacionViewDto, \
-    ListadoPaginadoEntidadDir3ViewDto, EntidadDir3ViewDto
-from ..database.model import SistemaInformacionModelDto, UnidadDir3ModelDto
+    ListadoPaginadoEntidadDir3ViewDto, EntidadDir3ViewDto, TipoComponenteViewDto
+from ..database.model import SistemaInformacionModelDto, UnidadDir3ModelDto, TipoComponenteModelDto
 from ...service_layer import unit_of_work
 
 
@@ -40,6 +41,12 @@ def unidad_to_view(model_entity):
         nombre_unidad_padre=model_entity.C_DNM_UD_ORGANICA_SUPERIOR
     )
 
+def tipo_componente_to_view(model_entity):
+    return TipoComponenteViewDto(
+        tipo=model_entity.tipo_componente,
+        nombre=model_entity.nombre
+    )
+
 def unidades_dir3(id: str, nombre: str, page: int, page_size: int, uow: unit_of_work.SqlAlchemyUnitOfWork):
     with uow:
         filter_query = uow.session.query(UnidadDir3ModelDto)
@@ -65,3 +72,8 @@ def unidad_dir3(unidad_id: str, uow: unit_of_work.SqlAlchemyUnitOfWork):
             return None
 
         return unidad_to_view(unidad)
+
+def tipos_componente(uow:  unit_of_work.SqlAlchemyUnitOfWork):
+    with uow:
+        tipos = uow.session.query(TipoComponenteModelDto).all()
+        return RootModel([tipo_componente_to_view(t) for t in tipos])
