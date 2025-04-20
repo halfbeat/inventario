@@ -94,9 +94,9 @@ class SistemaInformacionModelDto(Base, AuditoriaMixinModelDto):
     ):
         self.sistema_id = kwargs.get("sistema_id")
         self.nombre = kwargs.get("nombre")
-        self.unidad_responsable = kwargs.get("unidad_responsable")
-        self.tecnico_responsable = kwargs.get("tecnico_responsable")
-        self.observaciones = kwargs.get("observaciones")
+        self.unidad_responsable = kwargs.get("unidad_responsable", None)
+        self.tecnico_responsable = kwargs.get("tecnico_responsable", None)
+        self.observaciones = kwargs.get("observaciones", None)
 
 class TipoComponenteModelDto(Base):
     __tablename__ = 'INVE_TIPOS_COMPONENTE'
@@ -135,3 +135,15 @@ class ComponenteModelDto(Base, AuditoriaMixinModelDto):
             [sistema_id, componente_id]
         ),
     )
+
+    def __init__(
+            self,
+            **kwargs
+    ):
+        self.sistema_id = kwargs.get("sistema_id")
+        self.componente_id = kwargs.get("componente_id")
+        self.tipo = kwargs.get("tipo")
+        self.nombre = kwargs.get("nombre")
+        self.componente_padre_id = kwargs.get("componente_padre_id", None)
+        self.url_proyecto_git = kwargs.get("url_proyecto_git", None)
+        self.observaciones = kwargs.get("observaciones", None)

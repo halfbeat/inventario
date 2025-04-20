@@ -1,9 +1,8 @@
 import abc
 
-from sqlalchemy import Double
-
-from ...domain import model
 from ...adapters.database import model as dbmodel
+from ...domain import model
+
 
 class DomainModelMapper(abc.ABC):
 
@@ -31,7 +30,18 @@ class ComponenteModelMapper(DomainModelMapper):
         )
 
     def to_model(self, domain_entity):
-        raise NotImplementedError
+        if domain_entity is None:
+            return None
+
+        return dbmodel.ComponenteModelDto(
+            sistema_id=domain_entity.sistema.sistema_id,
+            componente_id=domain_entity.componente_id,
+            componente_padre_id=None,
+            nombre=domain_entity.nombre,
+            tipo=domain_entity.tipo,
+            observaciones=domain_entity.observaciones,
+            url_proyecto_git=domain_entity.url_proyecto_git
+        )
 
 
 class SistemaInformaciomDomainModelMapper(DomainModelMapper):
@@ -67,5 +77,9 @@ class SistemaInformaciomDomainModelMapper(DomainModelMapper):
             tecnico_responsable=domain_entity.tecnico_responsable,
             observaciones=domain_entity.observaciones
         )
+
+        componente_mapper = ComponenteModelMapper()
+        for componente in domain_entity.componentes:
+            model_dto.componentes.append(componente_mapper.to_model(componente))
 
         return model_dto

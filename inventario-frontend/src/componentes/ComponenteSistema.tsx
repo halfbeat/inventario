@@ -6,6 +6,7 @@ import {Editor as TinyMCEEditor} from "tinymce";
 import {SubmitHandler, useForm} from "react-hook-form";
 import useApi from "../common/useApi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useNavigate} from "react-router-dom";
 
 interface ComponenteSistemaProps {
     sistemaId?: string | undefined
@@ -24,12 +25,16 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
     const api = useApi();
     const [componente, setComponente] = useState<ComponenteSistemaDto | null>(null);
     const editorRef = useRef<TinyMCEEditor | null>(null);
+    const navigate = useNavigate()
+
     const {
         register,
         handleSubmit,
         setValue,
         formState: {errors},
     } = useForm<FormProps>()
+
+    const [tiposComponente, setTiposComponente] = useState<Array<TipoComponenteDto>>([]);
 
     useEffect(() => {
         if (sistemaId && componenteId && api) {
@@ -46,9 +51,7 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
                 })
                 .catch(err => console.error(err));
         }
-    }, [sistemaId, componenteId, api]);
-
-    const [tiposComponente, setTiposComponente] = useState<Array<TipoComponenteDto>>([]);
+    }, [sistemaId, componenteId, tiposComponente]);
     useEffect(() => {
         function obtenerTiposComponente() {
             if (api) {
@@ -78,7 +81,10 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
             console.log(data.componente_id)
             api.sistemas.modificarComponenteSistemaInformacion(
                 sistemaId, data.componente_id, componenteDtp
-            )
+            ).then(res => res.data)
+                .then(data => {
+                    navigate(`/sistemas/${data.sistema_id}/componentes/${data.componente_id}`)
+                })
                 .catch(err => console.error(err));
         }
     }

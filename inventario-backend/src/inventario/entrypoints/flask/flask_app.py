@@ -146,6 +146,7 @@ def put_componente_sistema(sistema_id: str, componente_id: str, jwt_token=None):
         componente_id,
         componente_view.nombre,
         componente_view.tipo,
+        componente_view.git_repo,
         componente_view.observaciones
     )
     uow = unit_of_work.SqlAlchemyUnitOfWork(session_factory=sessionmaker(bind=model.db.engine))
