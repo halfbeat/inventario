@@ -38,4 +38,4 @@ USER appuser
 EXPOSE 80
 
 # Run the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "--log-level=debug", "--capture-output", "inventario.entrypoints.flask_app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "--log-level=debug", "--capture-output", "inventario.entrypoints:app"]
