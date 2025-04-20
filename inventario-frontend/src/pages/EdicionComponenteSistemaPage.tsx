@@ -6,7 +6,7 @@ import {ComponenteSistema} from "../componentes/ComponenteSistema";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-const NuevoComponenteSistemaPage = () => {
+const EdicionComponenteSistemaPage = () => {
     let params = useParams();
     return (
         <>
@@ -14,13 +14,13 @@ const NuevoComponenteSistemaPage = () => {
             <div className={"text-end mb-1"}>
                 <Link className={"btn btn-primary btn-sm"} to={`/sistemas/${params.sistema_id}/componentes`}><FontAwesomeIcon icon={"arrow-left"}/> Volver</Link>
             </div>
-            <ComponenteSistema sistemaId={params.sistema_id} componenteId={undefined}/>
+            <ComponenteSistema sistemaId={params.sistema_id} componenteId={params.componente_id}/>
         </>
 
     )
 }
 
 
-export default withAuthenticationRequired(NuevoComponenteSistemaPage, {
+export default withAuthenticationRequired(EdicionComponenteSistemaPage, {
     OnRedirecting: () => (<div>Redirecting to the login page...</div>)
 });

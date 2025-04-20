@@ -14,7 +14,8 @@ const ComponentesSistemaPage = () => {
             <p className={"h4 p-2"}>Componentes del sistema </p>
             <ComponentesSistema sistemaId={params.sistema_id}></ComponentesSistema>
             <div className={"text-end mt-3"}>
-                <Link className={"btn btn-primary"} to={"registro"}><FontAwesomeIcon icon={"plus"}/> Registrar componente</Link>
+                <Link className={"btn btn-primary btn-sm"} to={"registro"}><FontAwesomeIcon icon={"plus"}/> Registrar
+                    componente</Link>
             </div>
         </>
 

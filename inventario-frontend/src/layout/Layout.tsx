@@ -11,6 +11,7 @@ import RegistroSistemaPage from "../pages/RegistroSistemaPage";
 import ComponentesSistemaPage from "../pages/ComponentesSistemaPage";
 import QueryDir3 from "../componentes/QueryDir3";
 import NuevoComponenteSistemaPage from "../pages/NuevoComponenteSistemaPage";
+import EdicionComponenteSistemaPage from "../pages/EdicionComponenteSistemaPage";
 
 export function Layout() {
     return (
@@ -27,6 +28,7 @@ export function Layout() {
                     <Route path={"/sistemas/:sistema_id"} element={<EditorSistemaPage/>}/>
                     <Route path={"/sistemas/:sistema_id/componentes"} element={<ComponentesSistemaPage/>}/>
                     <Route path={"/sistemas/:sistema_id/componentes/registro"} element={<NuevoComponenteSistemaPage/>}/>
+                    <Route path={"/sistemas/:sistema_id/componentes/:componente_id"} element={<EdicionComponenteSistemaPage/>}/>
                 </Routes>
             </div>
             <Footer></Footer>

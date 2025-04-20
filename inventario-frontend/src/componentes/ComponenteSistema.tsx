@@ -41,7 +41,7 @@ export const ComponenteSistema = ({sistemaId, componenteId}: ComponenteSistemaPr
                 })
                 .catch(err => console.error(err));
         }
-    }, [componenteId]);
+    }, [sistemaId, componenteId, api]);
 
     const onSubmit: SubmitHandler<FormProps> = (data) => {
         data.observaciones = editorRef.current?.getContent()
